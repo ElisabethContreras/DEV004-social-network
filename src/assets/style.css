@@ -21,9 +21,10 @@
   body {
     background-image: url("fondoMar.jpeg");
     background-size: contain;
-    /* background-repeat: no-repeat;*/
+    background-repeat: no-repeat;
     background-position: absolute;
-    background-size: 525px 800px;
+    /* background-size: 525px 800px; */
+    background-size: cover;
     margin: 0px;
     padding: 0px;
     background-attachment: fixed;
