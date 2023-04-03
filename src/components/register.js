@@ -1,8 +1,10 @@
 import { navigateTo } from '../router.js';
+import { registerWithEmail } from '../helpers/accederCongmail.js';
 
 export const Register = () => {
-  const div = document.createElement('div');
-  div.innerHTML = `
+
+    const div = document.createElement('div');
+    div.innerHTML = `
     <img class="iconoRegister" src="assets/logoPrincipal.png" alt="Icono-Wanderlust">
     <p>Únete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. ¡Viaja sin límites!</p>
     <form id="registerForm" class="registerForm">
@@ -24,7 +26,7 @@ export const Register = () => {
     const email = e.target.email.value;
     const password = e.target.psw.value;
     registerWithEmail(email, password)
-      .then((useCredential) => {
+      .then(() => {
         navigateTo('/home');
       })
       .catch((error) => {
