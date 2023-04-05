@@ -5,8 +5,10 @@ export const Login = () => {
   // Create a div element to hold the login component
   const div = document.createElement('div');
   div.innerHTML = `
-
-  <img src="assets/logo.png" class="logoForm" alt="logo-Wanderlust">
+  
+  <header> 
+    <img src="assets/logo.png" class="logoForm" alt="logo-Wanderlust">
+  </header>
   <form id="loginForm" class="loginForm">
   <div class="row">
   <div class="col">
