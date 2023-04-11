@@ -71,7 +71,7 @@ export const Login = () => {
       },
     );
   });
-
+  
   div.querySelector('.google-btn').addEventListener('click', (e) => {
     e.preventDefault();
     signInWithGoogle().then(
