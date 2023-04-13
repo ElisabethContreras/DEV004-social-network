@@ -44,7 +44,7 @@ export const Home = () => {
     postList.innerHTML = '';
 
     publicaciones.forEach((publicacion) => {
-      console.log(publicacion);
+      // console.log(publicacion);
       const postDiv = document.createElement('div');
       postDiv.className = 'post';
       postDiv.innerHTML = ` 
@@ -54,7 +54,7 @@ export const Home = () => {
         </header>
         <p>${publicacion.descripcion}</p>
       `;
-      console.log(`https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`);
+      // console.log(`https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`);
       postList.appendChild(postDiv);
     });
   };
@@ -83,9 +83,9 @@ export const Home = () => {
     const user = auth.currentUser;
 
     const post = {
-      autorPhotoURL: user.photoURL,
+      autorPhotoURL: user.photoURL || `https://ui-avatars.com/api/?name=${user.email.split('@')[0]}&size=96&background=007bff&color=fff&rounded=true`,
       descripcion: postContent,
-      autor: user.displayName,
+      autor: user.displayName || user.email.split('@')[0],
       fecha_creacion: new Date(),
     };
 
