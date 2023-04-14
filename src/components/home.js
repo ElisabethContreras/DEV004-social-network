@@ -6,6 +6,8 @@ import { initFirebase } from '../helpers/firebase';
 import { navigateTo } from '../router';
 
 export const Home = () => {
+  document.body.classList.add('home-background');
+  document.body.classList.remove('others-background');
   const div = document.createElement('div');
   div.className = 'muro';
   div.innerHTML = `
@@ -14,11 +16,11 @@ export const Home = () => {
       <h1>Wanderlust</h1>
       <img class="btnCerrarSesion" src="assets/logOutIcon.png" alt="Cerrar sesión">
     </header>
-    <h2>Bienvenido a wanderlust</h2>
+    <h1>Bienvenido a wanderlust</h1>
     <div class="container-post">
       <form id="post-form">
         <p>¿Cuál ha sido tu destino de viaje favorito hasta ahora y por qué lo recomendarías?</p>
-        <textarea id="post-content" placeholder="Cuéntanos tus aventuras......"></textarea>
+        <textarea id="post-content" placeholder="Cuéntanos tus aventuras......" required></textarea>
         <button type="submit">Publicar</button>
       </form>
       <div id="post-list"></div>
@@ -28,14 +30,17 @@ export const Home = () => {
   const postList = div.querySelector('#post-list');
   const { db } = initFirebase(); // obtener la referencia al objeto db
 
+  // eslint-disable-next-line no-unused-vars
   div.querySelector('.btnCerrarSesion').addEventListener('click', (e) => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
         navigateTo('/');
+        // eslint-disable-next-line no-console
         console.log('Sesión cerrada con éxito');
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.error(error);
       });
   });
@@ -44,6 +49,7 @@ export const Home = () => {
     postList.innerHTML = '';
 
     publicaciones.forEach((publicacion) => {
+      // eslint-disable-next-line no-console
       console.log(publicacion);
       const postDiv = document.createElement('div');
       postDiv.className = 'post';
@@ -54,7 +60,6 @@ export const Home = () => {
         </header>
         <p>${publicacion.descripcion}</p>
       `;
-      console.log(`https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`);
       postList.appendChild(postDiv);
     });
   };
@@ -81,19 +86,21 @@ export const Home = () => {
     const postContent = postForm.querySelector('#post-content').value;
     const auth = getAuth();
     const user = auth.currentUser;
-
     const post = {
-      autorPhotoURL: user.photoURL,
+      autorPhotoURL: user.photoURL || `https://ui-avatars.com/api/?name=${user.email.split('@')[0]}&size=96&background=007bff&color=fff&rounded=true`,
       descripcion: postContent,
-      autor: user.displayName,
+      autor: user.displayName || user.email.split('@')[0], // utilizar displayName si está definido, si no utilizar el nombre de usuario basado en el correo electrónico
       fecha_creacion: new Date(),
     };
 
     // agregar la publicación a la base de datos
     try {
       const docRef = await addDoc(collection(db, 'publicaciones'), post);
+      // eslint-disable-next-line no-console
       console.log('Publicación agregada con ID:', docRef.id);
+    // eslint-disable-next-line no-shadow
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error('Error al agregar la publicación:', e);
     }
 
