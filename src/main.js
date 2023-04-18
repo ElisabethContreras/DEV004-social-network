@@ -3,6 +3,6 @@ import { initFirebase } from './helpers/firebase';
 import { initRouter } from './router';
 import { ROUTES } from './routes';
 
-// Initialize Router
+// Se inicializa el ROUTES y el Firebase.
 initRouter(ROUTES);
 initFirebase();

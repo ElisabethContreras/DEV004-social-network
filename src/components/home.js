@@ -1,6 +1,6 @@
 import { getAuth, signOut } from 'firebase/auth';
 import {
-  collection, query, getDocs, addDoc,
+  collection, query, getDocs, addDoc, deleteDoc, doc,
 } from 'firebase/firestore';
 import { initFirebase } from '../helpers/firebase';
 import { navigateTo } from '../router';
@@ -47,7 +47,6 @@ export const Home = () => {
 
   const mostrarPublicaciones = (publicaciones) => {
     postList.innerHTML = '';
-
     publicaciones.forEach((publicacion) => {
       // eslint-disable-next-line no-console
       console.log(publicacion);
@@ -60,6 +59,27 @@ export const Home = () => {
         </header>
         <p>${publicacion.descripcion}</p>
       `;
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+      if (currentUser && currentUser.uid === publicacion.uid) {
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.addEventListener('click', async () => {
+          // Mostrar mensaje de confirmación
+          const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta publicación?');
+          if (confirmacion) {
+            try {
+              await deleteDoc(doc(db, 'publicaciones', publicacion.id));
+              const publicaciones = await obtenerPublicaciones();
+              mostrarPublicaciones(publicaciones);
+            } catch (e) {
+              console.error('Error al eliminar la publicación:', e);
+            }
+          }
+        });
+        // Agregar el botón de eliminar a la publicación
+        postDiv.appendChild(deleteButton);
+      }
       postList.appendChild(postDiv);
     });
   };
@@ -91,6 +111,7 @@ export const Home = () => {
       descripcion: postContent,
       autor: user.displayName || user.email.split('@')[0], // utilizar displayName si está definido, si no utilizar el nombre de usuario basado en el correo electrónico
       fecha_creacion: new Date(),
+      uid: user.uid,
     };
 
     // agregar la publicación a la base de datos
