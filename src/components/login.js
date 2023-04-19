@@ -7,7 +7,7 @@ export const Login = () => {
   document.body.classList.add('others-background');
   document.body.classList.remove('home-background');
   const div = document.createElement('div');
-  div.className = 'contenedor-login';
+  div.className = 'contenedores-r-r  contenedor-login';
   div.innerHTML = `
   <picture>
   <source media="(max-width: 600px)" srcset="assets/logo.png">

@@ -6,26 +6,27 @@ export const RecuperarContrasena = () => {
   document.body.classList.add('others-background');
   document.body.classList.remove('home-background');
   const div = document.createElement('div');
-  div.className = 'contenedor-restablecer-contraseña';
+  div.className = 'contenedores-r-r';
   div.innerHTML = `
     <picture>
       <source media="(max-width: 600px)" srcset="assets/logoPrincipal.png">
       <img src="assets/iconoNavegador.png" alt="Descripción de la imagen" class="icono-register">
     </picture>
-    <p>¡No te preocupes, te ayudaremos a recuperar tu contraseña!</p>
-    <form id="recuperar-Form" class="register-Form">
+    <form id="recuperar-Form" class="form-r-r">
       <h2>Recuperar contraseña</h2>
+      <p>Para restablecer su contraseña, ingrese la dirección de correo electrónico que usa para iniciar sesión.</p>
       <input type="email" placeholder="Correo electrónico" name="email" id="email" required>
       <div style="height: 16px;"></div>
       <button class="btn-registros">Enviar</button>
       <div style="height: 32px;"></div>
       <a href="#" style="color: black;" class="btn">
-        ¿Ya tienes una cuenta?<br>
-        <span style="color: #3e8ed0;">Ingresa</span>
+      ¡No importa! <br>
+        <span style="color: #3e8ed0;">Llévame de vuelta para iniciar sesión</span>
       </a>
     </form>
     <div class="mensaje-envio-container modal">
     <div id="contenedor-msj" class="modal-content">
+    <h2>Consultar su correo electrónico</h2>
       <span class="close">&times;</span>
       <div id="mensaje-envio"></div>
     <button id="volver-inicio" class="btn-registros">Volver a la página de inicio</button>
@@ -46,11 +47,12 @@ export const RecuperarContrasena = () => {
     mostrarVentanaRecuperarContraseña(email)
       .then(() => {
         // mostrar mensaje de éxito
-        mensajeEnvio.textContent = 'Correo enviado correctamente, revise su bandeja de gmail';
+        // eslint-disable-next-line no-template-curly-in-string
+        mensajeEnvio.textContent = `Correo enviado correctamente. Por favor, revise su bandeja de entrada de ${email} para obtener instrucciones sobre cómo restablecer su contraseña.`;
         mensajeEnvioContainer.style.display = 'flex';
       })
       .catch((error) => {
-        mensajeEnvio.textContent = 'Error al enviar el correo. Por favor, intenta de nuevo más tarde.';
+        mensajeEnvio.textContent = `Error al enviar el correo ${email} . Por favor, intenta de nuevo más tarde.`;
         mensajeEnvioContainer.style.display = 'flex';
       });
   });

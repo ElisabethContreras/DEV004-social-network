@@ -5,14 +5,14 @@ export const Register = () => {
   document.body.classList.add('others-background');
   document.body.classList.remove('home-background');
   const div = document.createElement('div');
-  div.className = 'contenedor-registro';
+  div.className = 'contenedores-r-r';
   div.innerHTML = `
   <picture>
   <source media="(max-width: 600px)" srcset="assets/logoPrincipal.png">
   <img src="assets/iconoNavegador.png" alt="Descripción de la imagen" class="icono-register">
 </picture>
     <p>Únete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. ¡Viaja sin límites!</p>
-    <form id="registerForm" class="register-Form">
+    <form id="registerForm" class="form-r-r">
     <h2>Registro</h2>
         <input type="email" placeholder="Correo electrónico" name="email" id="email" required>
         <div style="height: 16px;"></div>
@@ -42,22 +42,5 @@ export const Register = () => {
         alert(error.message);
       });
   });
-  /*
-  div.querySelector('#registerForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.psw.value;
-    const username = email.split('@')[0];
-    const userData = { email, password, username }; // crear objeto con las tres propiedades
-    registerWithEmail(userData)
-      .then(() => {
-        navigateTo('/home');
-      })
-      .catch((error) => {
-        console.error(error);
-        alert(error.message);
-      });
-  });
-*/
   return div;
 };

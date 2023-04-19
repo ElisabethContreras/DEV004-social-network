@@ -12,13 +12,13 @@ export const Home = () => {
   div.className = 'muro';
   div.innerHTML = `
     <header class="header-muro">
-      <img class="img-logo" src="assets/logoPrincipal.png">
+      <img class="img-logo-muro" src="assets/logoPrincipal.png">
       <h1>Wanderlust</h1>
-      <img class="btnCerrarSesion" src="assets/logOutIcon.png" alt="Cerrar sesión">
+      <img class="cerrar-sesion" src="assets/logOutIcon.png" alt="Cerrar sesión">
     </header>
     <h1>Bienvenido a wanderlust</h1>
     <div class="container-post">
-      <form id="post-form">
+      <form id="post-form" class="post-form">
         <p>¿Cuál ha sido tu destino de viaje favorito hasta ahora y por qué lo recomendarías?</p>
         <textarea id="post-content" placeholder="Cuéntanos tus aventuras......" required></textarea>
         <button type="submit">Publicar</button>
@@ -31,13 +31,13 @@ export const Home = () => {
   const { db } = initFirebase(); // obtener la referencia al objeto db
 
   // eslint-disable-next-line no-unused-vars
-  div.querySelector('.btnCerrarSesion').addEventListener('click', (e) => {
+  div.querySelector('.cerrar-sesion').addEventListener('click', (e) => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
         navigateTo('/');
         // eslint-disable-next-line no-console
-        console.log('Sesión cerrada con éxito');
+        alert('Sesión cerrada con éxito');
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
@@ -57,19 +57,22 @@ export const Home = () => {
           <img class="post-author-photo" src="${publicacion.autorPhotoURL ? publicacion.autorPhotoURL : `https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`}" alt="Foto de perfil de ${publicacion.autor}">
           <p>Publicado por ${publicacion.autor} el ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
         </header>
-        <p>${publicacion.descripcion}</p>
+        <p class="texto-descripcion">${publicacion.descripcion}</p>
       `;
       const auth = getAuth();
       const currentUser = auth.currentUser;
       if (currentUser && currentUser.uid === publicacion.uid) {
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Eliminar';
-        deleteButton.addEventListener('click', async () => {
+        const deleteButton = document.createElement('div');
+        deleteButton.innerHTML = `<img class="delete" src='assets/deleteVacio.png'></button>
+        `;
+        deleteButton.querySelector('.delete').addEventListener('click', async () => {
           // Mostrar mensaje de confirmación
+          // eslint-disable-next-line no-restricted-globals, no-alert
           const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta publicación?');
           if (confirmacion) {
             try {
               await deleteDoc(doc(db, 'publicaciones', publicacion.id));
+              // eslint-disable-next-line no-shadow, no-use-before-define
               const publicaciones = await obtenerPublicaciones();
               mostrarPublicaciones(publicaciones);
             } catch (e) {
@@ -88,6 +91,7 @@ export const Home = () => {
     const q = query(collection(db, 'publicaciones'));
     const querySnapshot = await getDocs(q);
     const publicaciones = [];
+    // eslint-disable-next-line no-shadow
     querySnapshot.forEach((doc) => {
       publicaciones.push({ id: doc.id, ...doc.data() });
     });
@@ -99,10 +103,8 @@ export const Home = () => {
   });
 
   const postForm = div.querySelector('#post-form');
-
   postForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-
     const postContent = postForm.querySelector('#post-content').value;
     const auth = getAuth();
     const user = auth.currentUser;
