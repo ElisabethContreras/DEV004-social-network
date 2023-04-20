@@ -73,7 +73,7 @@ button{
   border: none;
   background-color:#A5BC34;
 }
-input{
+.contenedores-r-r  input{
   border:none;
   border-radius: 5px;
   height: 50px;
@@ -199,7 +199,20 @@ a{
 }
 #post-list {
   margin-top: 20px;
-
+}
+.contenedor-btn-post{
+display: flex;
+justify-content: flex-end;
+}
+.contenedor-btn-post img{
+  width: 40px;
+  height: 40px;
+}
+.form-edicion{
+  margin: 20px;
+}
+.item-edit{
+  width: 100%;
 }
 .header-muro{
   color: #fdfffd;
@@ -250,12 +263,12 @@ h2{
   padding: 10px;
   margin-top: 20px;
 }
-.post img{
+/* .post img{
   width: 80px;
   height: 80px;
   border-radius: 50%;
   text-align: left;
-}
+} */
 .post p{
   height: auto;
   text-align: center;
@@ -267,7 +280,12 @@ h2{
   justify-content: space-between;
   margin: 20px;
 }
-
+.post-header img{
+  width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    text-align: left;
+}
 #contenedor-msj{
   background-color: #fefefe;
   margin: auto; /* 15% from the top and centered */
@@ -349,7 +367,7 @@ border-radius: 20px;
   margin: 20px;
   padding: 5px;
 }
-.post img{
+.header-muro img{
   width: 60px;
   margin-right: 20px;
   height: 60px;

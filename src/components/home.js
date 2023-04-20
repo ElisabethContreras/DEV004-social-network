@@ -1,7 +1,7 @@
 import { getAuth, signOut } from 'firebase/auth';
 import {
   // eslint-disable-next-line max-len
-  collection, query, getDocs, addDoc, deleteDoc, doc, updateDoc, increment, arrayUnion, getDoc, arrayRemove,
+  collection, query, getDocs, addDoc, deleteDoc, doc, updateDoc,
 } from 'firebase/firestore';
 import { initFirebase } from '../helpers/firebase';
 import { navigateTo } from '../router';
@@ -11,7 +11,6 @@ export const Home = () => {
   document.body.classList.remove('others-background');
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log(user)
   const div = document.createElement('div');
   div.className = 'muro';
   div.innerHTML = `
@@ -25,10 +24,8 @@ export const Home = () => {
     <form id="post-form" class="post-form">
     <p>¿Cuál ha sido tu destino de viaje favorito hasta ahora y por qué lo recomendarías?</p>
     <div class="contenedor-img-text">
-    <img src="${user.photoURL ? user.photoURL : `https://ui-avatars.com/api/?name=${user.email.split('@')[0]}&size=96&background=007bff&color=fff&rounded=true`}" />
     <textarea id="post-content" placeholder="Cuéntanos tus aventuras......" required></textarea>
     </div>
-
     <div class="contenedor-btn-publicar"><button type="submit" class='btn-registros'>Publicar</button></div>
     </form>
     <div id="post-list"></div>
@@ -36,7 +33,7 @@ export const Home = () => {
   `;
   const postList = div.querySelector('#post-list');
   const { db } = initFirebase(); // obtener la referencia al objeto db
- 
+
   div.querySelector('.cerrar-sesion').addEventListener('click', (e) => {
     // eslint-disable-next-line no-shadow
     const auth = getAuth();
@@ -61,40 +58,43 @@ export const Home = () => {
       <p>Publicado por ${publicacion.autor} el ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
       </header>
       <p class="texto-descripcion">${publicacion.descripcion}</p>
-      <div class="likes-container"></div>
       `;
       // eslint-disable-next-line no-shadow
 
+      // eslint-disable-next-line no-shadow
       const auth = getAuth();
       const currentUser = auth.currentUser;
 
       // Botón de "Me gusta"
-      const likeButton = document.createElement('div');
-      const likeImg = document.createElement('img');
-      likeImg.setAttribute('class', 'like');
-      likeImg.setAttribute('src', 'assets/likeVacio.png');
-      likeButton.appendChild(likeImg);
-      likeImg.addEventListener('click', async () => {
-        try {
-          // eslint-disable-next-line no-use-before-define
-          await darMeGusta(publicacion.id, currentUser.uid);
-          // Actualizar el número de likes en la publicación
-          publicacion.likes += 1;
-          const likesContainer = postDiv.querySelector('.likes-container');
-          likesContainer.innerHTML = `${publicacion.likes} ${publicacion.likes === 1 ? 'me gusta' : 'me gustan'}`;
-          // Cambiar el icono de "Me gusta"
-          likeImg.setAttribute('src', 'assets/likeLleno.png');
-        } catch (e) {
-          console.error('Error al dar "Me gusta":', e);
-        }
-      });
+      // const likeButton = document.createElement('div');
+      // const likeImg = document.createElement('img');
+      // likeImg.setAttribute('class', 'like');
+      // likeImg.setAttribute('src', 'assets/likeVacio.png');
+      // likeButton.appendChild(likeImg);
+      // likeImg.addEventListener('click', async () => {
+      //   try {
+      //     // eslint-disable-next-line no-use-before-define
+      //     await darMeGusta(publicacion.id, currentUser.uid);
+      //     // Actualizar el número de likes en la publicación
+      //     publicacion.likes += 1;
+      //     const likesContainer = postDiv.querySelector('.likes-container');
+      // eslint-disable-next-line max-len
+      //     likesContainer.innerHTML = `${publicacion.likes} ${publicacion.likes === 1 ? 'me gusta' : 'me gustan'}`;
+      //     // Cambiar el icono de "Me gusta"
+      //     likeImg.setAttribute('src', 'assets/likeLleno.png');
+      //   } catch (e) {
+      //     console.error('Error al dar "Me gusta":', e);
+      //   }
+      // });
       /* si el usuario esta logeado y su uid es igual a la de la publicacion entonces
       puede editar y elimar su post */
 
       if (currentUser && currentUser.uid === publicacion.uid) {
+        const contenedorCajaEditar = document.createElement('div');
         const contenedorBtnPost = document.createElement('div');
         const deleteImg = document.createElement('img');
         const editContent = document.createElement('img');
+        contenedorBtnPost.setAttribute('class', 'contenedor-btn-post');
         editContent.setAttribute('class', 'editar-post');
         editContent.setAttribute('src', 'assets/mundoVacio.png');
         deleteImg.setAttribute('class', 'delete');
@@ -118,44 +118,80 @@ export const Home = () => {
           }
         });
         // añadimos un escuchador de eventos para cuando demos click en la imagen poder editar post
-        editContent.addEventListener('click', async () => {
-          const nuevoContenido = prompt('Editar descripción:', publicacion.descripcion);
-          if (nuevoContenido !== null && nuevoContenido !== '') {
-            editContent.setAttribute('src', 'assets/mundoPintado.png');
-            try {
-              // eslint-disable-next-line no-use-before-define
-              await editarPublicacion(publicacion.id, nuevoContenido);
-            } catch (e) {
-              alert('Error al editar la publicación:', e);
-            }
-          } else if (nuevoContenido === '') {
-            alert('Error , el contenido no puede estar vacio ');
+
+        editContent.addEventListener('click', () => {
+          // Verificar si ya hay un formulario de edición
+          const formExistente = contenedorCajaEditar.querySelector('.form-edicion');
+          if (formExistente) {
+            // Si ya existe un formulario, mostrarlo en lugar de crear uno nuevo
+            formExistente.style.display = 'block';
+            document.getElementById('descripcion').value = publicacion.descripcion;
+          } else {
+            // Si no existe un formulario, crear uno nuevo
+            const form = document.createElement('div');
+            form.className = 'form-edicion';
+            form.innerHTML = `
+      <input type="text" id="descripcion" class="item-edit" placeholder="Editar descripción:" name="descripcion" value="${publicacion.descripcion}">
+      <div>
+        <button type="button" id="guardar">Guardar</button>
+        <button type="button" id="cancelar">Cancelar</button>
+      </div>
+    `;
+            // Agregar el formulario al DOM
+            contenedorCajaEditar.appendChild(form);
+            // Agregar controlador de eventos al botón "Cancelar"
+            const cancelarBtn = form.querySelector('#cancelar');
+            cancelarBtn.addEventListener('click', () => {
+              // Ocultar el formulario y restablecer el contenido del campo de entrada de texto
+              form.style.display = 'none';
+              document.getElementById('descripcion').value = publicacion.descripcion;
+            });
+            // Agregar controlador de eventos al botón "Guardar"
+            const guardarBtn = form.querySelector('#guardar');
+            guardarBtn.addEventListener('click', async () => {
+              const nuevoContenido = document.getElementById('descripcion').value;
+              if (nuevoContenido !== null && nuevoContenido !== '') {
+                try {
+                  await editarPublicacion(publicacion.id, nuevoContenido);
+                  // Actualizar la descripción en la página y ocultar el formulario
+                  publicacion.descripcion = nuevoContenido;
+                  alert('guardado con exito');
+                  document.getElementById('descripcion-publicacion').textContent = nuevoContenido;
+                  form.style.display = 'none';
+                } catch (e) {
+                  console.log(e);
+                }
+              } else if (nuevoContenido === '') {
+                alert('Error , el contenido no puede estar vacio ');
+              }
+            });
           }
         });
+        postDiv.appendChild(contenedorCajaEditar);
         postDiv.appendChild(contenedorBtnPost);
       }
-      postDiv.appendChild(likeButton);
+      // postDiv.appendChild(likeButton);
       postList.appendChild(postDiv);
     });
   };
 
   // funcion para dar me gusta
-  const darMeGusta = async (publicacionId, uid) => {
-    const docRef = doc(db, 'publicaciones', publicacionId);
-    const publicacion = await getDoc(docRef);
-    const usuariosQueDieronLike = publicacion.data().usuariosQueDieronLike;
-    if (!usuariosQueDieronLike.includes(uid)) {
-      await updateDoc(docRef, {
-        likes: increment(1),
-        usuariosQueDieronLike: arrayUnion(uid),
-      });
-    } else {
-      await updateDoc(docRef, {
-        likes: increment(-1),
-        usuariosQueDieronLike: arrayRemove(uid),
-      });
-    }
-  };
+  // const darMeGusta = async (publicacionId, uid) => {
+  //   const docRef = doc(db, 'publicaciones', publicacionId);
+  //   const publicacion = await getDoc(docRef);
+  //   const usuariosQueDieronLike = publicacion.data().usuariosQueDieronLike;
+  //   if (!usuariosQueDieronLike.includes(uid)) {
+  //     await updateDoc(docRef, {
+  //       likes: increment(1),
+  //       usuariosQueDieronLike: arrayUnion(uid),
+  //     });
+  //   } else {
+  //     await updateDoc(docRef, {
+  //       likes: increment(-1),
+  //       usuariosQueDieronLike: arrayRemove(uid),
+  //     });
+  //   }
+  // };
 
   /* La función editarPublicacion es una función asíncrona que toma dos argumentos: publicacionId,
    que es el ID de la publicación a editar, y nuevoContenido, que es la nueva descripción que se
