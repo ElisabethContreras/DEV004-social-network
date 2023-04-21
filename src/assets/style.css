@@ -340,10 +340,20 @@ border-radius: 20px;
   display: flex;
   justify-content: end;
 }
+.like{
+  height: 0px;
+}
+#like{
+  height: 0px;
+}
+.contenedor-like{
+  display: flex;
+  justify-content: flex-start;
+}
 .like {
   background: url("likeLleno.png");
-  background-repeat:no-repeat;
-  padding: 10px;
+  background-size: contain;
+  padding: 25px;
   margin-left: 30px;
   background-position:center;
   cursor: pointer;
@@ -351,8 +361,8 @@ border-radius: 20px;
 
 .disLike {
   background: url("likeVacio.png");
-  background-repeat:no-repeat;
-  padding: 10px;
+  background-size: contain;
+  padding: 25px;
   margin-left: 30px;
   background-position:center;
   cursor: pointer;

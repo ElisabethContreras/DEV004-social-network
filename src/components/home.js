@@ -56,22 +56,22 @@ export const Home = () => {
       <p>Publicado por ${publicacion.autor} el ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
       </header>
       <p class="texto-descripcion">${publicacion.descripcion}</p>
-
+      <div class="contenedor-like">
+      <img id="like">
+      <p class="p2"></p>
+      </div>
       `;
       const auth = getAuth();
       const currentUser = auth.currentUser;
       const like = async (id, uid) => updateDoc(doc(db, 'publicaciones', id), { likes: arrayUnion(uid) });
       const disLike = async (id, uid) => updateDoc(doc(db, 'publicaciones', id), { likes: arrayRemove(uid) });
-      const likeButton = document.createElement('img');
-      likeButton.classList.add('like');
-      const disLikeButton = document.createElement('img');
-      disLikeButton.classList.add('disLike');
-      // disLikeButton.style.display = 'none';
+      const likeButton = postDiv.querySelector('#like');
+      const disLikeButton = postDiv.querySelector('#like');
       publicacion.likes = publicacion.likes || [];
       if (publicacion.likes && publicacion.likes.includes(auth.currentUser.uid)) {
-        postDiv.appendChild(likeButton);
+        likeButton.classList.add('like');
       } else {
-        postDiv.appendChild(disLikeButton);
+        disLikeButton.classList.add('disLike');
       }
       likeButton.addEventListener('click', async () => {
         if (likeButton.classList.toggle('disLike')) {
@@ -87,12 +87,8 @@ export const Home = () => {
           mostrarPublicaciones(publicaciones);
         }
       });
-
-      /* Contador de like y dislike */
-      const counterLike = document.createElement('p');
-      counterLike.classList.add('p2');
+      const counterLike = postDiv.querySelector('.p2');
       counterLike.textContent = publicacion.likes.length;
-      postDiv.appendChild(counterLike);
 
       if (currentUser && currentUser.uid === publicacion.uid) {
         const contenedorCajaEditar = document.createElement('div');
@@ -173,7 +169,6 @@ export const Home = () => {
         postDiv.appendChild(contenedorCajaEditar);
         postDiv.appendChild(contenedorBtnPost);
       }
-      // postDiv.appendChild(likeButton);
       postList.appendChild(postDiv);
     });
   };
