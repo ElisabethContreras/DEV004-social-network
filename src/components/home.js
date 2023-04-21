@@ -2,7 +2,7 @@
 /* eslint-disable no-shadow */
 import { getAuth, signOut } from 'firebase/auth';
 import {
-  collection, query, getDocs, addDoc, deleteDoc, doc, updateDoc,
+  collection, query, getDocs, addDoc, deleteDoc, doc, updateDoc, arrayUnion, arrayRemove,
 } from 'firebase/firestore';
 import { initFirebase } from '../helpers/firebase';
 import { navigateTo } from '../router';
@@ -56,9 +56,43 @@ export const Home = () => {
       <p>Publicado por ${publicacion.autor} el ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
       </header>
       <p class="texto-descripcion">${publicacion.descripcion}</p>
+
       `;
       const auth = getAuth();
       const currentUser = auth.currentUser;
+      const like = async (id, uid) => updateDoc(doc(db, 'publicaciones', id), { likes: arrayUnion(uid) });
+      const disLike = async (id, uid) => updateDoc(doc(db, 'publicaciones', id), { likes: arrayRemove(uid) });
+      const likeButton = document.createElement('img');
+      likeButton.classList.add('like');
+      const disLikeButton = document.createElement('img');
+      disLikeButton.classList.add('disLike');
+      // disLikeButton.style.display = 'none';
+      publicacion.likes = publicacion.likes || [];
+      if (publicacion.likes && publicacion.likes.includes(auth.currentUser.uid)) {
+        postDiv.appendChild(likeButton);
+      } else {
+        postDiv.appendChild(disLikeButton);
+      }
+      likeButton.addEventListener('click', async () => {
+        if (likeButton.classList.toggle('disLike')) {
+          disLike(publicacion.id, currentUser.uid);
+          const publicaciones = await obtenerPublicaciones();
+          mostrarPublicaciones(publicaciones);
+        }
+      });
+      disLikeButton.addEventListener('click', async () => {
+        if (disLikeButton.classList.toggle('like')) {
+          like(publicacion.id, currentUser.uid);
+          const publicaciones = await obtenerPublicaciones();
+          mostrarPublicaciones(publicaciones);
+        }
+      });
+
+      /* Contador de like y dislike */
+      const counterLike = document.createElement('p');
+      counterLike.classList.add('p2');
+      counterLike.textContent = publicacion.likes.length;
+      postDiv.appendChild(counterLike);
 
       if (currentUser && currentUser.uid === publicacion.uid) {
         const contenedorCajaEditar = document.createElement('div');

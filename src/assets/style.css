@@ -340,6 +340,23 @@ border-radius: 20px;
   display: flex;
   justify-content: end;
 }
+.like {
+  background: url("likeLleno.png");
+  background-repeat:no-repeat;
+  padding: 10px;
+  margin-left: 30px;
+  background-position:center;
+  cursor: pointer;
+}
+
+.disLike {
+  background: url("likeVacio.png");
+  background-repeat:no-repeat;
+  padding: 10px;
+  margin-left: 30px;
+  background-position:center;
+  cursor: pointer;
+}
 @media only screen and (max-width: 600px) {
   .post-form p{
     color: #000;
