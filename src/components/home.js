@@ -119,24 +119,18 @@ export const Home = () => {
             const guardarBtn = form.querySelector('#guardar');
             guardarBtn.addEventListener('click', async () => {
               const nuevoContenido = document.getElementById('descripcion').value;
-              if (nuevoContenido !== null && nuevoContenido !== '') {
-                const contenidoRegex = /[a-zA-Z]/;
-                if (contenidoRegex.test(nuevoContenido)) {
-                  try {
-                    await editarPublicacion(publicacion.id, nuevoContenido);
-                    // Actualizar la descripción en la página y ocultar el formulario
-                    publicacion.descripcion = nuevoContenido;
-                    alert('Guardado con éxito');
-                    document.getElementById('descripcion-publicacion').textContent = nuevoContenido;
-                    form.style.display = 'none';
-                  } catch (e) {
-                    console.log(e);
-                  }
-                // eslint-disable-next-line keyword-spacing
-                } else {
-                  alert('Error, el contenido debe contener letras');
+              if (nuevoContenido.trim().length !== 0) {
+                try {
+                  await editarPublicacion(publicacion.id, nuevoContenido);
+                  // Actualizar la descripción en la página y ocultar el formulario
+                  publicacion.descripcion = nuevoContenido;
+                  alert('Guardado con éxito');
+                  document.getElementById('descripcion-publicacion').textContent = nuevoContenido;
+                  form.style.display = 'none';
+                } catch (e) {
+                  console.log(e);
                 }
-              } else if (nuevoContenido === '') {
+              } else {
                 alert('Error, el contenido no puede estar vacío');
               }
             });
@@ -182,9 +176,6 @@ export const Home = () => {
   postForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const postContent = postForm.querySelector('#post-content').value;
-    if (postContent === '') {
-      alert('La publicacion no puede estar vacia, por favor inserte palabras');
-    };
     const auth = getAuth();
     const user = auth.currentUser;
     const post = {
@@ -194,15 +185,16 @@ export const Home = () => {
       fecha_creacion: new Date(),
       uid: user.uid,
     };
-    try {
-    // agregar la publicación a la base de datos
-      const docRef = await addDoc(collection(db, 'publicaciones'), post);
-      // eslint-disable-next-line no-console
-      console.log('Publicación agregada con ID:', docRef.id);
-    // eslint-disable-next-line no-shadow
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error('Error al agregar la publicación:', e);
+    if (postContent.trim().length !== 0) {
+      try {
+        // agregar la publicación a la base de datos
+        const docRef = await addDoc(collection(db, 'publicaciones'), post);
+        console.log('Publicación agregada con ID:', docRef.id);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      alert('Error, el contenido no puede estar vacío');
     }
     // obtener y mostrar las publicaciones actualizadas
     const publicaciones = await obtenerPublicaciones();
