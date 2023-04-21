@@ -348,6 +348,11 @@ border-radius: 20px;
 }
 .contenedor-like{
   display: flex;
+  justify-content: space-between;
+}
+.items-likes{
+  align-items: center;
+  display: flex;
   justify-content: flex-start;
 }
 .like {

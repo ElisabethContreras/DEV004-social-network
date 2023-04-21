@@ -56,9 +56,14 @@ export const Home = () => {
       <p>Publicado por ${publicacion.autor} el ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
       </header>
       <p class="texto-descripcion">${publicacion.descripcion}</p>
+      <div class="contenedor-edicion">
+      </div>
       <div class="contenedor-like">
+      <div class="items-likes" >
       <img id="like">
       <p class="p2"></p>
+      </div>
+      <div class="contenedor-btn-post"></div>
       </div>
       `;
       const auth = getAuth();
@@ -91,11 +96,10 @@ export const Home = () => {
       counterLike.textContent = publicacion.likes.length;
 
       if (currentUser && currentUser.uid === publicacion.uid) {
-        const contenedorCajaEditar = document.createElement('div');
-        const contenedorBtnPost = document.createElement('div');
+        const contenedorCajaEditar = postDiv.querySelector('.contenedor-edicion');
+        const contenedorBtnPost = postDiv.querySelector('.contenedor-btn-post');
         const deleteImg = document.createElement('img');
         const editContent = document.createElement('img');
-        contenedorBtnPost.setAttribute('class', 'contenedor-btn-post');
         editContent.setAttribute('class', 'editar-post');
         editContent.setAttribute('src', 'assets/mundoVacio.png');
         deleteImg.setAttribute('class', 'delete');
@@ -166,8 +170,6 @@ export const Home = () => {
             });
           }
         });
-        postDiv.appendChild(contenedorCajaEditar);
-        postDiv.appendChild(contenedorBtnPost);
       }
       postList.appendChild(postDiv);
     });
