@@ -6,6 +6,13 @@ import {
 } from 'firebase/firestore';
 import { initFirebase } from '../helpers/firebase';
 import { navigateTo } from '../router';
+import logoBlanco from '../assets/logoPrincipal.png';
+import iconoSalir from '../assets/logOutIcon.png';
+import editarVacio from '../assets/mundoVacio.png';
+// import mundoLleno from '../assets/mundoPintado.png';
+import eliminarVacio from '../assets/deleteVacio.png';
+import eliminarLleno from '../assets/deletePintado.png';
+
 
 export const Home = () => {
   document.body.classList.add('home-background');
@@ -14,11 +21,11 @@ export const Home = () => {
   div.className = 'muro';
   div.innerHTML = `
     <header class="header-muro">
-    <img class="img-logo-muro" src="assets/logoPrincipal.png">
+    <img class="img-logo-muro" src="${logoBlanco}">
     <h1>Wanderlust</h1>
-    <img class="cerrar-sesion" src="assets/logOutIcon.png" alt="Cerrar sesión">
+    <img class="cerrar-sesion" src="${iconoSalir}" alt="Cerrar sesión">
     </header>
-    <h1>Bienvenido a wanderlust</h1>
+    <h1>¡Hola, Bienvenidx a wanderlust !</h1>
     <div class="container-post">
     <form id="post-form" class="post-form">
     <p>¿Cuál ha sido tu destino de viaje favorito hasta ahora y por qué lo recomendarías?</p>
@@ -38,7 +45,7 @@ export const Home = () => {
     signOut(auth)
       .then(() => {
         navigateTo('/');
-        alert('Sesión cerrada con éxito');
+        alert('Sesión cerrada con éxito, vuelve pronto :D');
       })
       .catch((error) => {
         alert(error);
@@ -101,14 +108,14 @@ export const Home = () => {
         const deleteImg = document.createElement('img');
         const editContent = document.createElement('img');
         editContent.setAttribute('class', 'editar-post');
-        editContent.setAttribute('src', 'assets/mundoVacio.png');
+        editContent.setAttribute('src', editarVacio);
         deleteImg.setAttribute('class', 'delete');
-        deleteImg.setAttribute('src', 'assets/deleteVacio.png');
+        deleteImg.setAttribute('src', eliminarVacio);
         contenedorBtnPost.appendChild(editContent);
         contenedorBtnPost.appendChild(deleteImg);
         deleteImg.addEventListener('click', async () => {
           // Mostrar mensaje de confirmación para eliminar post
-          deleteImg.setAttribute('src', 'assets/deletePintado.png');
+          deleteImg.setAttribute('src', eliminarLleno);
           const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta publicación?');
           if (confirmacion) {
             try {

@@ -19,7 +19,7 @@ html, body {
   height: 100%;
 }
 .home-background {
-  background-color: #ADD8E6;
+  background-color: #9FDDE8;
 }
 .others-background{
   background-image: url("mar.jpg");
@@ -383,9 +383,6 @@ border-radius: 20px;
   .contenedores-r-r{
     background: none;
     max-width: 90%;
-  }
-  .home-background {
-    background-color: #ADD8E6;
   }
   .others-background{
     background-image: url("fondoMar.jpeg");

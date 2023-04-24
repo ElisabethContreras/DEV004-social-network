@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { navigateTo } from '../router';
 import { signInWithGoogle, signInWithPassword } from '../helpers/accederCongmail';
+import logo from '../assets/logo.png';
+import logoDorado from '../assets/logo1.png';
+import googleIcon from '../assets/google.png';
 
 export const Login = () => {
   // Create a div element to hold the login component
@@ -10,14 +13,14 @@ export const Login = () => {
   div.className = 'contenedores-r-r  contenedor-login';
   div.innerHTML = `
   <picture>
-  <source media="(max-width: 600px)" srcset="assets/logo.png">
-  <img src="assets/logo1.png" alt="Descripción de la imagen" class="logoForm">
+  <source media="(max-width: 600px)" srcset="${logo}">
+  <img src="${logoDorado}" alt="Descripción de la imagen" class="logoForm">
   </picture>
   <form id="loginForm" class="loginForm">
   <button class="google-btn">
   <div class="contenido-google">
   <span>
-  <img class="icono-google" src="assets/google.png">
+  <img class="icono-google" src="${googleIcon}">
   </span>
   <p style="color: black;"class="texto-google">Continuar con Google</p>
   </div>

@@ -1,5 +1,8 @@
 import { navigateTo } from '../router.js';
 import { registerWithEmail } from '../helpers/accederCongmail.js';
+import logoBlanco from '../assets/logoPrincipal.png';
+import iconoNegro from '../assets/iconoNavegador.png';
+
 
 export const Register = () => {
   document.body.classList.add('others-background');
@@ -8,8 +11,8 @@ export const Register = () => {
   div.className = 'contenedores-r-r';
   div.innerHTML = `
   <picture>
-  <source media="(max-width: 600px)" srcset="assets/logoPrincipal.png">
-  <img src="assets/iconoNavegador.png" alt="Descripción de la imagen" class="icono-register">
+  <source media="(max-width: 600px)" srcset="${logoBlanco}">
+  <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register">
 </picture>
     <p>Únete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. ¡Viaja sin límites!</p>
     <form id="registerForm" class="form-r-r">
@@ -46,17 +49,18 @@ export const Register = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.psw.value;
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) {
-      openModal('Por favor, ingrese su dirección de correo electrónico.');
+    // const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    // const emailRegex = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.[a-zA-Z]{2,}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // Validar que se haya ingresado un correo electrónico válido
+    if (!email || !emailRegex.test(email)) {
+      openModal('Por favor, ingrese una dirección de correo electrónico válida.');
       return;
     }
-    if (!password) {
-      openModal('Por favor, ingrese su contraseña.');
-      return;
-    }
-    if (password.length < 6) {
-      openModal('La contraseña debe tener al menos 6 caracteres.');
+    // eslint-disable-next-line max-len
+    // Validar que se haya ingresado una contraseña de al menos 6 caracteres y sin espacios en blanco
+    if (password.trim().length < 6 || /\s/.test(password)) {
+      openModal('La contraseña debe tener al menos 6 caracteres y no tener espacios en blanco.');
       return;
     }
     registerWithEmail(email, password)

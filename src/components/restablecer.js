@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { mostrarVentanaRecuperarContraseña } from '../helpers/accederCongmail.js';
 import { navigateTo } from '../router.js';
+import logoBlanco from '../assets/logoPrincipal.png';
+import iconoNegro from '../assets/iconoNavegador.png';
 
 export const RecuperarContrasena = () => {
   document.body.classList.add('others-background');
@@ -9,8 +11,8 @@ export const RecuperarContrasena = () => {
   div.className = 'contenedores-r-r';
   div.innerHTML = `
     <picture>
-      <source media="(max-width: 600px)" srcset="assets/logoPrincipal.png">
-      <img src="assets/iconoNavegador.png" alt="Descripción de la imagen" class="icono-register">
+      <source media="(max-width: 600px)" srcset="${logoBlanco}">
+      <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register">
     </picture>
     <form id="recuperar-Form" class="form-r-r">
       <h2>Recuperar contraseña</h2>

@@ -11956,6 +11956,27 @@ function Ds(t2) {
 function Cs(t2) {
   return je(t2) && t2.arrayValue.values ? t2.arrayValue.values.slice() : [];
 }
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+class xs {
+  constructor(t2, e) {
+    this.field = t2, this.transform = e;
+  }
+}
 function Ns(t2, e) {
   return t2.field.isEqual(e.field) && function(t3, e2) {
     return t3 instanceof vs && e2 instanceof vs || t3 instanceof Ps && e2 instanceof Ps ? tt(t3.elements, e2.elements, Be) : t3 instanceof Ss && e2 instanceof Ss ? Be(t3._t, e2._t) : t3 instanceof Rs && e2 instanceof Rs;
@@ -16857,6 +16878,14 @@ class $h {
     return null !== this.fieldMask ? new Gs(t2, this.data, this.fieldMask, e, this.fieldTransforms) : new Ks(t2, this.data, e, this.fieldTransforms);
   }
 }
+class Mh {
+  constructor(t2, e, n) {
+    this.data = t2, this.fieldMask = e, this.fieldTransforms = n;
+  }
+  toMutation(t2, e) {
+    return new Gs(t2, this.data, this.fieldMask, e, this.fieldTransforms);
+  }
+}
 function Fh(t2) {
   switch (t2) {
     case 0:
@@ -16961,6 +16990,97 @@ function Uh(t2, e, n, s, i, r = {}) {
   } else
     c = null, a = o.fieldTransforms;
   return new $h(new sn(u), c, a);
+}
+class Kh extends Nh {
+  _toFieldTransform(t2) {
+    if (2 !== t2.Yc)
+      throw 1 === t2.Yc ? t2.ia(`${this._methodName}() can only appear at the top level of your update data`) : t2.ia(`${this._methodName}() cannot be used with set() unless you pass {merge:true}`);
+    return t2.fieldMask.push(t2.path), null;
+  }
+  isEqual(t2) {
+    return t2 instanceof Kh;
+  }
+}
+function Gh(t2, e, n) {
+  return new Bh({
+    Yc: 3,
+    oa: e.settings.oa,
+    methodName: t2._methodName,
+    ta: n
+  }, e.databaseId, e.serializer, e.ignoreUndefinedProperties);
+}
+class zh extends Nh {
+  constructor(t2, e) {
+    super(t2), this.ca = e;
+  }
+  _toFieldTransform(t2) {
+    const e = Gh(
+      this,
+      t2,
+      true
+    ), n = this.ca.map((t3) => Zh(t3, e)), s = new vs(n);
+    return new xs(t2.path, s);
+  }
+  isEqual(t2) {
+    return this === t2;
+  }
+}
+class jh extends Nh {
+  constructor(t2, e) {
+    super(t2), this.ca = e;
+  }
+  _toFieldTransform(t2) {
+    const e = Gh(
+      this,
+      t2,
+      true
+    ), n = this.ca.map((t3) => Zh(t3, e)), s = new Ps(n);
+    return new xs(t2.path, s);
+  }
+  isEqual(t2) {
+    return this === t2;
+  }
+}
+function Hh(t2, e, n, s) {
+  const i = t2.ua(1, e, n);
+  el("Data must be an object, but it was:", i, s);
+  const r = [], o = sn.empty();
+  _e(s, (t3, s2) => {
+    const u2 = il(e, t3, n);
+    s2 = getModularInstance(s2);
+    const c = i.na(u2);
+    if (s2 instanceof Kh)
+      r.push(u2);
+    else {
+      const t4 = Zh(s2, c);
+      null != t4 && (r.push(u2), o.set(u2, t4));
+    }
+  });
+  const u = new Ae(r);
+  return new Mh(o, u, i.fieldTransforms);
+}
+function Jh(t2, e, n, s, i, r) {
+  const o = t2.ua(1, e, n), u = [nl(e, s, n)], c = [i];
+  if (r.length % 2 != 0)
+    throw new L(B.INVALID_ARGUMENT, `Function ${e}() needs to be called with an even number of arguments that alternate between field names and values.`);
+  for (let t3 = 0; t3 < r.length; t3 += 2)
+    u.push(nl(e, r[t3])), c.push(r[t3 + 1]);
+  const a = [], h = sn.empty();
+  for (let t3 = u.length - 1; t3 >= 0; --t3)
+    if (!ol(a, u[t3])) {
+      const e2 = u[t3];
+      let n2 = c[t3];
+      n2 = getModularInstance(n2);
+      const s2 = o.na(e2);
+      if (n2 instanceof Kh)
+        a.push(e2);
+      else {
+        const t4 = Zh(n2, s2);
+        null != t4 && (a.push(e2), h.set(e2, t4));
+      }
+    }
+  const l2 = new Ae(a);
+  return new Mh(h, l2, o.fieldTransforms);
 }
 function Yh(t2, e, n, s = false) {
   return Zh(n, t2.ua(s ? 4 : 3, e));
@@ -17557,6 +17677,13 @@ function tf(t2) {
   const e = Ha(t2.firestore, fh), n = _h(e), s = new Yl(e);
   return hl(t2._query), Fa(n, t2._query).then((n2) => new jl(e, s, t2, n2));
 }
+function rf(t2, e, n, ...s) {
+  t2 = Ha(t2, th);
+  const i = Ha(t2.firestore, fh), r = qh(i);
+  let o;
+  o = "string" == typeof (e = getModularInstance(e)) || e instanceof Ch ? Jh(r, "updateDoc", t2._key, e, n, s) : Hh(r, "updateDoc", t2._key, e);
+  return hf(i, [o.toMutation(t2._key, Os.exists(true))]);
+}
 function of(t2) {
   return hf(Ha(t2.firestore, fh), [new Ws(t2._key, Os.none())]);
 }
@@ -17569,6 +17696,12 @@ function hf(t2, e) {
     const n = new q();
     return t3.asyncQueue.enqueueAndForget(async () => Mc(await Da(t3), e2, n)), n.promise;
   }(_h(t2), e);
+}
+function Sf(...t2) {
+  return new zh("arrayUnion", t2);
+}
+function Df(...t2) {
+  return new jh("arrayRemove", t2);
 }
 !function(t2, e = true) {
   !function(t3) {
@@ -17642,67 +17775,108 @@ const mostrarVentanaRecuperarContrase\u00F1a = (email) => {
   const auth = getAuth();
   return sendPasswordResetEmail(auth, email);
 };
+const logoBlanco = "/assets/logoPrincipal.b869871e.png";
+const iconoNegro = "/assets/iconoNavegador.5dc75f61.png";
 const Register = () => {
   document.body.classList.add("others-background");
   document.body.classList.remove("home-background");
   const div = document.createElement("div");
-  div.className = "contenedor-registro";
+  div.className = "contenedores-r-r";
   div.innerHTML = `
   <picture>
-  <source media="(max-width: 600px)" srcset="assets/logoPrincipal.png">
-  <img src="assets/iconoNavegador.png" alt="Descripci\xF3n de la imagen" class="icono-register">
+  <source media="(max-width: 600px)" srcset="${logoBlanco}">
+  <img src="${iconoNegro}" alt="Descripci\xF3n de la imagen" class="icono-register">
 </picture>
     <p>\xDAnete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. \xA1Viaja sin l\xEDmites!</p>
-    <form id="registerForm" class="register-Form">
+    <form id="registerForm" class="form-r-r">
     <h2>Registro</h2>
-        <input type="email" placeholder="Correo electr\xF3nico" name="email" id="email" required>
+        <input type="email" placeholder="Correo electr\xF3nico" name="email" id="email" >
         <div style="height: 16px;"></div>
-        <input type="password" maxlength="16" minlength="6"  placeholder="Contrase\xF1a" name="psw" id="psw" required>
+        <input type="password" maxlength="16" minlength="6"  placeholder="Contrase\xF1a" name="psw" id="psw" >
         <div style="height: 16px;"></div>
         <button  class="btn-registros">Crear</button>
         <div style="height: 32px;"></div>
         <a href="#" style="color: black;" class="btn"> \xBF Ya tienes una cuenta?<br><span style="color: #3e8ed0; ">Ingresa</span></a>
-    </form>`;
+    </form>
+    <div class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Some text in the Modal..</p>
+    </div>
+  </div>`;
   div.querySelector(".btn").addEventListener("click", (e) => {
     e.preventDefault();
     navigateTo("/");
   });
+  div.querySelector(".close").addEventListener("click", (e) => {
+    e.preventDefault();
+    div.querySelector(".modal").style.display = "none";
+  });
+  const openModal = (message) => {
+    div.querySelector(".modal").style.display = "block";
+    div.querySelector(".modal-content > p:nth-child(2)").textContent = message;
+    div.querySelector(".modal-content > p:nth-child(2)").style.color = "black";
+  };
   div.querySelector("#registerForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.psw.value;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!email || !emailRegex.test(email)) {
+      openModal("Por favor, ingrese una direcci\xF3n de correo electr\xF3nico v\xE1lida.");
+      return;
+    }
+    if (password.trim().length < 6 || /\s/.test(password)) {
+      openModal("La contrase\xF1a debe tener al menos 6 caracteres y no tener espacios en blanco.");
+      return;
+    }
     registerWithEmail(email, password).then(() => {
       navigateTo("/home");
     }).catch((error) => {
-      console.error(error);
-      alert(error.message);
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          openModal("correo electr\xF3nico ya est\xE1 en uso");
+          break;
+        case "auth/invalid-email":
+          openModal("correo electr\xF3nico no tiene un formato v\xE1lido");
+          break;
+        case "auth/weak-password":
+          openModal("la contrase\xF1a no cumple los requisitos de seguridad");
+          break;
+        default:
+          openModal("Ha ocurrido un error desconocido, por favor intenta de nuevo m\xE1s tarde.");
+          break;
+      }
     });
   });
   return div;
 };
+const logo = "/assets/logo.fb195676.png";
+const logoDorado = "/assets/logo1.b2c6df31.png";
+const googleIcon = "/assets/google.d65d89c2.png";
 const Login = () => {
   document.body.classList.add("others-background");
   document.body.classList.remove("home-background");
   const div = document.createElement("div");
-  div.className = "contenedor-login";
+  div.className = "contenedores-r-r  contenedor-login";
   div.innerHTML = `
   <picture>
-  <source media="(max-width: 600px)" srcset="assets/logo.png">
-  <img src="assets/logo1.png" alt="Descripci\xF3n de la imagen" class="logoForm">
+  <source media="(max-width: 600px)" srcset="${logo}">
+  <img src="${logoDorado}" alt="Descripci\xF3n de la imagen" class="logoForm">
   </picture>
   <form id="loginForm" class="loginForm">
   <button class="google-btn">
   <div class="contenido-google">
   <span>
-  <img class="icono-google" src="assets/google.png">
+  <img class="icono-google" src="${googleIcon}">
   </span>
   <p style="color: black;"class="texto-google">Continuar con Google</p>
   </div>
   </button>
   <p>o</p>
-  <input type="email" id="username" name="username" placeholder="Correo electr\xF3nico " required>
+  <input type="email" id="username" name="username" placeholder="Correo electr\xF3nico ">
   <div style="height: 16px;"></div>
-  <input type="password" id="password" name="password" placeholder="Contrase\xF1a" required>
+  <input type="password" id="password" name="password" placeholder="Contrase\xF1a" >
   <div style="height: 32px;"></div>
   <button class="btn-registros">Iniciar sesi\xF3n</button>
   <div style="height: 16px;"></div>
@@ -17734,14 +17908,32 @@ const Login = () => {
   });
   div.querySelector("#loginForm").addEventListener("submit", (e) => {
     e.preventDefault();
-    const username = div.querySelector("#username").value;
+    const email = div.querySelector("#username").value;
     const password = div.querySelector("#password").value;
-    signInWithPassword(username, password).then(
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(email)) {
+      openModal("Por favor, introduce un correo electr\xF3nico v\xE1lido.");
+      return;
+    }
+    if (password.length < 6) {
+      openModal("Por favor, introduce una contrase\xF1a de al menos 6 caracteres.");
+      return;
+    }
+    signInWithPassword(email, password).then(
       (useCredential) => {
         navigateTo("/home");
       },
       (error) => {
-        openModal(error.message);
+        const errorCode = error.code;
+        let errorMessage;
+        if (errorCode === "auth/wrong-password") {
+          errorMessage = "La contrase\xF1a es incorrecta. Por favor, int\xE9ntalo de nuevo.";
+        } else if (errorCode === "auth/user-not-found") {
+          errorMessage = "No se ha encontrado una cuenta con este correo electr\xF3nico. Por favor, reg\xEDstrate primero.";
+        } else {
+          errorMessage = "Ha ocurrido un error al iniciar sesi\xF3n. Por favor, int\xE9ntalo de nuevo m\xE1s tarde.";
+        }
+        openModal(errorMessage);
       }
     );
   });
@@ -17752,7 +17944,50 @@ const Login = () => {
         navigateTo("/home");
       },
       (error) => {
-        openModal(error.message);
+        switch (error.code) {
+          case "auth/popup-closed-by-user":
+            openModal("El inicio de sesi\xF3n se ha cancelado.");
+            break;
+          case "auth/cancelled-popup-request":
+            openModal("El inicio de sesi\xF3n se ha cancelado.");
+            break;
+          case "auth/web-storage-unsupported":
+            openModal("El navegador no soporta el almacenamiento web o el usuario ha desactivado este soporte.");
+            break;
+          case "auth/operation-not-supported-in-this-environment":
+            openModal("Esta operaci\xF3n no es compatible en el entorno actual.");
+            break;
+          case "auth/auth-domain-config-required":
+            openModal("La configuraci\xF3n del dominio de autenticaci\xF3n es obligatoria.");
+            break;
+          case "auth/credential-already-in-use":
+            openModal("Esta credencial ya est\xE1 en uso.");
+            break;
+          case "auth/user-disabled":
+            openModal("La cuenta de usuario ha sido deshabilitada.");
+            break;
+          case "auth/user-token-expired":
+            openModal("El token de usuario ha expirado.");
+            break;
+          case "auth/invalid-email":
+            openModal("La direcci\xF3n de correo electr\xF3nico proporcionada no es v\xE1lida.");
+            break;
+          case "auth/user-not-found":
+            openModal("No se encontr\xF3 una cuenta con la direcci\xF3n de correo electr\xF3nico proporcionada.");
+            break;
+          case "auth/wrong-password":
+            openModal("La contrase\xF1a proporcionada no es v\xE1lida.");
+            break;
+          case "auth/popup-blocked":
+            openModal("El inicio de sesi\xF3n emergente ha sido bloqueado por el navegador.");
+            break;
+          case "auth/network-request-failed":
+            openModal("Ha ocurrido un error de red, por favor comprueba tu conexi\xF3n.");
+            break;
+          default:
+            openModal("Ha ocurrido un error desconocido, por favor intenta de nuevo m\xE1s tarde.");
+            break;
+        }
       }
     );
   });
@@ -17766,6 +18001,10 @@ const Login = () => {
   });
   return div;
 };
+const iconoSalir = "/assets/logOutIcon.6bcb2dd8.png";
+const editarVacio = "/assets/mundoVacio.d7ed2e7a.png";
+const eliminarVacio = "/assets/deleteVacio.16fa643e.png";
+const eliminarLleno = "/assets/deletePintado.0331b282.png";
 const Home = () => {
   document.body.classList.add("home-background");
   document.body.classList.remove("others-background");
@@ -17773,50 +18012,95 @@ const Home = () => {
   div.className = "muro";
   div.innerHTML = `
     <header class="header-muro">
-      <img class="img-logo" src="assets/logoPrincipal.png">
-      <h1>Wanderlust</h1>
-      <img class="btnCerrarSesion" src="assets/logOutIcon.png" alt="Cerrar sesi\xF3n">
+    <img class="img-logo-muro" src="${logoBlanco}">
+    <h1>Wanderlust</h1>
+    <img class="cerrar-sesion" src="${iconoSalir}" alt="Cerrar sesi\xF3n">
     </header>
-    <h1>Bienvenido a wanderlust</h1>
+    <h1>\xA1Hola, Bienvenidx a wanderlust !</h1>
     <div class="container-post">
-      <form id="post-form">
-        <p>\xBFCu\xE1l ha sido tu destino de viaje favorito hasta ahora y por qu\xE9 lo recomendar\xEDas?</p>
-        <textarea id="post-content" placeholder="Cu\xE9ntanos tus aventuras......" required></textarea>
-        <button type="submit">Publicar</button>
-      </form>
-      <div id="post-list"></div>
+    <form id="post-form" class="post-form">
+    <p>\xBFCu\xE1l ha sido tu destino de viaje favorito hasta ahora y por qu\xE9 lo recomendar\xEDas?</p>
+    <div class="contenedor-img-text">
+    <textarea id="post-content" placeholder="Cu\xE9ntanos tus aventuras......" ></textarea>
+    </div>
+    <div class="contenedor-btn-publicar"><button type="submit" class='btn-registros'>Publicar</button></div>
+    </form>
+    <div id="post-list"></div>
     </div>
   `;
   const postList = div.querySelector("#post-list");
   const { db: db2 } = initFirebase();
-  div.querySelector(".btnCerrarSesion").addEventListener("click", (e) => {
+  div.querySelector(".cerrar-sesion").addEventListener("click", (e) => {
     const auth = getAuth();
     signOut(auth).then(() => {
       navigateTo("/");
-      console.log("Sesi\xF3n cerrada con \xE9xito");
+      alert("Sesi\xF3n cerrada con \xE9xito, vuelve pronto :D");
     }).catch((error) => {
-      console.error(error);
+      alert(error);
     });
   });
   const mostrarPublicaciones = (publicaciones) => {
     postList.innerHTML = "";
     publicaciones.forEach((publicacion) => {
-      console.log(publicacion);
       const postDiv = document.createElement("div");
       postDiv.className = "post";
       postDiv.innerHTML = ` 
       <header class="post-header">
-          <img class="post-author-photo" src="${publicacion.autorPhotoURL ? publicacion.autorPhotoURL : `https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`}" alt="Foto de perfil de ${publicacion.autor}">
-          <p>Publicado por ${publicacion.autor} el ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
-        </header>
-        <p>${publicacion.descripcion}</p>
+      <img class="post-author-photo" src="${publicacion.autorPhotoURL ? publicacion.autorPhotoURL : `https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`}" alt="Foto de perfil de ${publicacion.autor}">
+      <p>Publicado por ${publicacion.autor} el ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
+      </header>
+      <p class="texto-descripcion">${publicacion.descripcion}</p>
+      <div class="contenedor-edicion">
+      </div>
+      <div class="contenedor-like">
+      <div class="items-likes" >
+      <img id="like">
+      <p class="p2"></p>
+      </div>
+      <div class="contenedor-btn-post"></div>
+      </div>
       `;
       const auth = getAuth();
       const currentUser = auth.currentUser;
+      const like = async (id2, uid) => rf(rh(db2, "publicaciones", id2), { likes: Sf(uid) });
+      const disLike = async (id2, uid) => rf(rh(db2, "publicaciones", id2), { likes: Df(uid) });
+      const likeButton = postDiv.querySelector("#like");
+      const disLikeButton = postDiv.querySelector("#like");
+      publicacion.likes = publicacion.likes || [];
+      if (publicacion.likes && publicacion.likes.includes(auth.currentUser.uid)) {
+        likeButton.classList.add("like");
+      } else {
+        disLikeButton.classList.add("disLike");
+      }
+      likeButton.addEventListener("click", async () => {
+        if (likeButton.classList.toggle("disLike")) {
+          disLike(publicacion.id, currentUser.uid);
+          const publicaciones2 = await obtenerPublicaciones();
+          mostrarPublicaciones(publicaciones2);
+        }
+      });
+      disLikeButton.addEventListener("click", async () => {
+        if (disLikeButton.classList.toggle("like")) {
+          like(publicacion.id, currentUser.uid);
+          const publicaciones2 = await obtenerPublicaciones();
+          mostrarPublicaciones(publicaciones2);
+        }
+      });
+      const counterLike = postDiv.querySelector(".p2");
+      counterLike.textContent = publicacion.likes.length;
       if (currentUser && currentUser.uid === publicacion.uid) {
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Eliminar";
-        deleteButton.addEventListener("click", async () => {
+        const contenedorCajaEditar = postDiv.querySelector(".contenedor-edicion");
+        const contenedorBtnPost = postDiv.querySelector(".contenedor-btn-post");
+        const deleteImg = document.createElement("img");
+        const editContent = document.createElement("img");
+        editContent.setAttribute("class", "editar-post");
+        editContent.setAttribute("src", editarVacio);
+        deleteImg.setAttribute("class", "delete");
+        deleteImg.setAttribute("src", eliminarVacio);
+        contenedorBtnPost.appendChild(editContent);
+        contenedorBtnPost.appendChild(deleteImg);
+        deleteImg.addEventListener("click", async () => {
+          deleteImg.setAttribute("src", eliminarLleno);
           const confirmacion = confirm("\xBFEst\xE1s seguro de que deseas eliminar esta publicaci\xF3n?");
           if (confirmacion) {
             try {
@@ -17828,10 +18112,54 @@ const Home = () => {
             }
           }
         });
-        postDiv.appendChild(deleteButton);
+        editContent.addEventListener("click", () => {
+          const formExistente = contenedorCajaEditar.querySelector(".form-edicion");
+          if (formExistente) {
+            formExistente.style.display = "block";
+            document.getElementById("descripcion").value = publicacion.descripcion;
+          } else {
+            const form = document.createElement("div");
+            form.className = "form-edicion";
+            form.innerHTML = `
+            <input type="text" id="descripcion" class="item-edit" placeholder="Editar descripci\xF3n:" name="descripcion" value="${publicacion.descripcion}">
+            <div class="contenedor-btn-edit">
+            <button type="button" id="guardar" class="btn-guardar">Guardar</button>
+            <button type="button" id="cancelar" class="btn-cancelar">Cancelar</button>
+            </div>  `;
+            contenedorCajaEditar.appendChild(form);
+            const cancelarBtn = form.querySelector("#cancelar");
+            cancelarBtn.addEventListener("click", () => {
+              form.style.display = "none";
+              document.getElementById("descripcion").value = publicacion.descripcion;
+            });
+            const guardarBtn = form.querySelector("#guardar");
+            guardarBtn.addEventListener("click", async () => {
+              const nuevoContenido = document.getElementById("descripcion").value;
+              if (nuevoContenido.trim().length !== 0) {
+                try {
+                  await editarPublicacion(publicacion.id, nuevoContenido);
+                  publicacion.descripcion = nuevoContenido;
+                  alert("Guardado con \xE9xito");
+                  document.getElementById("descripcion-publicacion").textContent = nuevoContenido;
+                  form.style.display = "none";
+                } catch (e) {
+                  console.log(e);
+                }
+              } else {
+                alert("Error, el contenido no puede estar vac\xEDo");
+              }
+            });
+          }
+        });
       }
       postList.appendChild(postDiv);
     });
+  };
+  const editarPublicacion = async (publicacionId, nuevoContenido) => {
+    const docRef = rh(db2, "publicaciones", publicacionId);
+    await rf(docRef, { descripcion: nuevoContenido });
+    const publicaciones = await obtenerPublicaciones();
+    mostrarPublicaciones(publicaciones);
   };
   const obtenerPublicaciones = async () => {
     const q2 = dl(sh(db2, "publicaciones"));
@@ -17858,11 +18186,15 @@ const Home = () => {
       fecha_creacion: new Date(),
       uid: user.uid
     };
-    try {
-      const docRef = await uf(sh(db2, "publicaciones"), post);
-      console.log("Publicaci\xF3n agregada con ID:", docRef.id);
-    } catch (e2) {
-      console.error("Error al agregar la publicaci\xF3n:", e2);
+    if (postContent.trim().length !== 0) {
+      try {
+        const docRef = await uf(sh(db2, "publicaciones"), post);
+        console.log("Publicaci\xF3n agregada con ID:", docRef.id);
+      } catch (e2) {
+        console.log(e2);
+      }
+    } else {
+      alert("Error, el contenido no puede estar vac\xEDo");
     }
     const publicaciones = await obtenerPublicaciones();
     mostrarPublicaciones(publicaciones);
@@ -17874,26 +18206,27 @@ const RecuperarContrasena = () => {
   document.body.classList.add("others-background");
   document.body.classList.remove("home-background");
   const div = document.createElement("div");
-  div.className = "contenedor-restablecer-contrase\xF1a";
+  div.className = "contenedores-r-r";
   div.innerHTML = `
     <picture>
-      <source media="(max-width: 600px)" srcset="assets/logoPrincipal.png">
-      <img src="assets/iconoNavegador.png" alt="Descripci\xF3n de la imagen" class="icono-register">
+      <source media="(max-width: 600px)" srcset="${logoBlanco}">
+      <img src="${iconoNegro}" alt="Descripci\xF3n de la imagen" class="icono-register">
     </picture>
-    <p>\xA1No te preocupes, te ayudaremos a recuperar tu contrase\xF1a!</p>
-    <form id="recuperar-Form" class="register-Form">
+    <form id="recuperar-Form" class="form-r-r">
       <h2>Recuperar contrase\xF1a</h2>
+      <p>Para restablecer su contrase\xF1a, ingrese la direcci\xF3n de correo electr\xF3nico que usa para iniciar sesi\xF3n.</p>
       <input type="email" placeholder="Correo electr\xF3nico" name="email" id="email" required>
       <div style="height: 16px;"></div>
       <button class="btn-registros">Enviar</button>
       <div style="height: 32px;"></div>
       <a href="#" style="color: black;" class="btn">
-        \xBFYa tienes una cuenta?<br>
-        <span style="color: #3e8ed0;">Ingresa</span>
+      \xA1No importa! <br>
+        <span style="color: #3e8ed0;">Ll\xE9vame de vuelta para iniciar sesi\xF3n</span>
       </a>
     </form>
     <div class="mensaje-envio-container modal">
     <div id="contenedor-msj" class="modal-content">
+    <h2>Consultar su correo electr\xF3nico</h2>
       <span class="close">&times;</span>
       <div id="mensaje-envio"></div>
     <button id="volver-inicio" class="btn-registros">Volver a la p\xE1gina de inicio</button>
@@ -17911,10 +18244,10 @@ const RecuperarContrasena = () => {
     e.preventDefault();
     const email = e.target.email.value;
     mostrarVentanaRecuperarContrase\u00F1a(email).then(() => {
-      mensajeEnvio.textContent = "Correo enviado correctamente, revise su bandeja de gmail";
+      mensajeEnvio.textContent = `Correo enviado correctamente. Por favor, revise su bandeja de entrada de ${email} para obtener instrucciones sobre c\xF3mo restablecer su contrase\xF1a.`;
       mensajeEnvioContainer.style.display = "flex";
     }).catch((error) => {
-      mensajeEnvio.textContent = "Error al enviar el correo. Por favor, intenta de nuevo m\xE1s tarde.";
+      mensajeEnvio.textContent = `Error al enviar el correo ${email} . Por favor, intenta de nuevo m\xE1s tarde.`;
       mensajeEnvioContainer.style.display = "flex";
     });
   });

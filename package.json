@@ -18,9 +18,10 @@
     "test": "jest --coverage --env=jsdom",
     "dev": "vite dev src",
     "start": "npm run dev",
-    "build": "vite build && npm run postbuild",
+    "build": "vite build && npm run postbuild && npm run create-redirects",
     "postbuild": "copyfiles -f ./src/img/**/* ./dist/img",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "create-redirects": "echo /* /index.html 200 > dist/_redirects"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.19.4",

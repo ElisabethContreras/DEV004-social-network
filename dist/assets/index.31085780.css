@@ -4,18 +4,41 @@ body {
   padding: 0px;
   font-family:"Jost" ;
 }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000000;
+}
 html, body {
   height: 100%;
 }
 .home-background {
-  background-color: #ADD8E6;
+  background-color: #9FDDE8;
 }
 .others-background{
-  background-image: url("/DEV004-social-network/assets/mar.b7df8aff.jpg");
+  background-image: url("/assets/mar.b7df8aff.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
+}
+button{
+  cursor: pointer;
+}
+.form-r-r{
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  /* padding: 36px; */
+  padding: 15px 36px;
 }
 .loginForm{
   box-sizing: border-box;
@@ -24,65 +47,33 @@ html, body {
   width: 100%;
   max-width: 400px;
   padding: 36px;
-  font-size: 16px;
-  min-height: 120px;
-  -webkit-font-smoothing: antialiased;
-  margin-right: auto;
-  margin-left: auto;
 }
 .logoForm{
   width: 75%;
 }
-.contenedor-login{
- 
+.contenedores-r-r{
+
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
-   /* max-height: 80vh;*/
     background-color: #F7F6F6;
     text-align: center;
     margin: 0 auto;
-    /* padding: 36px 10px; */
+    padding: 20px 10px;
     border-radius: 8px;
-  
+
 }
 .icono-register{
   width: 50%;
 }
-.contenedor-registro{
- 
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  max-height: 80vh;
-  background-color: #F7F6F6;
-  text-align: center;
-  margin: 0 auto;
-  padding: 36px 10px;
-  border-radius: 8px; 
-}
-.register-Form{
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 400px;
-  padding: 36px;
-  font-size: 16px;
-  min-height: 120px;
-  -webkit-font-smoothing: antialiased;
-  margin-right: auto;
-  margin-left: auto;
-}
+
 .btn-register{
   border: none;
   background-color:#A5BC34;
 }
-input{   
+.contenedores-r-r  input{
   border:none;
   border-radius: 5px;
   height: 50px;
@@ -113,7 +104,6 @@ a{
 .btn-registros{
   height: 48px;
     font-size: 18px;
-    line-height: 24px;
     padding-left: 20px;
     padding-right: 20px;
     box-sizing: border-box;
@@ -142,7 +132,7 @@ a{
 }
 .modal{
   display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
+  position: absolute; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
@@ -172,7 +162,7 @@ a{
   color: black;
   text-decoration: none;
   cursor: pointer;
-} 
+}
 
 .container-post {
   max-width: 700px;
@@ -180,46 +170,105 @@ a{
   display: flex;
     align-items: left;
     flex-direction: column;
-  
 
 }
-
+.post-form p{
+  margin: 20px;
+}
 #post-content {
-  width: 100%;
+  width: -webkit-fill-available;
   height: 100px;
+  background-color: #D9D9D9;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 20px;
 }
-
+.contenedor-img-text{
+  display: flex;
+  align-items: center;
+  margin: 20px;
+  justify-content: space-around;
+}
+.contenedor-img-text img{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
 #post-list {
   margin-top: 20px;
-  
+}
+.contenedor-btn-post{
+display: flex;
+justify-content: flex-end;
+margin:20px ;
+}
+.contenedor-btn-post img{
+  width: 40px;
+  height: 40px;
+}
+.form-edicion{
+  margin: 20px;
+  align-items: center;
+}
+.item-edit{
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 20px;
+}
+.contenedor-btn-edit{
+  display: flex;
+  justify-content: space-around;
+}
+.btn-cancelar{
+background-color: #063075;
+height: 40px;
+ width: 80px;
+color: #fdfffd;
+border: none;
+border-radius: 5px;
+}
+.btn-guardar{
+background-color: #A5BC34;
+color: white;
+border-radius: 5px;
+border: none;
+height: 40px;
+ width: 80px;
 }
 .header-muro{
   color: #fdfffd;
-  font-size: 300%;
   width: 100%;
+  font-size: 30px;
   display: flex;
   align-items: center; /*alinea los elemntos dentro del header*/
   justify-content: space-around;
-  height: 250px;
   background-color: #063075;
+}
+.img-logo-muro{
+  width: 150px;
+
 }
 .logo-muro{
   width:15%;
-  
+
 }
 .muro{
- 
+
   height: 100%; /* Estableces la altura del div */
   width: 100%; /* Estableces el ancho del div */
   margin: 0; /* Elimina los márgenes predeterminados */
   padding: 0; /* Elimina el relleno predeterminado */
 }
-.btnCerrarSesion {
+.cerrar-sesion{
   background-color: #1e2a78;
   color: #fff; /* Para asegurarte de que el texto sea legible */
   border: none; /* Para eliminar el borde predeterminado del botón */
   padding: 10px 20px; /* Para agregar un poco de espacio entre el contenido y los bordes del botón */
   cursor: pointer; /* Para indicar que el botón es clickable */
+  width: 50px;
 }
 h1{
   text-align: center;
@@ -229,33 +278,37 @@ h2{
   color: black;
   background: none;
   width: 100%;
-  height: 50px;
+  /* height: 50px; */
 }
 .post{
   background-color: white;
-  margin:20px;
+  height: auto;
+  border-radius: 20px;
+  padding: 10px;
+  margin-top: 20px;
 }
-.post img{
+/* .post img{
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   text-align: left;
+} */
+.post p{
+  height: auto;
+  text-align: center;
+  padding: 10px;
 }
 .post-header{
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin: 20px;
 }
-.contenedor-restablecer-contraseña {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  max-height: 80vh;
-  background-color: #F7F6F6;
-  text-align: center;
-  margin: 0 auto;
-  padding: 36px 10px;
-  border-radius: 8px;
+.post-header img{
+  width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    text-align: left;
 }
 #contenedor-msj{
   background-color: #fefefe;
@@ -269,58 +322,118 @@ h2{
   margin: 10px;
   color: black;
 }
+.form-r-r p {
+  color: #000;
+  vertical-align: inherit;
+}
+.texto-descripcion{
+  background-color: #D9D9D9;
+  border-radius:20px ;
+  margin: 20px;
+}
+.post-form{
+background-color: #fdfffd;
+text-align: center;
+border-radius: 20px;
+}
+.contenedor-btn-publicar{
+  display: flex;
+  justify-content: end;
+}
+.like{
+  height: 0px;
+}
+#like{
+  height: 0px;
+}
+.contenedor-like{
+  display: flex;
+  justify-content: space-between;
+}
+.items-likes{
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
+.like {
+  background: url("/assets/likeLleno.b13ff6fc.png");
+  background-size: contain;
+  padding: 25px;
+  margin-left: 30px;
+  background-position:center;
+  cursor: pointer;
+}
+
+.disLike {
+  background: url("/assets/likeVacio.28eb9466.png");
+  background-size: contain;
+  padding: 25px;
+  margin-left: 30px;
+  background-position:center;
+  cursor: pointer;
+}
 @media only screen and (max-width: 600px) {
-.contenedor-login{
-  background: none;
-  margin-top: 2%;
-  max-width: 90%;
-  top: 45%;
+  .post-form p{
+    color: #000;
+    margin: 20px;
   }
-  .contenedor-registro{
+  .icono-register{
+    margin-bottom: 15%;
+  }
+  .contenedores-r-r{
     background: none;
-    max-width: 85%;
-   top:45%;
-  }
- 
- 
-  .home-background {
-    background-color: #ADD8E6;
+    max-width: 90%;
   }
   .others-background{
-    background-image: url("/DEV004-social-network/assets/fondoMar.3fcd21c9.jpeg");
+    background-image: url("/assets/fondoMar.3fcd21c9.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
   }
-  p {
-    color: #fdfbfb;
-    text-align: center;
-    font-family: "Jost";
-    margin: 10px;
+  .header-muro{
+    font-size: 15px;
+    justify-content: space-around;
   }
-  
+  .cerrar-sesion{
+    width: 30px;
+  }
+  .img-logo-muro{
+    width: 80px;
+  }
   a{
     color: #fdfffd;
   }
   h4 {
     text-align: center;
   }
- 
-  .register-Form{
+
+  .form-r-r{
     background-color: #F7F6F6;
     border-radius: 10%;
+    padding: 15px 36px;
   }
 .btn-register{
   border: none;
 }
-.contenedor-restablecer-contraseña {
-  background: none;
-  max-width: 85%;
- top:45%;
+.post{
+  margin: 20px;
+  padding: 5px;
+}
+.header-muro img{
+  width: 60px;
+  margin-right: 20px;
+  height: 60px;
+  border-radius: 50%;
+  text-align: left;
+}
+.post p{
+  font-size: 12px;
+}
+.post-form{
+  margin: 20px;
+}
 }
 
-}
 
 
- 
