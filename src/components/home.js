@@ -78,12 +78,11 @@ export const Home = () => {
       const like = async (id, uid) => updateDoc(doc(db, 'publicaciones', id), { likes: arrayUnion(uid) });
       const disLike = async (id, uid) => updateDoc(doc(db, 'publicaciones', id), { likes: arrayRemove(uid) });
       const likeButton = postDiv.querySelector('#like');
-      const disLikeButton = postDiv.querySelector('#like');
       publicacion.likes = publicacion.likes || [];
       if (publicacion.likes && publicacion.likes.includes(auth.currentUser.uid)) {
         likeButton.classList.add('like');
       } else {
-        disLikeButton.classList.add('disLike');
+        likeButton.classList.add('disLike');
       }
       likeButton.addEventListener('click', async () => {
         if (likeButton.classList.toggle('disLike')) {
@@ -92,8 +91,8 @@ export const Home = () => {
           mostrarPublicaciones(publicaciones);
         }
       });
-      disLikeButton.addEventListener('click', async () => {
-        if (disLikeButton.classList.toggle('like')) {
+      likeButton.addEventListener('click', async () => {
+        if (likeButton.classList.toggle('like')) {
           like(publicacion.id, currentUser.uid);
           const publicaciones = await obtenerPublicaciones();
           mostrarPublicaciones(publicaciones);
