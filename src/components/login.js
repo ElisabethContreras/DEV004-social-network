@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { navigateTo } from '../router';
-import { signInWithGoogle, signInWithPassword } from '../helpers/accederCongmail';
+import { signInWithGoogle, signInWithPassword, openModal} from '../helpers/accederCongmail';
 import logo from '../assets/logo.png';
 import logoDorado from '../assets/logo1.png';
 import googleIcon from '../assets/google.png';
@@ -51,11 +51,7 @@ export const Login = () => {
 </div>`;
 
   // Function to open modal
-  const openModal = (message) => {
-    div.querySelector('.modal').style.display = 'block';
-    div.querySelector('.modal-content > p:nth-child(2)').textContent = message;
-    div.querySelector('.modal-content > p:nth-child(2)').style.color = 'black';
-  };
+
   // funcion para ocultar el modal
   div.querySelector('.close').addEventListener('click', (e) => {
     e.preventDefault();

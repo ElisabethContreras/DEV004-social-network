@@ -1,5 +1,5 @@
 import { navigateTo } from '../router.js';
-import { registerWithEmail } from '../helpers/accederCongmail.js';
+import { registerWithEmail, openModal } from '../helpers/accederCongmail.js';
 import logoBlanco from '../assets/logoPrincipal.png';
 import iconoNegro from '../assets/iconoNavegador.png';
 
@@ -39,12 +39,6 @@ export const Register = () => {
     e.preventDefault();
     div.querySelector('.modal').style.display = 'none';
   });
-  const openModal = (message) => {
-    div.querySelector('.modal').style.display = 'block';
-    div.querySelector('.modal-content > p:nth-child(2)').textContent = message;
-    div.querySelector('.modal-content > p:nth-child(2)').style.color = 'black';
-  };
-
   div.querySelector('#registerForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = div.querySelector('#email').value;
