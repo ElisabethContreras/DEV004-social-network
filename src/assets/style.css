@@ -187,8 +187,15 @@ a{
   resize: none;
   padding: 20px;
 }
+.contenedor-img-post{
+  display: flex;
+  justify-content: center;
+}
 .contenedor-img-post img{ 
+  display: block;
   width: 100%;
+  height: 20em;
+  border-radius: 10px;
 }
 .contenedor-img-text{
   display: flex;

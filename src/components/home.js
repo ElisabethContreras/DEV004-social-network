@@ -4,15 +4,15 @@ import { getAuth, signOut } from 'firebase/auth';
 import {
   collection, query, getDocs, addDoc, deleteDoc, doc, updateDoc, arrayUnion, arrayRemove,
 } from 'firebase/firestore';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { ref, uploadBytes, getDownloadURL } from '@firebase/storage';
 import { initFirebase } from '../helpers/firebase';
 import { navigateTo } from '../router';
 import logoBlanco from '../assets/logoPrincipal.png';
 import iconoSalir from '../assets/logOutIcon.png';
 import editarVacio from '../assets/mundoVacio.png';
-// import mundoLleno from '../assets/mundoPintado.png';
 import eliminarVacio from '../assets/deleteVacio.png';
 import eliminarLleno from '../assets/deletePintado.png';
-
 
 export const Home = () => {
   document.body.classList.add('home-background');
@@ -31,6 +31,7 @@ export const Home = () => {
     <p>¿Cuál ha sido tu destino de viaje favorito hasta ahora y por qué lo recomendarías?</p>
     <div class="contenedor-img-text">
     <textarea id="post-content" placeholder="Cuéntanos tus aventuras......" ></textarea>
+    <input type="file" id="post-image" >
     </div>
     <div class="contenedor-btn-publicar"><button type="submit" class='btn-registros'>Publicar</button></div>
     </form>
@@ -38,7 +39,7 @@ export const Home = () => {
     </div>
   `;
   const postList = div.querySelector('#post-list');
-  const { db } = initFirebase(); // obtener la referencia al objeto db
+  const { db, storage } = initFirebase(); // obtener la referencia al objeto db
 
   div.querySelector('.cerrar-sesion').addEventListener('click', (e) => {
     const auth = getAuth();
@@ -62,7 +63,8 @@ export const Home = () => {
       <img class="post-author-photo" src="${publicacion.autorPhotoURL ? publicacion.autorPhotoURL : `https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`}" alt="Foto de perfil de ${publicacion.autor}">
       <p>Publicado por ${publicacion.autor} el ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
       </header>
-      <p class="texto-descripcion">${publicacion.descripcion}</p>
+        ${publicacion.image ? `<div class="contenedor-img-post"><img class="post-imagen" src="${publicacion.image}" alt="Imagen de la publicación"></div>` : '<div class="post-imagen-vacia"></div>'}
+        <p class="texto-descripcion">${publicacion.descripcion}</p>
       <div class="contenedor-edicion">
       </div>
       <div class="contenedor-like">
@@ -141,6 +143,9 @@ export const Home = () => {
             const form = document.createElement('div');
             form.className = 'form-edicion';
             form.innerHTML = `
+            <label for="imagen">Nueva imagen:</label>
+            <input type="file" id="imagen" class="item-edit" accept="image/*">
+            <label for="imagen">Nueva imagen:</label>
             <input type="text" id="descripcion" class="item-edit" placeholder="Editar descripción:" name="descripcion" value="${publicacion.descripcion}">
             <div class="contenedor-btn-edit">
             <button type="button" id="guardar" class="btn-guardar">Guardar</button>
@@ -191,6 +196,7 @@ export const Home = () => {
     const publicaciones = await obtenerPublicaciones();
     mostrarPublicaciones(publicaciones);
   };
+
   /* obtener las publicaciones almacenadas en una colección Firestore de
   Firebase y devolverlas como un array de objetos que contienen el ID del documento y sus datos. */
   const obtenerPublicaciones = async () => {
@@ -213,32 +219,47 @@ export const Home = () => {
   postForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const postContent = postForm.querySelector('#post-content').value;
+    const postImage = postForm.querySelector('#post-image').files[0];
     const auth = getAuth();
     const user = auth.currentUser;
+
+    // Validar que el contenido y la imagen no estén vacíos
+    if (postContent.trim().length === 0) {
+      alert('Error, el contenido no puede estar vacío');
+      return;
+    }
+    if (!postImage) {
+      alert('Error, debes seleccionar una imagen');
+      return;
+    }
+
+    // Subir la imagen a Firebase Storage
+    const storageRef = ref(storage, `images/${postImage.name}`);
+    const snapshot = await uploadBytes(storageRef, postImage);
+    const imageUrl = await getDownloadURL(snapshot.ref);
+
+    // Crear la publicación con la información de la imagen y guardarla en la base de datos
     const post = {
       autorPhotoURL: user.photoURL || `https://ui-avatars.com/api/?name=${user.email.split('@')[0]}&size=96&background=007bff&color=fff&rounded=true`,
       descripcion: postContent,
-      autor: user.displayName || user.email.split('@')[0], // utilizar displayName si está definido, si no utilizar el nombre de usuario basado en el correo electrónico
+      autor: user.displayName || user.email.split('@')[0],
       fecha_creacion: new Date(),
       uid: user.uid,
+      image: imageUrl,
     };
-    if (postContent.trim().length !== 0) {
-      try {
-        // agregar la publicación a la base de datos
-        const docRef = await addDoc(collection(db, 'publicaciones'), post);
-        console.log('Publicación agregada con ID:', docRef.id);
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      alert('Error, el contenido no puede estar vacío');
+    try {
+      const docRef = await addDoc(collection(db, 'publicaciones'), post);
+      console.log('Publicación agregada con ID:', docRef.id);
+    } catch (e) {
+      console.log(e);
     }
-    // obtener y mostrar las publicaciones actualizadas
+
+    // Obtener y mostrar las publicaciones actualizadas
     const publicaciones = await obtenerPublicaciones();
     mostrarPublicaciones(publicaciones);
-    // resetear el formulario
+
+    // Resetear el formulario
     postForm.reset();
   });
-
   return div;
 };
