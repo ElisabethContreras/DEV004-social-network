@@ -44,8 +44,6 @@ describe('Pruebas de login', () => {
   it('La promesa de iniciar sesion con correo y pws ha sido rechazada deberia abrir un modal', (done) => {
     signInWithPassword.mockRejectedValue({ code: 'auth/wrong-password' });
     const loginDiv = Login();
-    loginDiv.querySelector('#username').value = 'ssinuco@gmail.com';
-    loginDiv.querySelector('#password').value = '123456';
     loginDiv.querySelector('#loginForm').dispatchEvent(new Event('submit'));
     setTimeout(() => {
       expect(openModal).toHaveBeenCalled();
