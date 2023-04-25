@@ -143,10 +143,10 @@ export const Home = () => {
             const form = document.createElement('div');
             form.className = 'form-edicion';
             form.innerHTML = `
-            <label for="imagen">Nueva imagen:</label>
-            <input type="file" id="imagen" class="item-edit" accept="image/*">
-            <label for="imagen">Nueva imagen:</label>
-            <input type="text" id="descripcion" class="item-edit" placeholder="Editar descripción:" name="descripcion" value="${publicacion.descripcion}">
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion"  name="descripcion" value="${publicacion.descripcion}">
+            <label for="imagen">Imagen:</label>
+            <input type="file" id="imagen" name="imagen">
             <div class="contenedor-btn-edit">
             <button type="button" id="guardar" class="btn-guardar">Guardar</button>
             <button type="button" id="cancelar" class="btn-cancelar">Cancelar</button>
@@ -163,20 +163,31 @@ export const Home = () => {
             // Agregar controlador de eventos al botón "Guardar"
             const guardarBtn = form.querySelector('#guardar');
             guardarBtn.addEventListener('click', async () => {
+              const imagenInput = document.getElementById('imagen');
               const nuevoContenido = document.getElementById('descripcion').value;
-              if (nuevoContenido.trim().length !== 0) {
-                try {
-                  await editarPublicacion(publicacion.id, nuevoContenido);
-                  // Actualizar la descripción en la página y ocultar el formulario
-                  publicacion.descripcion = nuevoContenido;
-                  alert('Guardado con éxito');
-                  document.getElementById('descripcion-publicacion').textContent = nuevoContenido;
-                  form.style.display = 'none';
-                } catch (e) {
-                  console.log(e);
+              const nuevaImagen = imagenInput.files[0];
+              if (nuevoContenido.trim().length === 0) {
+                alert('Error: La descripción no puede estar vacía.');
+                return;
+              }
+              try {
+                // Actualizar la descripción de la publicación
+                const docRef = doc(db, 'publicaciones', publicacion.id);
+                await updateDoc(docRef, { descripcion: nuevoContenido });
+                // Si se seleccionó una nueva imagen, subirla al storage y actualizar la URL de la imagen en la base de datos
+                if (nuevaImagen) {
+                  const storageRef = ref(storage, `images/${nuevaImagen.name}`);
+                  const snapshot = await uploadBytes(storageRef, nuevaImagen);
+                  const nuevaUrlImagen = await getDownloadURL(snapshot.ref);
+                  await updateDoc(docRef, { image: nuevaUrlImagen });
                 }
-              } else {
-                alert('Error, el contenido no puede estar vacío');
+                // Actualizar la descripción en la página
+                publicacion.descripcion = nuevoContenido;
+                publicacion.image = nuevaImagen;
+                alert('La publicación se ha actualizado correctamente.');
+                form.style.display = 'none';
+              } catch (error) {
+                console.error('Error actualizando la publicación: ', error);
               }
             });
           }
@@ -185,18 +196,6 @@ export const Home = () => {
       postList.appendChild(postDiv);
     });
   };
-  /* La función editarPublicacion es una función asíncrona que toma dos argumentos: publicacionId,
-   que es el ID de la publicación a editar, y nuevoContenido, que es la nueva descripción que se
-   desea establecer para la publicación. */
-  const editarPublicacion = async (publicacionId, nuevoContenido) => {
-    const docRef = doc(db, 'publicaciones', publicacionId);
-    await updateDoc(docRef, { descripcion: nuevoContenido });
-    /* Esto se puede hacer para asegurarse de que se muestren las publicaciones actualizadas y que
-     la lista de publicaciones en la página */
-    const publicaciones = await obtenerPublicaciones();
-    mostrarPublicaciones(publicaciones);
-  };
-
   /* obtener las publicaciones almacenadas en una colección Firestore de
   Firebase y devolverlas como un array de objetos que contienen el ID del documento y sus datos. */
   const obtenerPublicaciones = async () => {
