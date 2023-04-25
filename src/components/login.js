@@ -75,11 +75,11 @@ export const Login = () => {
       openModal('Por favor, introduce una contraseña de al menos 6 caracteres.');
       return;
     }
-    signInWithPassword(email, password).then(
-      (useCredential) => {
+    signInWithPassword(email, password)
+      .then(() => {
         navigateTo('/home');
-      },
-      (error) => {
+      })
+      .catch((error) => {
         const errorCode = error.code;
         let errorMessage;
         if (errorCode === 'auth/wrong-password') {
@@ -90,17 +90,18 @@ export const Login = () => {
           errorMessage = 'Ha ocurrido un error al iniciar sesión. Por favor, inténtalo de nuevo más tarde.';
         }
         openModal(errorMessage);
-      },
-    );
+      });
   });
 
   div.querySelector('.google-btn').addEventListener('click', (e) => {
     e.preventDefault();
-    signInWithGoogle().then(
-      (useCredential) => {
-        navigateTo('/home');
-      },
-      (error) => {
+    signInWithGoogle()
+      .then(
+        () => {
+          navigateTo('/home');
+        },
+      )
+      .catch((error) => {
         switch (error.code) {
           case 'auth/popup-closed-by-user':
             openModal('El inicio de sesión se ha cancelado.');
@@ -145,8 +146,7 @@ export const Login = () => {
             openModal('Ha ocurrido un error desconocido, por favor intenta de nuevo más tarde.');
             break;
         }
-      },
-    );
+      });
   });
 
   div.querySelector('.signup-btn').addEventListener('click', (e) => {
@@ -157,7 +157,6 @@ export const Login = () => {
     e.preventDefault();
     navigateTo('/restablecer');
   });
-
   // Return the div element
   return div;
 };

@@ -21,7 +21,7 @@ export const Register = () => {
         <div style="height: 16px;"></div>
         <input type="password" maxlength="16" minlength="6"  placeholder="Contraseña" name="psw" id="psw" >
         <div style="height: 16px;"></div>
-        <button  class="btn-registros">Crear</button>
+        <button id="crear" class="btn-registros">Crear</button>
         <div style="height: 32px;"></div>
         <a href="#" style="color: black;" class="btn"> ¿ Ya tienes una cuenta?<br><span style="color: #3e8ed0; ">Ingresa</span></a>
     </form>
@@ -47,8 +47,8 @@ export const Register = () => {
 
   div.querySelector('#registerForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.psw.value;
+    const email = div.querySelector('#email').value;
+    const password = div.querySelector('#psw').value;
     // const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     // const emailRegex = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.[a-zA-Z]{2,}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -65,7 +65,7 @@ export const Register = () => {
     }
     registerWithEmail(email, password)
       .then(() => {
-        navigateTo('/home');
+        navigateTo('/');
       })
       .catch((error) => {
         switch (error.code) {
