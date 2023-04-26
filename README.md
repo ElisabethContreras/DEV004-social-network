@@ -46,12 +46,14 @@ En <strong>Wanderlust </strong> , los usuarios pueden publicar sus experiencias 
 Para lograr estos objetivos, deberás aprender y hacer uso de las siguientes
 herramientas o habilidades técnicas:
 ## 3. Historias de usuario
-
-<p align="center" width="100%"> <img width="fit-content" src="src/assets/h1.png"></p>
-<p align="center" width="100%"> <img width="fit-content" src="src/assets/h2.png"></p>
-<p align="center" width="100%"> <img width="fit-content" src="src/assets/h3.png"></p>
 <p align="center" width="100%"> <img width="fit-content" src="src/assets/hu1.png"></p>
 <p align="center" width="100%"> <img width="fit-content" src="src/assets/hu2.png"></p>
+
+### Criterios de aceptación y definición de terminado 
+<p align="center" width="100%"> <img width="fit-content" src="src/assets/h1.png"></p> 
+<p align="center" width="100%"> <img width="fit-content" src="src/assets/h2.png"></p>
+<p align="center" width="100%"> <img width="fit-content" src="src/assets/h3.png"></p>
+
 
 ## 4. Objetivos de aprendizaje
 
