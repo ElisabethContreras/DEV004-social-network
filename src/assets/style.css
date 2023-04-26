@@ -160,7 +160,7 @@ a{
   width: 80%; /* Could be more or less, depending on screen size */
 }
 .close {
-  color: #aaa;
+  color: #565255;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -363,10 +363,11 @@ h2{
 }
 #contenedor-msj{
   background-color: #fefefe;
-  margin: auto; /* 15% from the top and centered */
+  margin-top: 50%; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
+  height: fit-content;
 }
 
 #mensaje-envio {
@@ -433,13 +434,11 @@ width: fit-content;
   .contenedores-r-r span{
     color: white ;
   }
-  .close{
-    color: #0d16b9;
-  }
+
   .span-register{
     margin-bottom: 20px;
   }
- 
+
   .icono-restablecer{
     margin-bottom:15% ;
   }

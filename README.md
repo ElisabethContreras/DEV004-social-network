@@ -1,5 +1,5 @@
 # Creando una Red Social
-<p align="center" width="100%"> <img width="100%" src="src/assets/logo1.png"></p>
+<p align="center" width="100%"> <img width="100%" src="src/assets/wanderlust.jpg"></p>
 
 ## Índice
 
@@ -30,7 +30,7 @@ más comentado.
 
 ## 2. Descripción
 
-<strong>Wanderlust </strong> es una aplicación web de publicación de viajes donde los usuarios pueden compartir sus aventuras y descubrir nuevos destinos a través de la experiencia de otros viajeros. La aplicación utiliza la tecnología de Firebase para almacenar y recuperar datos de usuarios y publicaciones.
+<strong>Wanderlust </strong> es una red social de viajes donde los usuarios pueden compartir sus aventuras y descubrir nuevos destinos a través de la experiencia de otros viajeros. La aplicación utiliza la tecnología de Firebase para almacenar y recuperar datos de usuarios y publicaciones.
 
 En <strong>Wanderlust </strong> , los usuarios pueden publicar sus experiencias de viaje y compartir fotos de lugares hermosos que hayan visitado. Además, cuenta con una sección de exploración donde los usuarios pueden ver todas las publicaciones e interactuar con otras publicaciones dando "Me gusta" , también tiene una función de edición para los usuarios que hayan publicado, lo que les permite editar sus publicaciones existentes o eliminarlas por completo.
 
@@ -46,6 +46,13 @@ En <strong>Wanderlust </strong> , los usuarios pueden publicar sus experiencias 
 Para lograr estos objetivos, deberás aprender y hacer uso de las siguientes
 herramientas o habilidades técnicas:
 ## 3. Historias de usuario
+
+<p align="center" width="100%"> <img width="fit-content" src="src/assets/h1.png"></p>
+<p align="center" width="100%"> <img width="fit-content" src="src/assets/h2.png"></p>
+<p align="center" width="100%"> <img width="fit-content" src="src/assets/h3.png"></p>
+<p align="center" width="100%"> <img width="fit-content" src="src/assets/hu1.png"></p>
+<p align="center" width="100%"> <img width="fit-content" src="src/assets/hu2.png"></p>
+
 ## 4. Objetivos de aprendizaje
 
 Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en tu proyecto. Piensa en eso al decidir tu estrategia de trabajo.

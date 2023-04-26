@@ -27,7 +27,7 @@ export const Register = () => {
     </form>
     <div class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
+      <span class="close" style="color: #565255;">&times;</span>
       <p>Some text in the Modal..</p>
     </div>
   </div>`;

@@ -17413,6 +17413,37 @@ class ml extends ll {
     return "and" === this.type ? "and" : "or";
   }
 }
+class pl extends fl {
+  constructor(t2, e) {
+    super(), this._field = t2, this._direction = e, this.type = "orderBy";
+  }
+  static _create(t2, e) {
+    return new pl(t2, e);
+  }
+  _apply(t2) {
+    const e = function(t3, e2, n) {
+      if (null !== t3.startAt)
+        throw new L(B.INVALID_ARGUMENT, "Invalid query. You must not call startAt() or startAfter() before calling orderBy().");
+      if (null !== t3.endAt)
+        throw new L(B.INVALID_ARGUMENT, "Invalid query. You must not call endAt() or endBefore() before calling orderBy().");
+      const s = new hn(e2, n);
+      return function(t4, e3) {
+        if (null === Kn(t4)) {
+          const n2 = Gn(t4);
+          null !== n2 && kl(t4, n2, e3.field);
+        }
+      }(t3, s), s;
+    }(t2._query, this._field, this._direction);
+    return new eh(t2.firestore, t2.converter, function(t3, e2) {
+      const n = t3.explicitOrderBy.concat([e2]);
+      return new Bn(t3.path, t3.collectionGroup, n, t3.filters.slice(), t3.limit, t3.limitType, t3.startAt, t3.endAt);
+    }(t2._query, e));
+  }
+}
+function Il(t2, e = "asc") {
+  const n = e, s = al("orderBy", t2);
+  return pl._create(s, n);
+}
 function Cl(t2, e, n) {
   if ("string" == typeof (n = getModularInstance(n))) {
     if ("" === n)
@@ -19540,6 +19571,11 @@ const mostrarVentanaRecuperarContrase\u00F1a = (email) => {
   const auth = getAuth();
   return sendPasswordResetEmail(auth, email);
 };
+const openModal = (message) => {
+  document.querySelector(".modal").style.display = "block";
+  document.querySelector(".modal-content > p:nth-child(2)").textContent = message;
+  document.querySelector(".modal-content > p:nth-child(2)").style.color = "black";
+};
 const logoBlanco = "/assets/logoPrincipal.b869871e.png";
 const iconoNegro = "/assets/iconoNavegador.5dc75f61.png";
 const Register = () => {
@@ -19552,20 +19588,20 @@ const Register = () => {
   <source media="(max-width: 600px)" srcset="${logoBlanco}">
   <img src="${iconoNegro}" alt="Descripci\xF3n de la imagen" class="icono-register">
 </picture>
-    <p>\xDAnete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. \xA1Viaja sin l\xEDmites!</p>
+    <span class="span-register">\xDAnete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. \xA1Viaja sin l\xEDmites!</span>
     <form id="registerForm" class="form-r-r">
     <h2>Registro</h2>
         <input type="email" placeholder="Correo electr\xF3nico" name="email" id="email" >
         <div style="height: 16px;"></div>
         <input type="password" maxlength="16" minlength="6"  placeholder="Contrase\xF1a" name="psw" id="psw" >
         <div style="height: 16px;"></div>
-        <button  class="btn-registros">Crear</button>
+        <button id="crear" class="btn-registros">Crear</button>
         <div style="height: 32px;"></div>
-        <a href="#" style="color: black;" class="btn"> \xBF Ya tienes una cuenta?<br><span style="color: #3e8ed0; ">Ingresa</span></a>
+        <span style="color: black;"> \xBF Ya tienes una cuenta?<br><a href="#" style="color: #3e8ed0; " class="btn">Ingresa</a></span>
     </form>
     <div class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
+      <span class="close" style="color: #565255;">&times;</span>
       <p>Some text in the Modal..</p>
     </div>
   </div>`;
@@ -19577,15 +19613,10 @@ const Register = () => {
     e.preventDefault();
     div.querySelector(".modal").style.display = "none";
   });
-  const openModal = (message) => {
-    div.querySelector(".modal").style.display = "block";
-    div.querySelector(".modal-content > p:nth-child(2)").textContent = message;
-    div.querySelector(".modal-content > p:nth-child(2)").style.color = "black";
-  };
   div.querySelector("#registerForm").addEventListener("submit", (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.psw.value;
+    const email = div.querySelector("#email").value;
+    const password = div.querySelector("#psw").value;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!email || !emailRegex.test(email)) {
       openModal("Por favor, ingrese una direcci\xF3n de correo electr\xF3nico v\xE1lida.");
@@ -19596,7 +19627,8 @@ const Register = () => {
       return;
     }
     registerWithEmail(email, password).then(() => {
-      navigateTo("/home");
+      navigateTo("/");
+      openModal("Registrado exitosamente");
     }).catch((error) => {
       switch (error.code) {
         case "auth/email-already-in-use":
@@ -19647,26 +19679,19 @@ const Login = () => {
   <div style="height: 16px;"></div>
   <div class="col">
   <div>
-  <a href="#" class="btn" >\xBFOlvidaste tu contrase\xF1a ? <span class="olvidaste-contrase\xF1a-btn" style="color: #66DA5F;">Recuperala</span></a>
+  <span class="olvidaste-contrase\xF1a-btn" >\xBFOlvidaste tu contrase\xF1a ? <a href="#" class="btn" style="color: #66DA5F; ">Recuperala</a></span>
   </div>
-  <div style="height: 16px;"></div>
   <div>
-  <a href="#" class="signup-btn">\xBFNo tienes una cuenta? <span  style="color: #66DA5F;">Registrate</span></a>
+  <span>\xBFNo tienes una cuenta? <a href="#" class="signup-btn" style="color: #66DA5F; ">Registrate</a></span>
   </div>
-  <div style="height: 16px;"></div>
   </div>
   </form>
   <div class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <span class="close" style="color: #565255;">&times;</span>
     <p>Some text in the Modal..</p>
   </div>
 </div>`;
-  const openModal = (message) => {
-    div.querySelector(".modal").style.display = "block";
-    div.querySelector(".modal-content > p:nth-child(2)").textContent = message;
-    div.querySelector(".modal-content > p:nth-child(2)").style.color = "black";
-  };
   div.querySelector(".close").addEventListener("click", (e) => {
     e.preventDefault();
     div.querySelector(".modal").style.display = "none";
@@ -19684,77 +19709,73 @@ const Login = () => {
       openModal("Por favor, introduce una contrase\xF1a de al menos 6 caracteres.");
       return;
     }
-    signInWithPassword(email, password).then(
-      (useCredential) => {
-        navigateTo("/home");
-      },
-      (error) => {
-        const errorCode = error.code;
-        let errorMessage;
-        if (errorCode === "auth/wrong-password") {
-          errorMessage = "La contrase\xF1a es incorrecta. Por favor, int\xE9ntalo de nuevo.";
-        } else if (errorCode === "auth/user-not-found") {
-          errorMessage = "No se ha encontrado una cuenta con este correo electr\xF3nico. Por favor, reg\xEDstrate primero.";
-        } else {
-          errorMessage = "Ha ocurrido un error al iniciar sesi\xF3n. Por favor, int\xE9ntalo de nuevo m\xE1s tarde.";
-        }
-        openModal(errorMessage);
+    signInWithPassword(email, password).then(() => {
+      navigateTo("/home");
+    }).catch((error) => {
+      const errorCode = error.code;
+      let errorMessage;
+      if (errorCode === "auth/wrong-password") {
+        errorMessage = "La contrase\xF1a es incorrecta. Por favor, int\xE9ntalo de nuevo.";
+      } else if (errorCode === "auth/user-not-found") {
+        errorMessage = "No se ha encontrado una cuenta con este correo electr\xF3nico. Por favor, reg\xEDstrate primero.";
+      } else {
+        errorMessage = "Ha ocurrido un error al iniciar sesi\xF3n. Por favor, int\xE9ntalo de nuevo m\xE1s tarde.";
       }
-    );
+      openModal(errorMessage);
+    });
   });
   div.querySelector(".google-btn").addEventListener("click", (e) => {
     e.preventDefault();
     signInWithGoogle().then(
-      (useCredential) => {
+      () => {
         navigateTo("/home");
-      },
-      (error) => {
-        switch (error.code) {
-          case "auth/popup-closed-by-user":
-            openModal("El inicio de sesi\xF3n se ha cancelado.");
-            break;
-          case "auth/cancelled-popup-request":
-            openModal("El inicio de sesi\xF3n se ha cancelado.");
-            break;
-          case "auth/web-storage-unsupported":
-            openModal("El navegador no soporta el almacenamiento web o el usuario ha desactivado este soporte.");
-            break;
-          case "auth/operation-not-supported-in-this-environment":
-            openModal("Esta operaci\xF3n no es compatible en el entorno actual.");
-            break;
-          case "auth/auth-domain-config-required":
-            openModal("La configuraci\xF3n del dominio de autenticaci\xF3n es obligatoria.");
-            break;
-          case "auth/credential-already-in-use":
-            openModal("Esta credencial ya est\xE1 en uso.");
-            break;
-          case "auth/user-disabled":
-            openModal("La cuenta de usuario ha sido deshabilitada.");
-            break;
-          case "auth/user-token-expired":
-            openModal("El token de usuario ha expirado.");
-            break;
-          case "auth/invalid-email":
-            openModal("La direcci\xF3n de correo electr\xF3nico proporcionada no es v\xE1lida.");
-            break;
-          case "auth/user-not-found":
-            openModal("No se encontr\xF3 una cuenta con la direcci\xF3n de correo electr\xF3nico proporcionada.");
-            break;
-          case "auth/wrong-password":
-            openModal("La contrase\xF1a proporcionada no es v\xE1lida.");
-            break;
-          case "auth/popup-blocked":
-            openModal("El inicio de sesi\xF3n emergente ha sido bloqueado por el navegador.");
-            break;
-          case "auth/network-request-failed":
-            openModal("Ha ocurrido un error de red, por favor comprueba tu conexi\xF3n.");
-            break;
-          default:
-            openModal("Ha ocurrido un error desconocido, por favor intenta de nuevo m\xE1s tarde.");
-            break;
-        }
       }
-    );
+    ).catch((error) => {
+      switch (error.code) {
+        case "auth/popup-closed-by-user":
+          openModal("El inicio de sesi\xF3n se ha cancelado.");
+          break;
+        case "auth/cancelled-popup-request":
+          openModal("El inicio de sesi\xF3n se ha cancelado.");
+          break;
+        case "auth/web-storage-unsupported":
+          openModal("El navegador no soporta el almacenamiento web o el usuario ha desactivado este soporte.");
+          break;
+        case "auth/operation-not-supported-in-this-environment":
+          openModal("Esta operaci\xF3n no es compatible en el entorno actual.");
+          break;
+        case "auth/auth-domain-config-required":
+          openModal("La configuraci\xF3n del dominio de autenticaci\xF3n es obligatoria.");
+          break;
+        case "auth/credential-already-in-use":
+          openModal("Esta credencial ya est\xE1 en uso.");
+          break;
+        case "auth/user-disabled":
+          openModal("La cuenta de usuario ha sido deshabilitada.");
+          break;
+        case "auth/user-token-expired":
+          openModal("El token de usuario ha expirado.");
+          break;
+        case "auth/invalid-email":
+          openModal("La direcci\xF3n de correo electr\xF3nico proporcionada no es v\xE1lida.");
+          break;
+        case "auth/user-not-found":
+          openModal("No se encontr\xF3 una cuenta con la direcci\xF3n de correo electr\xF3nico proporcionada.");
+          break;
+        case "auth/wrong-password":
+          openModal("La contrase\xF1a proporcionada no es v\xE1lida.");
+          break;
+        case "auth/popup-blocked":
+          openModal("El inicio de sesi\xF3n emergente ha sido bloqueado por el navegador.");
+          break;
+        case "auth/network-request-failed":
+          openModal("Ha ocurrido un error de red, por favor comprueba tu conexi\xF3n.");
+          break;
+        default:
+          openModal("Ha ocurrido un error desconocido, por favor intenta de nuevo m\xE1s tarde.");
+          break;
+      }
+    });
   });
   div.querySelector(".signup-btn").addEventListener("click", (e) => {
     e.preventDefault();
@@ -19781,15 +19802,18 @@ const Home = () => {
     <h1>Wanderlust</h1>
     <img class="cerrar-sesion" src="${iconoSalir}" alt="Cerrar sesi\xF3n">
     </header>
-    <h1>\xA1Hola, Bienvenidx a wanderlust !</h1>
+    <h2>\xA1Hola, Bienvenidx a wanderlust !</h2>
     <div class="container-post">
     <form id="post-form" class="post-form">
     <p>\xBFCu\xE1l ha sido tu destino de viaje favorito hasta ahora y por qu\xE9 lo recomendar\xEDas?</p>
     <div class="contenedor-img-text">
     <textarea id="post-content" placeholder="Cu\xE9ntanos tus aventuras......" ></textarea>
-    <input type="file" id="post-image" >
+    <div class="drop-container">
+    <span style="color:black;"class="drop-title">Selecciona una imagen de tus viajes</span>
+    <input type="file"  class="post-image" id="post-image" >
     </div>
-    <div class="contenedor-btn-publicar"><button type="submit" class='btn-registros'>Publicar</button></div>
+    </div>
+    <div class="contenedor-btn-publicar"><button type="submit" class='btn-publicar'>Publicar</button></div>
     </form>
     <div id="post-list"></div>
     </div>
@@ -19813,10 +19837,10 @@ const Home = () => {
       postDiv.innerHTML = ` 
       <header class="post-header">
       <img class="post-author-photo" src="${publicacion.autorPhotoURL ? publicacion.autorPhotoURL : `https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`}" alt="Foto de perfil de ${publicacion.autor}">
-      <p>Publicado por ${publicacion.autor} el ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
+      <p>${publicacion.autor} ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
       </header>
         ${publicacion.image ? `<div class="contenedor-img-post"><img class="post-imagen" src="${publicacion.image}" alt="Imagen de la publicaci\xF3n"></div>` : '<div class="post-imagen-vacia"></div>'}
-        <p class="texto-descripcion">${publicacion.descripcion}</p>
+        <p class="texto-descripcion"><strong>${publicacion.autor}</strong>  ${publicacion.descripcion}</p>
       <div class="contenedor-edicion">
       </div>
       <div class="contenedor-like">
@@ -19913,11 +19937,15 @@ const Home = () => {
               try {
                 const docRef = rh(db2, "publicaciones", publicacion.id);
                 await rf(docRef, { descripcion: nuevoContenido });
+                const publicaciones2 = await obtenerPublicaciones();
+                mostrarPublicaciones(publicaciones2);
                 if (nuevaImagen) {
                   const storageRef = ref(storage, `images/${nuevaImagen.name}`);
                   const snapshot = await uploadBytes(storageRef, nuevaImagen);
                   const nuevaUrlImagen = await getDownloadURL(snapshot.ref);
                   await rf(docRef, { image: nuevaUrlImagen });
+                  const publicaciones3 = await obtenerPublicaciones();
+                  mostrarPublicaciones(publicaciones3);
                 }
                 publicacion.descripcion = nuevoContenido;
                 publicacion.image = nuevaImagen;
@@ -19934,7 +19962,7 @@ const Home = () => {
     });
   };
   const obtenerPublicaciones = async () => {
-    const q2 = dl(sh(db2, "publicaciones"));
+    const q2 = dl(sh(db2, "publicaciones"), Il("fecha_creacion", "desc"));
     const querySnapshot = await tf(q2);
     const publicaciones = [];
     querySnapshot.forEach((doc) => {
@@ -19991,24 +20019,23 @@ const RecuperarContrasena = () => {
   div.innerHTML = `
     <picture>
       <source media="(max-width: 600px)" srcset="${logoBlanco}">
-      <img src="${iconoNegro}" alt="Descripci\xF3n de la imagen" class="icono-register">
+      <img src="${iconoNegro}" alt="Descripci\xF3n de la imagen" class="icono-register icono-restablecer">
     </picture>
     <form id="recuperar-Form" class="form-r-r">
       <h2>Recuperar contrase\xF1a</h2>
-      <p>Para restablecer su contrase\xF1a, ingrese la direcci\xF3n de correo electr\xF3nico que usa para iniciar sesi\xF3n.</p>
-      <input type="email" placeholder="Correo electr\xF3nico" name="email" id="email" required>
+      <p style="color: black;">Para restablecer su contrase\xF1a, ingrese la direcci\xF3n de correo electr\xF3nico que usa para iniciar sesi\xF3n.</p>
+      <input type="email" placeholder="Correo electr\xF3nico" name="email" id="email">
       <div style="height: 16px;"></div>
       <button class="btn-registros">Enviar</button>
-      <div style="height: 32px;"></div>
-      <a href="#" style="color: black;" class="btn">
+      <div style="height: 16px;"></div>
+      <span style="color: black;">
       \xA1No importa! <br>
-        <span style="color: #3e8ed0;">Ll\xE9vame de vuelta para iniciar sesi\xF3n</span>
-      </a>
+      <a href="#"  style="color: #3e8ed0;"class="btn"> Ll\xE9vame de vuelta para iniciar sesi\xF3n</a></span>
     </form>
     <div class="mensaje-envio-container modal">
     <div id="contenedor-msj" class="modal-content">
     <h2>Consultar su correo electr\xF3nico</h2>
-      <span class="close">&times;</span>
+      <span class="close" style="color: #565255;">&times;</span>
       <div id="mensaje-envio"></div>
     <button id="volver-inicio" class="btn-registros">Volver a la p\xE1gina de inicio</button>
     </div>
@@ -20028,8 +20055,16 @@ const RecuperarContrasena = () => {
       mensajeEnvio.textContent = `Correo enviado correctamente. Por favor, revise su bandeja de entrada de ${email} para obtener instrucciones sobre c\xF3mo restablecer su contrase\xF1a.`;
       mensajeEnvioContainer.style.display = "flex";
     }).catch((error) => {
-      mensajeEnvio.textContent = `Error al enviar el correo ${email} . Por favor, intenta de nuevo m\xE1s tarde.`;
-      mensajeEnvioContainer.style.display = "flex";
+      if (error.code === "auth/invalid-email") {
+        mensajeEnvio.textContent = "La direcci\xF3n de correo electr\xF3nico no es v\xE1lida.";
+        mensajeEnvioContainer.style.display = "flex";
+      } else if (error.code === "auth/user-not-found") {
+        mensajeEnvio.textContent = "No se encontr\xF3 ning\xFAn usuario con la direcci\xF3n de correo electr\xF3nico proporcionada.";
+        mensajeEnvioContainer.style.display = "flex";
+      } else {
+        mensajeEnvio.textContent = "Se ha producido un error al restablecer la contrase\xF1a. Por favor, int\xE9ntelo nuevamente m\xE1s tarde.";
+        mensajeEnvioContainer.style.display = "flex";
+      }
     });
   });
   div.querySelector(".close").addEventListener("click", (e) => {
