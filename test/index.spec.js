@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * @jest-environment jsdom
  */
@@ -7,6 +8,7 @@ import { RecuperarContrasena } from '../src/components/restablecer';
 import { Register } from '../src/components/register';
 import {
   signInWithPassword, signInWithGoogle, mostrarVentanaRecuperarContraseña, registerWithEmail,
+  openModal,
 } from '../src/helpers/accederCongmail';
 
 jest.mock('../src/helpers/accederCongmail');
@@ -39,7 +41,15 @@ describe('Pruebas de login', () => {
       expect(prueba.navigateTo).toHaveBeenCalledWith('/home');
     });
   });
-
+  it('La promesa de iniciar sesion con correo y pws ha sido rechazada deberia abrir un modal', (done) => {
+    signInWithPassword.mockRejectedValue({ code: 'auth/wrong-password' });
+    const loginDiv = Login();
+    loginDiv.querySelector('#loginForm').dispatchEvent(new Event('submit'));
+    setTimeout(() => {
+      expect(openModal).toHaveBeenCalled();
+      done();
+    });
+  });
   it('Autenticación con Google, debería redireccionar a /home', () => {
     // Paso 1: Visualizar el formulario de login.
     signInWithGoogle.mockResolvedValueOnce({ user: { email: 'ssinuco@gmail.com' } });

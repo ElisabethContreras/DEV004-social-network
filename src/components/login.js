@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { navigateTo } from '../router';
-import { signInWithGoogle, signInWithPassword } from '../helpers/accederCongmail';
+import { signInWithGoogle, signInWithPassword, openModal} from '../helpers/accederCongmail';
 import logo from '../assets/logo.png';
 import logoDorado from '../assets/logo1.png';
 import googleIcon from '../assets/google.png';
@@ -34,13 +34,11 @@ export const Login = () => {
   <div style="height: 16px;"></div>
   <div class="col">
   <div>
-  <a href="#" class="btn" >¿Olvidaste tu contraseña ? <span class="olvidaste-contraseña-btn" style="color: #66DA5F;">Recuperala</span></a>
+  <span class="olvidaste-contraseña-btn" >¿Olvidaste tu contraseña ? <a href="#" class="btn" style="color: #66DA5F; ">Recuperala</a></span>
   </div>
-  <div style="height: 16px;"></div>
   <div>
-  <a href="#" class="signup-btn">¿No tienes una cuenta? <span  style="color: #66DA5F;">Registrate</span></a>
+  <span>¿No tienes una cuenta? <a href="#" class="signup-btn" style="color: #66DA5F; ">Registrate</a></span>
   </div>
-  <div style="height: 16px;"></div>
   </div>
   </form>
   <div class="modal">
@@ -51,11 +49,7 @@ export const Login = () => {
 </div>`;
 
   // Function to open modal
-  const openModal = (message) => {
-    div.querySelector('.modal').style.display = 'block';
-    div.querySelector('.modal-content > p:nth-child(2)').textContent = message;
-    div.querySelector('.modal-content > p:nth-child(2)').style.color = 'black';
-  };
+
   // funcion para ocultar el modal
   div.querySelector('.close').addEventListener('click', (e) => {
     e.preventDefault();

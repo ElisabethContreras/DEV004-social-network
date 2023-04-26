@@ -25,3 +25,8 @@ export const mostrarVentanaRecuperarContraseña = (email) => {
   const auth = getAuth();
   return sendPasswordResetEmail(auth, email);
 };
+export const openModal = (message) => {
+  document.querySelector('.modal').style.display = 'block';
+  document.querySelector('.modal-content > p:nth-child(2)').textContent = message;
+  document.querySelector('.modal-content > p:nth-child(2)').style.color = 'black';
+};

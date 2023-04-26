@@ -1,5 +1,5 @@
 import { navigateTo } from '../router.js';
-import { registerWithEmail } from '../helpers/accederCongmail.js';
+import { registerWithEmail, openModal } from '../helpers/accederCongmail.js';
 import logoBlanco from '../assets/logoPrincipal.png';
 import iconoNegro from '../assets/iconoNavegador.png';
 
@@ -14,7 +14,7 @@ export const Register = () => {
   <source media="(max-width: 600px)" srcset="${logoBlanco}">
   <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register">
 </picture>
-    <p>Únete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. ¡Viaja sin límites!</p>
+    <span class="span-register">Únete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. ¡Viaja sin límites!</span>
     <form id="registerForm" class="form-r-r">
     <h2>Registro</h2>
         <input type="email" placeholder="Correo electrónico" name="email" id="email" >
@@ -23,7 +23,7 @@ export const Register = () => {
         <div style="height: 16px;"></div>
         <button id="crear" class="btn-registros">Crear</button>
         <div style="height: 32px;"></div>
-        <a href="#" style="color: black;" class="btn"> ¿ Ya tienes una cuenta?<br><span style="color: #3e8ed0; ">Ingresa</span></a>
+        <span style="color: black;"> ¿ Ya tienes una cuenta?<br><a href="#" style="color: #3e8ed0; " class="btn">Ingresa</a></span>
     </form>
     <div class="modal">
     <div class="modal-content">
@@ -39,12 +39,6 @@ export const Register = () => {
     e.preventDefault();
     div.querySelector('.modal').style.display = 'none';
   });
-  const openModal = (message) => {
-    div.querySelector('.modal').style.display = 'block';
-    div.querySelector('.modal-content > p:nth-child(2)').textContent = message;
-    div.querySelector('.modal-content > p:nth-child(2)').style.color = 'black';
-  };
-
   div.querySelector('#registerForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = div.querySelector('#email').value;
@@ -66,6 +60,7 @@ export const Register = () => {
     registerWithEmail(email, password)
       .then(() => {
         navigateTo('/');
+        openModal('Registrado exitosamente');
       })
       .catch((error) => {
         switch (error.code) {
