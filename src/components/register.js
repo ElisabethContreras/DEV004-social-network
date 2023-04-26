@@ -60,6 +60,7 @@ export const Register = () => {
     registerWithEmail(email, password)
       .then(() => {
         navigateTo('/');
+        openModal('Registrado exitosamente');
       })
       .catch((error) => {
         switch (error.code) {
