@@ -4,7 +4,7 @@
 ## Índice
 
 * [1. Preámbulo](#1-preámbulo)
-* [2. Descripción](#2-descripcion)
+* [2. Descripción](#2-descripción)
 * [3. Historias de usuario](#3-Historias-de-usuario)
 * [4. Objetivos de aprendizaje](#3-objetivos-de-aprendizaje)
 * [5. Consideraciones generales](#4-consideraciones-generales)
