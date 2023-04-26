@@ -64,10 +64,10 @@ export const Home = () => {
       postDiv.innerHTML = ` 
       <header class="post-header">
       <img class="post-author-photo" src="${publicacion.autorPhotoURL ? publicacion.autorPhotoURL : `https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`}" alt="Foto de perfil de ${publicacion.autor}">
-      <p>Publicado por ${publicacion.autor} el ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
+      <p>${publicacion.autor} ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
       </header>
         ${publicacion.image ? `<div class="contenedor-img-post"><img class="post-imagen" src="${publicacion.image}" alt="Imagen de la publicación"></div>` : '<div class="post-imagen-vacia"></div>'}
-        <p class="texto-descripcion">${publicacion.descripcion}</p>
+        <p class="texto-descripcion"><strong>${publicacion.autor}</strong>  ${publicacion.descripcion}</p>
       <div class="contenedor-edicion">
       </div>
       <div class="contenedor-like">
