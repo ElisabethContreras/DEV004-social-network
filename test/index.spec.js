@@ -44,12 +44,15 @@ describe('Pruebas de login', () => {
   it('La promesa de iniciar sesion con correo y pws ha sido rechazada deberia abrir un modal', (done) => {
     signInWithPassword.mockRejectedValue({ code: 'auth/wrong-password' });
     const loginDiv = Login();
+    loginDiv.querySelector('#username').value = 'email@example.com';
+    loginDiv.querySelector('#password').value = '123456';
     loginDiv.querySelector('#loginForm').dispatchEvent(new Event('submit'));
     setTimeout(() => {
-      expect(openModal).toHaveBeenCalled();
+      expect(openModal).toHaveBeenCalledWith('La contraseña es incorrecta. Por favor, inténtalo de nuevo.');
       done();
     });
   });
+
   it('Autenticación con Google, debería redireccionar a /home', () => {
     // Paso 1: Visualizar el formulario de login.
     signInWithGoogle.mockResolvedValueOnce({ user: { email: 'ssinuco@gmail.com' } });
