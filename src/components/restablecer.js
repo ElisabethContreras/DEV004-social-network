@@ -12,19 +12,18 @@ export const RecuperarContrasena = () => {
   div.innerHTML = `
     <picture>
       <source media="(max-width: 600px)" srcset="${logoBlanco}">
-      <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register">
+      <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register icono-restablecer">
     </picture>
     <form id="recuperar-Form" class="form-r-r">
       <h2>Recuperar contraseña</h2>
-      <p>Para restablecer su contraseña, ingrese la dirección de correo electrónico que usa para iniciar sesión.</p>
+      <p style="color: black;">Para restablecer su contraseña, ingrese la dirección de correo electrónico que usa para iniciar sesión.</p>
       <input type="email" placeholder="Correo electrónico" name="email" id="email" required>
       <div style="height: 16px;"></div>
       <button class="btn-registros">Enviar</button>
-      <div style="height: 32px;"></div>
-      <a href="#" style="color: black;" class="btn">
+      <div style="height: 16px;"></div>
+      <span style="color: black;">
       ¡No importa! <br>
-        <span style="color: #3e8ed0;">Llévame de vuelta para iniciar sesión</span>
-      </a>
+      <a href="#"  style="color: #3e8ed0;"class="btn"> Llévame de vuelta para iniciar sesión</a></span>
     </form>
     <div class="mensaje-envio-container modal">
     <div id="contenedor-msj" class="modal-content">

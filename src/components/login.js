@@ -34,13 +34,11 @@ export const Login = () => {
   <div style="height: 16px;"></div>
   <div class="col">
   <div>
-  <a href="#" class="btn" >¿Olvidaste tu contraseña ? <span class="olvidaste-contraseña-btn" style="color: #66DA5F;">Recuperala</span></a>
+  <span class="olvidaste-contraseña-btn" >¿Olvidaste tu contraseña ? <a href="#" class="btn" style="color: #66DA5F; ">Recuperala</a></span>
   </div>
-  <div style="height: 16px;"></div>
   <div>
-  <a href="#" class="signup-btn">¿No tienes una cuenta? <span  style="color: #66DA5F;">Registrate</span></a>
+  <span>¿No tienes una cuenta? <a href="#" class="signup-btn" style="color: #66DA5F; ">Registrate</a></span>
   </div>
-  <div style="height: 16px;"></div>
   </div>
   </form>
   <div class="modal">

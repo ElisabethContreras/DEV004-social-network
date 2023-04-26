@@ -65,7 +65,12 @@ button{
     margin: 0 auto;
     padding: 20px 10px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
 
+}
+.contenedores-r-r span{
+  margin-top: 20px;
 }
 .icono-register{
   width: 50%;
@@ -121,6 +126,7 @@ a{
     width: 18px;
     display: inline-block;
     margin-right: 12px;
+    margin-bottom: 15px;
 }
 .contenido-google{
   display: flex;
@@ -299,12 +305,6 @@ h2{
   padding: 10px;
   margin-top: 20px;
 }
-/* .post img{
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  text-align: left;
-} */
 .post p{
   height: auto;
   text-align: center;
@@ -334,7 +334,7 @@ h2{
   margin: 10px;
   color: black;
 }
-.form-r-r p {
+.form-r-r span{
   color: #000;
   vertical-align: inherit;
 }
@@ -384,17 +384,29 @@ border-radius: 20px;
   background-position:center;
   cursor: pointer;
 }
+.btn-registros:hover{
+  background-color: #063075;
+}
 @media only screen and (max-width: 600px) {
-  .post-form p{
-    color: #000;
-    margin: 20px;
+  .contenedores-r-r span{
+    color: white ;
   }
-  .icono-register{
-    margin-bottom: 15%;
+  .close{
+    color: #0d16b9;
+  }
+  .span-register{
+    margin-bottom: 20px;
+  }
+ 
+  .icono-restablecer{
+    margin-bottom:15% ;
   }
   .contenedores-r-r{
     background: none;
     max-width: 90%;
+  }
+  .contenedores-r-r p{
+    color: white;
   }
   .others-background{
     background-image: url("fondoMar.jpeg");
