@@ -1,7 +1,6 @@
 # Creando una Red Social
-<p align="center" width="100%"> <img width="100%" src=".src/assets/logo1.png">
-</p>
-
+<p align="center" width="100%"> <img width="100%" src="src/assets/logo1.png"></p>
+![Fuente](./src/assets/logo1.png)
 ## Índice
 
 * [1. Preámbulo](#1-preámbulo)
