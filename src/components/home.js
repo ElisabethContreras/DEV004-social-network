@@ -177,12 +177,16 @@ export const Home = () => {
                 // Actualizar la descripción de la publicación
                 const docRef = doc(db, 'publicaciones', publicacion.id);
                 await updateDoc(docRef, { descripcion: nuevoContenido });
+                const publicaciones = await obtenerPublicaciones();
+                mostrarPublicaciones(publicaciones);
                 // Si se seleccionó una nueva imagen, subirla al storage y actualizar la URL de la imagen en la base de datos
                 if (nuevaImagen) {
                   const storageRef = ref(storage, `images/${nuevaImagen.name}`);
                   const snapshot = await uploadBytes(storageRef, nuevaImagen);
                   const nuevaUrlImagen = await getDownloadURL(snapshot.ref);
                   await updateDoc(docRef, { image: nuevaUrlImagen });
+                  const publicaciones = await obtenerPublicaciones();
+                  mostrarPublicaciones(publicaciones);
                 }
                 // Actualizar la descripción en la página
                 publicacion.descripcion = nuevoContenido;
