@@ -55,6 +55,7 @@ herramientas o habilidades técnicas:
 <p align="center" width="100%"> <img width="fit-content" src="src/assets/h3.png"></p>
 
 
+
 ## 4. Objetivos de aprendizaje
 
 Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en tu proyecto. Piensa en eso al decidir tu estrategia de trabajo.
