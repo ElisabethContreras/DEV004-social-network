@@ -1,11 +1,9 @@
 # Creando una Red Social
-<p align="center" width="100%"> <img width="100%" src=".src/assets/logo1.png">
-</p>
 
 ## Índice
 
 * [1. Preámbulo](#1-preámbulo)
-* [2. Descripción](#2-descripcion)
+* [2. Resumen del proyecto](#2-resumen-del-proyecto)
 * [3. Objetivos de aprendizaje](#3-objetivos-de-aprendizaje)
 * [4. Consideraciones generales](#4-consideraciones-generales)
 * [5. Criterios de aceptación mínimos del proyecto](#5-criterios-de-aceptación-mínimos-del-proyecto)
@@ -28,12 +26,21 @@ investigaciones, comentar en los artículos de sus colegas, y filtrar artículos
 de acuerdo a determinadas etiquetas o su popularidad, lo más reciente, o lo
 más comentado.
 
-## 2. Descripción
+## 2. Resumen del proyecto
 
-<strong>Wanderlust </strong> es una aplicación web de publicación de viajes donde los usuarios pueden compartir sus aventuras y descubrir nuevos destinos a través de la experiencia de otros viajeros. La aplicación utiliza la tecnología de Firebase para almacenar y recuperar datos de usuarios y publicaciones.
+En este proyecto construirás una Red Social sobre lo que decidan tú y tu equipo.
+Podría ser, por ejemplo, sobre alimentación saludable, feminismo, educación,
+salud, energías renovables, amantes de las [Empanadas](https://es.wikipedia.org/wiki/Empanada)
+o de los [Tacos de Canasta](https://es.wikipedia.org/wiki/Taco),
+de la [Feijoada](https://es.wikipedia.org/wiki/Feijoada), o de lo que sea.
 
-En <strong>Wanderlust </strong> , los usuarios pueden publicar sus experiencias de viaje y compartir fotos de lugares hermosos que hayan visitado. Además, cuenta con una sección de exploración donde los usuarios pueden ver todas las publicaciones e interactuar con otras publicaciones dando "Me gusta" , también tiene una función de edición para los usuarios que hayan publicado, lo que les permite editar sus publicaciones existentes o eliminarlas por completo.
+Tu Red Social tendrá que permitir a cualquier usuario crear una cuenta de acceso
+y loguearse con ella; crear, editar, borrar y _"likear"_ publicacciones.
 
+Por lo tanto, en este proyecto construirás una
+[Single-page Application (SPA)](https://es.wikipedia.org/wiki/Single-page_application)
+[_responsive_](https://curriculum.laboratoria.la/es/topics/css/02-responsive) (con más de una vista / página)
+en la que podamos **leer y escribir datos**.
 
 ### Los objetivos generales de este proyecto son los siguientes
 
