@@ -202,7 +202,7 @@ export const Home = () => {
   /* obtener las publicaciones almacenadas en una colección Firestore de
   Firebase y devolverlas como un array de objetos que contienen el ID del documento y sus datos. */
   const obtenerPublicaciones = async () => {
-    const q = query(collection(db, 'publicaciones'),orderBy("fecha_creacion", "desc"));
+    const q = query(collection(db, 'publicaciones'), orderBy('fecha_creacion', 'desc'));
     const querySnapshot = await getDocs(q);
     const publicaciones = [];
     querySnapshot.forEach((doc) => {
