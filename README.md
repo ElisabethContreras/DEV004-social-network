@@ -5,12 +5,13 @@
 
 * [1. Preámbulo](#1-preámbulo)
 * [2. Descripción](#2-descripcion)
-* [3. Objetivos de aprendizaje](#3-objetivos-de-aprendizaje)
-* [4. Consideraciones generales](#4-consideraciones-generales)
-* [5. Criterios de aceptación mínimos del proyecto](#5-criterios-de-aceptación-mínimos-del-proyecto)
-* [6. Hacker edition](#6-hacker-edition)
-* [7. Entrega](#7-entrega)
-* [8. Pistas, tips y lecturas complementarias](#8-pistas-tips-y-lecturas-complementarias)
+* [3. Historias de usuario](#3-Historias-de-usuario)
+* [4. Objetivos de aprendizaje](#3-objetivos-de-aprendizaje)
+* [5. Consideraciones generales](#4-consideraciones-generales)
+* [6. Criterios de aceptación mínimos del proyecto](#5-criterios-de-aceptación-mínimos-del-proyecto)
+* [7. Hacker edition](#6-hacker-edition)
+* [8. Entrega](#7-entrega)
+* [9. Pistas, tips y lecturas complementarias](#8-pistas-tips-y-lecturas-complementarias)
 
 ## 1. Preámbulo
 
@@ -44,8 +45,8 @@ En <strong>Wanderlust </strong> , los usuarios pueden publicar sus experiencias 
 
 Para lograr estos objetivos, deberás aprender y hacer uso de las siguientes
 herramientas o habilidades técnicas:
-
-## 3. Objetivos de aprendizaje
+## 3. Historias de usuario
+## 4. Objetivos de aprendizaje
 
 Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en tu proyecto. Piensa en eso al decidir tu estrategia de trabajo.
 
@@ -305,7 +306,7 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
   * [Obtén actualizaciones en tiempo real con Cloud Firestore - Documentación oficial](https://firebase.google.com/docs/firestore/query-data/listen?hl=es)
 </p></details>
 
-## 4. Consideraciones generales
+## 5. Consideraciones generales
 
 * Este proyecto se debe trabajar en equipos de tres.
 
@@ -333,9 +334,9 @@ Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en t
 
 Para comenzar tendrás que hacer un _fork_ y _clonar_ este repositorio.
 
-## 5. Criterios de aceptación mínimos del proyecto
+## 6. Criterios de aceptación mínimos del proyecto
 
-### 5.1 Boilerplate
+### 6.1 Boilerplate
 
 Este proyecto no incluye un _boilerplate_ completo, solo algunos archivos de
 configuración basico, así es que tendrás que definir la estructura de carpetas
@@ -357,7 +358,7 @@ ninguna _dependencia circular_ en tu código ya que
 [import/no-cycle](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-cycle.md)
 que va a avisar si las tiene.)
 
-### 5.2 Definición del producto
+### 6.2 Definición del producto
 
 En el `README.md` cuéntanos brevemente cómo descubriste las necesidades de los
 usuarios y cómo llegaste a la definición final de tu producto. Es importante
@@ -366,7 +367,7 @@ que detalles:
 * Quiénes son los principales usuarios de producto.
 * Qué problema resuelve el producto / para qué le servirá a estos usuarios.
 
-### 5.3 Historias de usuario
+### 6.3 Historias de usuario
 
 Una vez que entiendas las necesidades de tus usuarixs, escribe las Historias de
 Usuario que representen todo lo que necesitan hacer/ver en la Red Social. Cada
@@ -390,20 +391,20 @@ una de tus Historias de Usuario debe tener:
     usuarios como mejoras.
   - Desplegaron su aplicación y etiquetaron la versión (git tag).
 
-### 5.4 Diseño de la Interfaz de Usuario (prototipo de baja fidelidad)
+### 6.4 Diseño de la Interfaz de Usuario (prototipo de baja fidelidad)
 
 Debes definir cuál será el flujo que seguirá el usuario dentro de tu aplicación
 y, con eso, diseña la Interfaz de Usuario (UI por sus siglas en inglés) que
 siga este flujo.
 
-### 5.5 Responsive
+### 6.5 Responsive
 
 Debe verse bien en dispositivos de pantallas grandes
 (computadoras/es, laptops, etc.) y pequeñas (_tablets_, celulares, etc.). Te
 sugerimos seguir la técnica de [_`mobile first`_](#mobile-first) (más detalles sobre esta técnica
 al final).
 
-### 5.6 Consideraciones del comportamiento de la interfaz de usuario (UI)
+### 6.6 Consideraciones del comportamiento de la interfaz de usuario (UI)
 
 Estas consideraciones te ayudarán a escribir las Definiciones de Terminado de
 tus H.U.:
@@ -442,7 +443,7 @@ tus H.U.:
     información editada.
   - Al recargar la página debo de poder ver los textos editados.
 
-### 5.7 Consideraciones técnicas Front-end
+### 6.7 Consideraciones técnicas Front-end
 
 * Separar la manipulación del DOM de la lógica (Separación de responsabilidades).
 * Contar con múltiples vistas. Para esto, tu aplicación debe ser una
@@ -460,7 +461,7 @@ tus H.U.:
 * Los tests unitarios deben cubrir un mínimo del 70% de _statements_, _functions_,
   _lines_, y _branches_.
 
-### 5.8 Consideraciones técnicas UX
+### 6.8 Consideraciones técnicas UX
 
 * Hacer al menos 2 entrevistas con usuarios.
 * Hacer un  prototipo de baja y alta fidelidad.
@@ -468,7 +469,7 @@ tus H.U.:
   diseño.
 * Hacer sesiones de _testing de usabilidad_ con el producto en HTML.
 
-## 6. Hacker edition
+## 7. Hacker edition
 
 Las secciones llamadas _Hacker Edition_ son **opcionales**. Si **terminaste**
 con todo lo anterior y te queda tiempo, intenta completarlas. Así podrás
@@ -482,7 +483,7 @@ profundizar y/o ejercitar más sobre los objetivos de aprendizaje del proyecto.
 * Permite comentar o responder una publicación.
 * Permite editar perfil.
 
-## 7. Entrega
+## 8. Entrega
 
 El proyecto será _entregado_ subiendo tu código a GitHub (`commit`/`push`) y la
 interfaz será desplegada usando GitHub pages u otro servicio de hosting
@@ -492,7 +493,7 @@ para guiarte con eso.
 
 ***
 
-## 8. Pistas, tips y Lecturas complementarias
+## 9. Pistas, tips y Lecturas complementarias
 
 ### Mobile first
 
