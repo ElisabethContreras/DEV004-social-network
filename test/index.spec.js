@@ -41,7 +41,18 @@ describe('Pruebas de login', () => {
       expect(prueba.navigateTo).toHaveBeenCalledWith('/home');
     });
   });
-  it('La promesa de iniciar sesion con correo y pws ha sido rechazada deberia abrir un modal', (done) => {
+  it('No puede iniciar sesion por correo no encontrado', (done) => {
+    signInWithPassword.mockRejectedValue({ code: 'auth/user-not-found' });
+    const loginDiv = Login();
+    loginDiv.querySelector('#username').value = 'email@example.com';
+    loginDiv.querySelector('#password').value = '123456';
+    loginDiv.querySelector('#loginForm').dispatchEvent(new Event('submit'));
+    setTimeout(() => {
+      expect(openModal).toHaveBeenCalledWith('No se ha encontrado una cuenta con este correo electrónico. Por favor, regístrate primero.');
+      done();
+    });
+  });
+  it('El inicio de sesión se ha cancelado por contraseña incorrecta', (done) => {
     signInWithPassword.mockRejectedValue({ code: 'auth/wrong-password' });
     const loginDiv = Login();
     loginDiv.querySelector('#username').value = 'email@example.com';
@@ -52,7 +63,17 @@ describe('Pruebas de login', () => {
       done();
     });
   });
-
+  it('El inicio de sesión con Google se ha cancelado', (done) => {
+    signInWithGoogle.mockRejectedValue({ code: 'auth/popup-closed-by-user' });
+    const loginDiv = Login();
+    loginDiv.querySelector('.google-btn').dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    setTimeout(() => {
+      const errorMessages = ['No se ha encontrado una cuenta con este correo electrónico. Por favor, regístrate primero.', 'La contraseña es incorrecta. Por favor, inténtalo de nuevo.'];
+      expect(openModal).toHaveBeenCalledWith('El inicio de sesión se ha cancelado.');
+      expect(openModal).not.toHaveBeenCalledWith(expect.arrayContaining(errorMessages));
+      done();
+    });
+  });
   it('Autenticación con Google, debería redireccionar a /home', () => {
     // Paso 1: Visualizar el formulario de login.
     signInWithGoogle.mockResolvedValueOnce({ user: { email: 'ssinuco@gmail.com' } });
