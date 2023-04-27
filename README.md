@@ -63,6 +63,9 @@ Además, esta red social podría resultar especialmente atractiva para aquellos 
 
 
 ###  Diseño de la Interfaz de Usuario (prototipo de baja fidelidad)
+Realizar el prototipo de baja del proyecto nos ayudó a visualizar y comprender mejor cómo sería la idea en la práctica. Al crear una maqueta o representación básica del diseño, se pudo evaluar su funcionalidad y hacer ajustes antes de comprometer con la construcción completa.
+También pudimos utilizar el prototipo de baja para obtener comentarios y opiniones de posibles usuarios finales. Sus sugerencias y observaciones nos permitieron mejorar y refinar el diseño antes de avanzar a la siguiente etapa del proyecto.
+<p align="center" width="100%"> <img width="fit-content" src="src/assets/prototipoBaja.jpeg"></p>
 
 
 ###  Responsive
