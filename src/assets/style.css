@@ -421,7 +421,6 @@ border-radius: 20px;
   background: url("likeLleno.png");
   background-size: contain;
   padding: 25px;
-  margin-left: 30px;
   background-position:center;
   cursor: pointer;
 }
@@ -430,7 +429,6 @@ border-radius: 20px;
   background: url("likeVacio.png");
   background-size: contain;
   padding: 25px;
-  margin-left: 30px;
   background-position:center;
   cursor: pointer;
 }
