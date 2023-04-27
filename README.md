@@ -2,9 +2,10 @@
 <p align="center" width="100%"> <img width="100%" src="src/assets/wanderlust.jpg"></p><br>
 <strong>Colaboradoras</strong>
 <br/>
-[Kelly  Flores](https://github.com/kellyfabiolafc)<br/>
-[Marwill Alexa](https://github.com/Alexas1903) <br/>
-[Elisabeth Rojas](https://github.com/ElisabethContreras)
+
+* [Kelly  Flores](https://github.com/kellyfabiolafc)
+* [Marwill Alexa](https://github.com/Alexas1903) 
+* [Elisabeth Rojas](https://github.com/ElisabethContreras)
 
 
 ## Índice
@@ -15,12 +16,12 @@
 * [5. Consideraciones técnicas UX](#5-consideraciones-técnicas-ux)
 * [6. Objetivos de aprendizaje](#6-objetivos-de-aprendizaje)
 ## 1. Wanderlust 
-### Definición
+### Definición:
 <strong>Wanderlust </strong> es una red social de viajes donde los usuarios pueden compartir sus aventuras y descubrir nuevos destinos a través de la experiencia de otros viajeros. La aplicación utiliza la tecnología de Firebase para almacenar y recuperar datos de usuarios y publicaciones.
 
 En <strong>Wanderlust </strong> , los usuarios pueden publicar sus experiencias de viaje y compartir fotos de lugares hermosos que hayan visitado. Además, cuenta con una sección de exploración donde los usuarios pueden ver todas las publicaciones e interactuar con otras publicaciones dando "Me gusta" , también tiene una función de edición para los usuarios que hayan publicado, lo que les permite editar sus publicaciones existentes o eliminarlas por completo.
 
-### Los objetivos generales de este proyecto son los siguientes
+### Los objetivos generales de este proyecto son los siguientes:
 
 * Desarrollar una SPA con temática de red social
 * Aplicar los conceptos de responsividad en el desarrollo de las vistas (templates)
@@ -35,9 +36,9 @@ Los resultados de la encuesta también nos ayudaron a definir el enfoque y la es
 
 <p align="center" width="100%"> <img width="fit-content" src="src/assets/encuesta.jpg"></p>
 
-### Objetivos 
+### Objetivos :
 El objetivo principal de Wanderlust, red social de viajes donde los usuarios pueden compartir sus aventuras y descubrir nuevos destinos a través de la experiencia de otros viajeros, es crear una comunidad de viajeros apasionados por explorar el mundo y compartir sus vivencias.
-## Principales usuarios
+### Principales usuarios :
 Los principales usuarios de esta red social son las personas que disfrutan viajar, descubrir nuevas culturas y tener experiencias únicas. Wanderlust fue creado para personas de diferentes edades, géneros y nacionalidades, pero con una pasión compartida por los viajes.
 
 Además, esta red social podría resultar especialmente atractiva para aquellos que buscan inspiración e ideas para planear sus próximos viajes, así como para aquellos que disfrutan compartiendo sus aventuras con otros y creando una comunidad en línea de viajeros entusiastas. También podrían ser usuarios aquellos que deseen encontrar recomendaciones y consejos de otros viajeros acerca de lugares para visitar, entre otros aspectos relacionados con los viajes.
@@ -62,7 +63,8 @@ Además, esta red social podría resultar especialmente atractiva para aquellos 
 
 ###  Responsive
 <p align="center" width="100%"> <img width="fit-content" src="src/assets/Responsive.jpg"></p>
-[Responsive design](https://www.canva.com/design/DAFhOPofCyE/duZxRh2iPazl_f1s8Y7oRw/watch?utm_content=DAFhOPofCyE&utm_campaign=share_your_design&utm_medium=link&utm_source=shareyourdesignpanel)
+
+* [Responsive design](https://www.canva.com/design/DAFhOPofCyE/duZxRh2iPazl_f1s8Y7oRw/watch?utm_content=DAFhOPofCyE&utm_campaign=share_your_design&utm_medium=link&utm_source=shareyourdesignpanel)
 
 ## 4. Consideraciones del comportamiento de la interfaz de usuario (UI)
 ✔️ **Creación de cuenta de usuario e inicio de sesión**
