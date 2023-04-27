@@ -149,10 +149,12 @@ export const Home = () => {
             const form = document.createElement('div');
             form.className = 'form-edicion';
             form.innerHTML = `
+            <div class="contenedor-inputs-editar">
             <label for="descripcion">Descripción:</label>
-            <input type="text" id="descripcion"  name="descripcion" value="${publicacion.descripcion}">
+            <textarea id="descripcion"  name="descripcion">${publicacion.descripcion}</textarea>
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" name="imagen">
+            </div>
             <div class="contenedor-btn-edit">
             <button type="button" id="guardar" class="btn-guardar">Guardar</button>
             <button type="button" id="cancelar" class="btn-cancelar">Cancelar</button>
@@ -182,6 +184,7 @@ export const Home = () => {
                 await updateDoc(docRef, { descripcion: nuevoContenido });
                 const publicaciones = await obtenerPublicaciones();
                 mostrarPublicaciones(publicaciones);
+                // eslint-disable-next-line max-len
                 // Si se seleccionó una nueva imagen, subirla al storage y actualizar la URL de la imagen en la base de datos
                 if (nuevaImagen) {
                   const storageRef = ref(storage, `images/${nuevaImagen.name}`);

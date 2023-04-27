@@ -265,6 +265,9 @@ margin:20px ;
   height: 40px;
   cursor: pointer;
 }
+.contenedor-inputs-editar{
+  flex-direction: column;
+   display: flex;}
 .form-edicion{
   margin: 20px;
   align-items: center;

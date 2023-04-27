@@ -19836,11 +19836,14 @@ const Home = () => {
       postDiv.className = "post";
       postDiv.innerHTML = ` 
       <header class="post-header">
+      <div class="sub-header-post">
       <img class="post-author-photo" src="${publicacion.autorPhotoURL ? publicacion.autorPhotoURL : `https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`}" alt="Foto de perfil de ${publicacion.autor}">
-      <p>${publicacion.autor} ${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
+      <p><strong>${publicacion.autor}</strong></p>
+      </div>
+      <p>${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
       </header>
         ${publicacion.image ? `<div class="contenedor-img-post"><img class="post-imagen" src="${publicacion.image}" alt="Imagen de la publicaci\xF3n"></div>` : '<div class="post-imagen-vacia"></div>'}
-        <p class="texto-descripcion"><strong>${publicacion.autor}</strong>  ${publicacion.descripcion}</p>
+      <p class="texto-descripcion"><strong>${publicacion.autor}</strong>  ${publicacion.descripcion}</p>
       <div class="contenedor-edicion">
       </div>
       <div class="contenedor-like">
@@ -19911,10 +19914,12 @@ const Home = () => {
             const form = document.createElement("div");
             form.className = "form-edicion";
             form.innerHTML = `
+            <div class="contenedor-inputs-editar">
             <label for="descripcion">Descripci\xF3n:</label>
-            <input type="text" id="descripcion"  name="descripcion" value="${publicacion.descripcion}">
+            <textarea id="descripcion"  name="descripcion">${publicacion.descripcion}</textarea>
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" name="imagen">
+            </div>
             <div class="contenedor-btn-edit">
             <button type="button" id="guardar" class="btn-guardar">Guardar</button>
             <button type="button" id="cancelar" class="btn-cancelar">Cancelar</button>
