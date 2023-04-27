@@ -18,8 +18,11 @@ html, body {
   height: 100%;
 }
 .home-background {
-  background-color: #9FDDE8;
+  /* background: linear-gradient(to bottom, #d7ffff 0%, #bdf0f7 25%, #9edde8 50%, #7ecad9 75%, #61b9cd 100%); */
+  background: linear-gradient(to bottom, #d7ffff 0%, #bbe9ec 25%,  rgb(93, 219, 230) 50%, #7ecad9 75%, rgba(21,105,231,1) 100%);
+  background-attachment: fixed;
 }
+
 .others-background{
   background-image: url("mar.jpg");
   background-size: cover;
@@ -62,7 +65,12 @@ button{
     margin: 0 auto;
     padding: 20px 10px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
 
+}
+.contenedores-r-r span{
+  margin-top: 20px;
 }
 .icono-register{
   width: 50%;
@@ -118,6 +126,7 @@ a{
     width: 18px;
     display: inline-block;
     margin-right: 12px;
+    margin-bottom: 15px;
 }
 .contenido-google{
   display: flex;
@@ -150,7 +159,7 @@ a{
   width: 80%; /* Could be more or less, depending on screen size */
 }
 .close {
-  color: #aaa;
+  color: #565255;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -164,12 +173,28 @@ a{
 }
 
 .container-post {
-  max-width: 700px;
+  max-width: 500px;
   margin: 0 auto;
   display: flex;
     align-items: left;
     flex-direction: column;
 
+}
+.btn-publicar{
+
+    height: 48px;
+    font-size: 18px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    background-color: #A5BC34;
+    color: #fdfffd;
+    margin-bottom: 20px;
+    margin-right: 20px;
 }
 .post-form p{
   margin: 20px;
@@ -184,8 +209,19 @@ a{
   resize: none;
   padding: 20px;
 }
+.contenedor-img-post{
+  display: flex;
+  justify-content: center;
+}
+.contenedor-img-post img{ 
+  display: block;
+  width: 100%;
+  height: 20em;
+  border-radius: 10px;
+}
 .contenedor-img-text{
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin: 20px;
   justify-content: space-around;
@@ -195,6 +231,25 @@ a{
   height: 80px;
   border-radius: 50%;
   margin-right: 20px;
+}
+.drop-container {
+   width: 100%; 
+    /* position: relative; */
+    display: flex;
+    /* gap: 10px; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    /* padding: 10px; */
+    border-radius: 10px;
+    color: #100f0f;
+    cursor: pointer;
+margin-top: 10px;
+
+}
+.post-image{
+  margin-top: 20px;
 }
 #post-list {
   margin-top: 20px;
@@ -207,7 +262,11 @@ margin:20px ;
 .contenedor-btn-post img{
   width: 40px;
   height: 40px;
+  cursor: pointer;
 }
+.contenedor-inputs-editar{
+  flex-direction: column;
+   display: flex;}
 .form-edicion{
   margin: 20px;
   align-items: center;
@@ -220,6 +279,7 @@ margin:20px ;
 .contenedor-btn-edit{
   display: flex;
   justify-content: space-around;
+  margin-top: 20px;
 }
 .btn-cancelar{
 background-color: #063075;
@@ -280,23 +340,18 @@ h2{
   /* height: 50px; */
 }
 .post{
-  background-color: white;
+  background-color: #e4e4e46e;
   height: auto;
   border-radius: 20px;
   padding: 10px;
   margin-top: 20px;
+  max-width: 500px;
 }
-/* .post img{
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  text-align: left;
-} */
-.post p{
+/* .post p{
   height: auto;
   text-align: center;
   padding: 10px;
-}
+} */
 .post-header{
   display: flex;
   align-items: center;
@@ -308,30 +363,37 @@ h2{
     height: 80px;
     border-radius: 50%;
     text-align: left;
+    margin-right:10px ;
+}
+.sub-header-post{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 #contenedor-msj{
   background-color: #fefefe;
-  margin: auto; /* 15% from the top and centered */
+  margin-top: 50%; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
+  height: fit-content;
 }
 
 #mensaje-envio {
   margin: 10px;
   color: black;
 }
-.form-r-r p {
+.form-r-r span{
   color: #000;
   vertical-align: inherit;
 }
-.texto-descripcion{
+/* .texto-descripcion{
   background-color: #D9D9D9;
   border-radius:20px ;
   margin: 20px;
-}
+} */
 .post-form{
-background-color: #fdfffd;
+background-color: rgb(0 0 0 / 20%);
 text-align: center;
 border-radius: 20px;
 }
@@ -358,7 +420,6 @@ border-radius: 20px;
   background: url("likeLleno.png");
   background-size: contain;
   padding: 25px;
-  margin-left: 30px;
   background-position:center;
   cursor: pointer;
 }
@@ -367,21 +428,33 @@ border-radius: 20px;
   background: url("likeVacio.png");
   background-size: contain;
   padding: 25px;
-  margin-left: 30px;
   background-position:center;
   cursor: pointer;
 }
+.btn-registros:hover{
+  background-color: #063075;
+}
+/* .contenedor-img-post img{
+width: fit-content;
+} */
 @media only screen and (max-width: 600px) {
-  .post-form p{
-    color: #000;
-    margin: 20px;
+  .contenedores-r-r span{
+    color: white ;
   }
-  .icono-register{
-    margin-bottom: 15%;
+
+  .span-register{
+    margin-bottom: 20px;
+  }
+
+  .icono-restablecer{
+    margin-bottom:15% ;
   }
   .contenedores-r-r{
     background: none;
     max-width: 90%;
+  }
+  .contenedores-r-r p{
+    color: white;
   }
   .others-background{
     background-image: url("fondoMar.jpeg");
@@ -391,8 +464,10 @@ border-radius: 20px;
     background-attachment: fixed;
   }
   .header-muro{
-    font-size: 15px;
+    font-size: 20px;
     justify-content: space-around;
+    height: 6em;
+
   }
   .cerrar-sesion{
     width: 30px;
@@ -419,19 +494,14 @@ border-radius: 20px;
   margin: 20px;
   padding: 5px;
 }
-.header-muro img{
-  width: 60px;
-  margin-right: 20px;
-  height: 60px;
-  border-radius: 50%;
-  text-align: left;
-}
+
 .post p{
   font-size: 12px;
 }
 .post-form{
   margin: 20px;
 }
+
 }
 
 
