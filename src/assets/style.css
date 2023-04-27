@@ -263,6 +263,7 @@ margin:20px ;
 .contenedor-btn-post img{
   width: 40px;
   height: 40px;
+  cursor: pointer;
 }
 .form-edicion{
   margin: 20px;
@@ -360,6 +361,12 @@ h2{
     height: 80px;
     border-radius: 50%;
     text-align: left;
+    margin-right:10px ;
+}
+.sub-header-post{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 #contenedor-msj{
   background-color: #fefefe;

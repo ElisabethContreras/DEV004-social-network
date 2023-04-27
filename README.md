@@ -1,11 +1,15 @@
 # Creando una Red Social
 <p align="center" width="100%"> <img width="100%" src="src/assets/wanderlust.jpg"></p><br>
-<strong>Colaboradoras</strong>
+ <strong>Colaboradoras :</strong>
 <br/>
 
 * [Kelly  Flores](https://github.com/kellyfabiolafc)
 * [Marwill Alexa](https://github.com/Alexas1903) 
 * [Elisabeth Rojas](https://github.com/ElisabethContreras)
+
+<strong>Demo</strong>
+
+* [Wanderlust](https://wanderlust-kea.netlify.app/)
 
 
 ## Índice
@@ -119,7 +123,7 @@ Además, las pruebas también nos han ayudado a identificar problemas específic
 Otro beneficio de las pruebas es que nos han permitido mejorar la eficiencia de la red social. Al identificar y corregir problemas de rendimiento, hemos logrado mejorar el tiempo de carga y la velocidad general de la red social, lo que es beneficioso tanto para nuestros usuarios como para nosotros.
 
 Por último, las pruebas también nos han ayudado a planificar a largo plazo. Al recopilar información sobre cómo los usuarios interactúan con la red social, podemos identificar áreas que necesitan mejoras y desarrollar nuevas funcionalidades y características que satisfagan las necesidades de nuestros usuarios.
-<p align="center" width="100%"> <img width="fit-content" src="src/assets/testeos.png"></p>
+<p align="center" width="100%"> <img width="fit-content" src="src/assets/testeos.jpg"></p>
 
 ## 6. Objetivos de aprendizaje
 ### HTML
