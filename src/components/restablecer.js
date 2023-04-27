@@ -17,7 +17,7 @@ export const RecuperarContrasena = () => {
     <form id="recuperar-Form" class="form-r-r">
       <h2>Recuperar contraseña</h2>
       <p style="color: black;">Para restablecer su contraseña, ingrese la dirección de correo electrónico que usa para iniciar sesión.</p>
-      <input type="email" placeholder="Correo electrónico" name="email" id="email" required>
+      <input type="email" placeholder="Correo electrónico" name="email" id="email">
       <div style="height: 16px;"></div>
       <button class="btn-registros">Enviar</button>
       <div style="height: 16px;"></div>
@@ -28,7 +28,7 @@ export const RecuperarContrasena = () => {
     <div class="mensaje-envio-container modal">
     <div id="contenedor-msj" class="modal-content">
     <h2>Consultar su correo electrónico</h2>
-      <span class="close">&times;</span>
+      <span class="close" style="color: #565255;">&times;</span>
       <div id="mensaje-envio"></div>
     <button id="volver-inicio" class="btn-registros">Volver a la página de inicio</button>
     </div>
@@ -53,8 +53,19 @@ export const RecuperarContrasena = () => {
         mensajeEnvioContainer.style.display = 'flex';
       })
       .catch((error) => {
-        mensajeEnvio.textContent = `Error al enviar el correo ${email} . Por favor, intenta de nuevo más tarde.`;
-        mensajeEnvioContainer.style.display = 'flex';
+        if (error.code === 'auth/invalid-email') {
+          // Mostrar mensaje de error en español
+          mensajeEnvio.textContent = 'La dirección de correo electrónico no es válida.';
+          mensajeEnvioContainer.style.display = 'flex';
+        } else if (error.code === 'auth/user-not-found') {
+          // Mostrar mensaje de error en español
+          mensajeEnvio.textContent = 'No se encontró ningún usuario con la dirección de correo electrónico proporcionada.';
+          mensajeEnvioContainer.style.display = 'flex';
+        } else {
+          // Mostrar mensaje de error genérico en español
+          mensajeEnvio.textContent = 'Se ha producido un error al restablecer la contraseña. Por favor, inténtelo nuevamente más tarde.';
+          mensajeEnvioContainer.style.display = 'flex';
+        }
       });
   });
 
