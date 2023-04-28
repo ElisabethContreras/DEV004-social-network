@@ -6,12 +6,14 @@ import * as prueba from '../src/router';
 import { Login } from '../src/components/login';
 import { RecuperarContrasena } from '../src/components/restablecer';
 import { Register } from '../src/components/register';
+import { Home } from '../src/components/home';
 import {
   signInWithPassword, signInWithGoogle, mostrarVentanaRecuperarContraseña, registerWithEmail,
-  openModal,
-} from '../src/helpers/accederCongmail';
+  openModal, cerrarsesion,
+} from '../src/helpers/firebaseAuth';
+import { crearPublicacion} from '../src/helpers/firebasestore';
 
-jest.mock('../src/helpers/accederCongmail');
+jest.mock('../src/helpers/firebaseAuth');
 
 describe('Pruebas de login', () => {
   beforeEach(() => {
@@ -143,6 +145,23 @@ describe('Prueba de registro', () => {
     // // Paso 4: Verificamos visualmente que la aplicación redija a `/`.
     return Promise.resolve().then(() => {
       expect(prueba.navigateTo).toHaveBeenCalledWith('/');
+    });
+  });
+});
+describe('Pruebas del Muro de publicaciones', () => {
+  beforeEach(() => {
+    // eslint-disable-next-line no-import-assign
+    prueba.navigateTo = jest.fn(() => console.log('ok'));
+  });
+  it('Si cerramos sesion deberiamos rederigirnos  a /', (done) => {
+    // router.navigateTo = jest.fn().mockImplementation(() => {
+    cerrarsesion.mockResolvedValue(Promise.resolve());
+    const homeDiv = Home();
+    homeDiv.querySelector('.cerrar-sesion').dispatchEvent(new Event('click'));
+    expect(cerrarsesion).toHaveBeenCalled();
+    setTimeout(() => {
+      expect(prueba.navigateTo).toHaveBeenCalledWith('/');
+      done();
     });
   });
 });

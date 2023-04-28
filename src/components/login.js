@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { navigateTo } from '../router';
-import { signInWithGoogle, signInWithPassword, openModal} from '../helpers/accederCongmail';
+import { signInWithGoogle, signInWithPassword, openModal } from '../helpers/firebaseAuth';
 import logo from '../assets/logo.png';
 import logoDorado from '../assets/logo1.png';
 import googleIcon from '../assets/google.png';
@@ -43,14 +42,10 @@ export const Login = () => {
   </form>
   <div class="modal">
   <div class="modal-content">
-    <span class="close" style="color: #565255;">&times;</span>
-    <p>Some text in the Modal..</p>
+  <span class="close" style="color: #565255;">&times;</span>
+  <p>Some text in the Modal..</p>
   </div>
-</div>`;
-
-  // Function to open modal
-
-  // funcion para ocultar el modal
+  </div>`;
   div.querySelector('.close').addEventListener('click', (e) => {
     e.preventDefault();
     div.querySelector('.modal').style.display = 'none';
