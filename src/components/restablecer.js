@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { mostrarVentanaRecuperarContraseña } from '../helpers/accederCongmail.js';
+import { mostrarVentanaRecuperarContraseña } from '../helpers/firebaseAuth.js';
 import { navigateTo } from '../router.js';
 import logoBlanco from '../assets/logoPrincipal.png';
 import iconoNegro from '../assets/iconoNavegador.png';
@@ -10,10 +10,10 @@ export const RecuperarContrasena = () => {
   const div = document.createElement('div');
   div.className = 'contenedores-r-r';
   div.innerHTML = `
-    <picture>
-      <source media="(max-width: 600px)" srcset="${logoBlanco}">
-      <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register icono-restablecer">
-    </picture>
+  <picture>
+  <source media="(max-width: 600px)" srcset="${logoBlanco}">
+  <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register icono-restablecer">
+  </picture>
     <form id="recuperar-Form" class="form-r-r">
       <h2>Recuperar contraseña</h2>
       <p style="color: black;">Para restablecer su contraseña, ingrese la dirección de correo electrónico que usa para iniciar sesión.</p>
@@ -38,7 +38,6 @@ export const RecuperarContrasena = () => {
     e.preventDefault();
     navigateTo('/');
   });
-
   const formulario = div.querySelector('#recuperar-Form');
   const mensajeEnvio = div.querySelector('#mensaje-envio');
   const mensajeEnvioContainer = div.querySelector('.mensaje-envio-container');

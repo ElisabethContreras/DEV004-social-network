@@ -3,7 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
-  signInWithEmailAndPassword, sendPasswordResetEmail,
+  signInWithEmailAndPassword, sendPasswordResetEmail, signOut
 } from 'firebase/auth';
 
 export const signInWithPassword = (email, password) => {
@@ -29,4 +29,8 @@ export const openModal = (message) => {
   document.querySelector('.modal').style.display = 'block';
   document.querySelector('.modal-content > p:nth-child(2)').textContent = message;
   document.querySelector('.modal-content > p:nth-child(2)').style.color = 'black';
+};
+export const cerrarsesion = () => {
+  const auth = getAuth();
+  return signOut(auth);
 };

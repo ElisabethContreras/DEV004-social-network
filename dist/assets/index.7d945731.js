@@ -7197,7 +7197,7 @@ function $a(a, b2, c, d, e) {
 function cb(a, b2, c, d, e, f) {
   if (!b2)
     throw Error("Invalid event type");
-  var h = p(e) ? !!e.capture : !!e, n = db(a);
+  var h = p(e) ? !!e.capture : !!e, n = db$1(a);
   n || (a[Xa$1] = n = new Ua(a));
   c = n.add(b2, c, d, h, f);
   if (c.proxy)
@@ -7237,7 +7237,7 @@ function hb(a, b2, c, d, e) {
     for (var f = 0; f < b2.length; f++)
       hb(a, b2[f], c, d, e);
   else
-    (d = p(d) ? !!d.capture : !!d, c = bb(c), a && a[A]) ? (a = a.i, b2 = String(b2).toString(), b2 in a.g && (f = a.g[b2], c = Va(f, c, d, e), -1 < c && (Pa(f[c]), Array.prototype.splice.call(f, c, 1), 0 == f.length && (delete a.g[b2], a.h--)))) : a && (a = db(a)) && (b2 = a.g[b2.toString()], a = -1, b2 && (a = Va(b2, c, d, e)), (c = -1 < a ? b2[a] : null) && ib(c));
+    (d = p(d) ? !!d.capture : !!d, c = bb(c), a && a[A]) ? (a = a.i, b2 = String(b2).toString(), b2 in a.g && (f = a.g[b2], c = Va(f, c, d, e), -1 < c && (Pa(f[c]), Array.prototype.splice.call(f, c, 1), 0 == f.length && (delete a.g[b2], a.h--)))) : a && (a = db$1(a)) && (b2 = a.g[b2.toString()], a = -1, b2 && (a = Va(b2, c, d, e)), (c = -1 < a ? b2[a] : null) && ib(c));
 }
 function ib(a) {
   if ("number" !== typeof a && a && !a.ba) {
@@ -7247,7 +7247,7 @@ function ib(a) {
     else {
       var c = a.type, d = a.proxy;
       b2.removeEventListener ? b2.removeEventListener(c, d, a.capture) : b2.detachEvent ? b2.detachEvent(fb(c), d) : b2.addListener && b2.removeListener && b2.removeListener(d);
-      (c = db(b2)) ? (Wa$1(c, a), 0 == c.h && (c.src = null, b2[Xa$1] = null)) : Pa(a);
+      (c = db$1(b2)) ? (Wa$1(c, a), 0 == c.h && (c.src = null, b2[Xa$1] = null)) : Pa(a);
     }
   }
 }
@@ -7265,7 +7265,7 @@ function gb(a, b2) {
   }
   return a;
 }
-function db(a) {
+function db$1(a) {
   a = a[Xa$1];
   return a instanceof Ua ? a : null;
 }
@@ -19339,12 +19339,12 @@ function extractBucket(host, config) {
   }
   return Location.makeFromBucketSpec(bucketString, host);
 }
-function connectStorageEmulator$1(storage, host, port, options = {}) {
-  storage.host = `${host}:${port}`;
-  storage._protocol = "http";
+function connectStorageEmulator$1(storage2, host, port, options = {}) {
+  storage2.host = `${host}:${port}`;
+  storage2._protocol = "http";
   const { mockUserToken } = options;
   if (mockUserToken) {
-    storage._overrideAuthToken = typeof mockUserToken === "string" ? mockUserToken : createMockUserToken(mockUserToken, storage.app.options.projectId);
+    storage2._overrideAuthToken = typeof mockUserToken === "string" ? mockUserToken : createMockUserToken(mockUserToken, storage2.app.options.projectId);
   }
 }
 class FirebaseStorageImpl {
@@ -19496,8 +19496,8 @@ function getStorage(app = getApp(), bucketUrl) {
   }
   return storageInstance;
 }
-function connectStorageEmulator(storage, host, port, options = {}) {
-  connectStorageEmulator$1(storage, host, port, options);
+function connectStorageEmulator(storage2, host, port, options = {}) {
+  connectStorageEmulator$1(storage2, host, port, options);
 }
 function factory(container, { instanceIdentifier: url }) {
   const app = container.getProvider("app").getImmediate();
@@ -19524,17 +19524,20 @@ const initFirebase = () => {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db2 = wh(app);
-  const storage = getStorage(app, "gs://wanderlust-edc27.appspot.com");
+  const storage2 = getStorage(app, "gs://wanderlust-edc27.appspot.com");
   return {
     app,
     auth,
     db: db2,
-    storage
+    storage: storage2
   };
 };
 const LOCAL_ROUTES = {};
 const navigateTo = (pathname, updateHistory = true) => {
-  const path = typeof LOCAL_ROUTES[pathname] !== "function" ? pathname : "/";
+  const path = LOCAL_ROUTES[pathname];
+  if (!LOCAL_ROUTES[pathname]) {
+    pathname = "/";
+  }
   if (updateHistory) {
     window.history.pushState({}, path, window.location.origin + pathname);
   }
@@ -19547,7 +19550,7 @@ const initRouter = (routes) => {
     currentRoutes[pathname] = routes[pathname];
     return currentRoutes;
   }, LOCAL_ROUTES);
-  window.addEventListener("popstate", (e) => {
+  window.addEventListener("popstate", () => {
     navigateTo(window.location.pathname, false);
   });
   window.addEventListener("load", () => {
@@ -19576,6 +19579,10 @@ const openModal = (message) => {
   document.querySelector(".modal-content > p:nth-child(2)").textContent = message;
   document.querySelector(".modal-content > p:nth-child(2)").style.color = "black";
 };
+const cerrarsesion = () => {
+  const auth = getAuth();
+  return signOut(auth);
+};
 const logoBlanco = "/assets/logoPrincipal.b869871e.png";
 const iconoNegro = "/assets/iconoNavegador.5dc75f61.png";
 const Register = () => {
@@ -19587,10 +19594,10 @@ const Register = () => {
   <picture>
   <source media="(max-width: 600px)" srcset="${logoBlanco}">
   <img src="${iconoNegro}" alt="Descripci\xF3n de la imagen" class="icono-register">
-</picture>
-    <span class="span-register">\xDAnete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. \xA1Viaja sin l\xEDmites!</span>
-    <form id="registerForm" class="form-r-r">
-    <h2>Registro</h2>
+  </picture>
+  <span class="span-register">\xDAnete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. \xA1Viaja sin l\xEDmites!</span>
+  <form id="registerForm" class="form-r-r">
+       <h2>Registro</h2>
         <input type="email" placeholder="Correo electr\xF3nico" name="email" id="email" >
         <div style="height: 16px;"></div>
         <input type="password" maxlength="16" minlength="6"  placeholder="Contrase\xF1a" name="psw" id="psw" >
@@ -19655,11 +19662,11 @@ const Login = () => {
   document.body.classList.add("others-background");
   document.body.classList.remove("home-background");
   const div = document.createElement("div");
-  div.className = "contenedores-r-r  contenedor-login";
+  div.className = "contenedores-r-r";
   div.innerHTML = `
   <picture>
   <source media="(max-width: 600px)" srcset="${logo}">
-  <img src="${logoDorado}" alt="Descripci\xF3n de la imagen" class="logoForm">
+  <img src="${logoDorado}" alt="logo wanderlust" class="logoForm">
   </picture>
   <form id="loginForm" class="loginForm">
   <button class="google-btn">
@@ -19688,10 +19695,10 @@ const Login = () => {
   </form>
   <div class="modal">
   <div class="modal-content">
-    <span class="close" style="color: #565255;">&times;</span>
-    <p>Some text in the Modal..</p>
+  <span class="close" style="color: #565255;">&times;</span>
+  <p>Some text in the Modal..</p>
   </div>
-</div>`;
+  </div>`;
   div.querySelector(".close").addEventListener("click", (e) => {
     e.preventDefault();
     div.querySelector(".modal").style.display = "none";
@@ -19791,6 +19798,54 @@ const iconoSalir = "/assets/logOutIcon.6bcb2dd8.png";
 const editarVacio = "/assets/mundoVacio.d7ed2e7a.png";
 const eliminarVacio = "/assets/deleteVacio.16fa643e.png";
 const eliminarLleno = "/assets/deletePintado.0331b282.png";
+const { db, storage } = initFirebase();
+const like = async (id2, uid) => rf(rh(db, "publicaciones", id2), { likes: Sf(uid) });
+const disLike = async (id2, uid) => rf(rh(db, "publicaciones", id2), { likes: Df(uid) });
+const uploadImage = async (storage2, file) => {
+  const storageRef = ref(storage2, `images/${file.name}`);
+  const snapshot = await uploadBytes(storageRef, file);
+  return getDownloadURL(snapshot.ref);
+};
+const editarPublicacion = async (postId, newContent, newImage) => {
+  const docRef = rh(db, "publicaciones", postId);
+  const updateData = { descripcion: newContent };
+  if (newImage) {
+    const newImageUrl = await uploadImage(storage, newImage);
+    updateData.image = newImageUrl;
+  }
+  await rf(docRef, updateData);
+};
+const obtenerPublicaciones = async () => {
+  const q2 = dl(sh(db, "publicaciones"), Il("fecha_creacion", "desc"));
+  const querySnapshot = await tf(q2);
+  const publicaciones = [];
+  querySnapshot.forEach((doc) => {
+    publicaciones.push({ id: doc.id, ...doc.data() });
+  });
+  console.log(publicaciones);
+  return publicaciones;
+};
+const crearPublicacion = async (user, postContent, postImage) => {
+  const imageUrl = await uploadImage(storage, postImage);
+  const post = {
+    autorPhotoURL: user.photoURL || `https://ui-avatars.com/api/?name=${user.email.split("@")[0]}&size=96&background=007bff&color=fff&rounded=true`,
+    descripcion: postContent,
+    autor: user.displayName || user.email.split("@")[0],
+    fecha_creacion: new Date(),
+    uid: user.uid,
+    image: imageUrl
+  };
+  const docRef = await uf(sh(db, "publicaciones"), post);
+  console.log("Publicaci\xF3n agregada con ID:", docRef.id);
+};
+const eliminarPublicacion = async (postId, db2) => {
+  try {
+    await of(rh(db2, "publicaciones", postId));
+    alert("Publicaci\xF3n eliminada con \xE9xito.");
+  } catch (error) {
+    alert("Error al eliminar la publicaci\xF3n:", error);
+  }
+};
 const Home = () => {
   document.body.classList.add("home-background");
   document.body.classList.remove("others-background");
@@ -19803,26 +19858,25 @@ const Home = () => {
     <img class="cerrar-sesion" src="${iconoSalir}" alt="Cerrar sesi\xF3n">
     </header>
     <h2>\xA1Hola, Bienvenidx a wanderlust !</h2>
-    <div class="container-post">
+    <section class="container-post">
     <form id="post-form" class="post-form">
     <p>\xBFCu\xE1l ha sido tu destino de viaje favorito hasta ahora y por qu\xE9 lo recomendar\xEDas?</p>
-    <div class="contenedor-img-text">
+    <section class="contenedor-img-text">
     <textarea id="post-content" placeholder="Cu\xE9ntanos tus aventuras......" ></textarea>
-    <div class="drop-container">
+    <section class="drop-container">
     <span style="color:black;"class="drop-title">Selecciona una imagen de tus viajes</span>
     <input type="file"  class="post-image" id="post-image" >
-    </div>
-    </div>
-    <div class="contenedor-btn-publicar"><button type="submit" class='btn-publicar'>Publicar</button></div>
+    </section>
+    </section>
+    <section class="contenedor-btn-publicar"><button type="submit" class='btn-publicar'>Publicar</button></section>
     </form>
-    <div id="post-list"></div>
-    </div>
+    <article id="post-list"></article>
+    </section>
   `;
   const postList = div.querySelector("#post-list");
-  const { db: db2, storage } = initFirebase();
+  const { db: db2 } = initFirebase();
   div.querySelector(".cerrar-sesion").addEventListener("click", (e) => {
-    const auth = getAuth();
-    signOut(auth).then(() => {
+    cerrarsesion().then(() => {
       navigateTo("/");
       alert("Sesi\xF3n cerrada con \xE9xito, vuelve pronto :D");
     }).catch((error) => {
@@ -19856,8 +19910,6 @@ const Home = () => {
       `;
       const auth = getAuth();
       const currentUser = auth.currentUser;
-      const like = async (id2, uid) => rf(rh(db2, "publicaciones", id2), { likes: Sf(uid) });
-      const disLike = async (id2, uid) => rf(rh(db2, "publicaciones", id2), { likes: Df(uid) });
       const likeButton = postDiv.querySelector("#like");
       publicacion.likes = publicacion.likes || [];
       if (publicacion.likes && publicacion.likes.includes(auth.currentUser.uid)) {
@@ -19882,7 +19934,9 @@ const Home = () => {
       const counterLike = postDiv.querySelector(".p2");
       counterLike.textContent = publicacion.likes.length;
       if (currentUser && currentUser.uid === publicacion.uid) {
-        const contenedorCajaEditar = postDiv.querySelector(".contenedor-edicion");
+        const contenedorCajaEditar = postDiv.querySelector(
+          ".contenedor-edicion"
+        );
         const contenedorBtnPost = postDiv.querySelector(".contenedor-btn-post");
         const deleteImg = document.createElement("img");
         const editContent = document.createElement("img");
@@ -19890,19 +19944,14 @@ const Home = () => {
         editContent.setAttribute("src", editarVacio);
         deleteImg.setAttribute("class", "delete");
         deleteImg.setAttribute("src", eliminarVacio);
-        contenedorBtnPost.appendChild(editContent);
-        contenedorBtnPost.appendChild(deleteImg);
+        contenedorBtnPost.append(editContent, deleteImg);
         deleteImg.addEventListener("click", async () => {
           deleteImg.setAttribute("src", eliminarLleno);
           const confirmacion = confirm("\xBFEst\xE1s seguro de que deseas eliminar esta publicaci\xF3n?");
           if (confirmacion) {
-            try {
-              await of(rh(db2, "publicaciones", publicacion.id));
-              const publicaciones2 = await obtenerPublicaciones();
-              mostrarPublicaciones(publicaciones2);
-            } catch (e) {
-              console.error("Error al eliminar la publicaci\xF3n:", e);
-            }
+            await eliminarPublicacion(publicacion.id, db2);
+            const publicaciones2 = await obtenerPublicaciones();
+            mostrarPublicaciones(publicaciones2);
           }
         });
         editContent.addEventListener("click", () => {
@@ -19911,24 +19960,23 @@ const Home = () => {
             formExistente.style.display = "block";
             document.getElementById("descripcion").value = publicacion.descripcion;
           } else {
-            const form = document.createElement("div");
+            const form = document.createElement("form");
             form.className = "form-edicion";
             form.innerHTML = `
-            <div class="contenedor-inputs-editar">
+            <section class="contenedor-inputs-editar">
             <label for="descripcion">Descripci\xF3n:</label>
             <textarea id="descripcion"  name="descripcion">${publicacion.descripcion}</textarea>
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" name="imagen">
-            </div>
-            <div class="contenedor-btn-edit">
+            </section>
+            <section class="contenedor-btn-edit">
             <button type="button" id="guardar" class="btn-guardar">Guardar</button>
             <button type="button" id="cancelar" class="btn-cancelar">Cancelar</button>
-            </div>  `;
+            </section>  `;
             contenedorCajaEditar.appendChild(form);
             const cancelarBtn = form.querySelector("#cancelar");
             cancelarBtn.addEventListener("click", () => {
               form.style.display = "none";
-              document.getElementById("descripcion").value = publicacion.descripcion;
             });
             const guardarBtn = form.querySelector("#guardar");
             guardarBtn.addEventListener("click", async () => {
@@ -19940,24 +19988,13 @@ const Home = () => {
                 return;
               }
               try {
-                const docRef = rh(db2, "publicaciones", publicacion.id);
-                await rf(docRef, { descripcion: nuevoContenido });
+                await editarPublicacion(publicacion.id, nuevoContenido, nuevaImagen);
                 const publicaciones2 = await obtenerPublicaciones();
                 mostrarPublicaciones(publicaciones2);
-                if (nuevaImagen) {
-                  const storageRef = ref(storage, `images/${nuevaImagen.name}`);
-                  const snapshot = await uploadBytes(storageRef, nuevaImagen);
-                  const nuevaUrlImagen = await getDownloadURL(snapshot.ref);
-                  await rf(docRef, { image: nuevaUrlImagen });
-                  const publicaciones3 = await obtenerPublicaciones();
-                  mostrarPublicaciones(publicaciones3);
-                }
-                publicacion.descripcion = nuevoContenido;
-                publicacion.image = nuevaImagen;
                 alert("La publicaci\xF3n se ha actualizado correctamente.");
                 form.style.display = "none";
-              } catch (error) {
-                console.error("Error actualizando la publicaci\xF3n: ", error);
+              } catch (e) {
+                console.error("Error actualizando la publicaci\xF3n: ", e);
               }
             });
           }
@@ -19965,15 +20002,6 @@ const Home = () => {
       }
       postList.appendChild(postDiv);
     });
-  };
-  const obtenerPublicaciones = async () => {
-    const q2 = dl(sh(db2, "publicaciones"), Il("fecha_creacion", "desc"));
-    const querySnapshot = await tf(q2);
-    const publicaciones = [];
-    querySnapshot.forEach((doc) => {
-      publicaciones.push({ id: doc.id, ...doc.data() });
-    });
-    return publicaciones;
   };
   obtenerPublicaciones().then((publicaciones) => {
     mostrarPublicaciones(publicaciones);
@@ -19987,28 +20015,15 @@ const Home = () => {
     const user = auth.currentUser;
     if (postContent.trim().length === 0) {
       alert("Error, el contenido no puede estar vac\xEDo");
-      return;
     }
     if (!postImage) {
       alert("Error, debes seleccionar una imagen");
-      return;
     }
-    const storageRef = ref(storage, `images/${postImage.name}`);
-    const snapshot = await uploadBytes(storageRef, postImage);
-    const imageUrl = await getDownloadURL(snapshot.ref);
-    const post = {
-      autorPhotoURL: user.photoURL || `https://ui-avatars.com/api/?name=${user.email.split("@")[0]}&size=96&background=007bff&color=fff&rounded=true`,
-      descripcion: postContent,
-      autor: user.displayName || user.email.split("@")[0],
-      fecha_creacion: new Date(),
-      uid: user.uid,
-      image: imageUrl
-    };
     try {
-      const docRef = await uf(sh(db2, "publicaciones"), post);
-      console.log("Publicaci\xF3n agregada con ID:", docRef.id);
+      await crearPublicacion(user, postContent, postImage);
+      alert("La publicaci\xF3n se ha creado correctamente.");
     } catch (e2) {
-      console.log(e2);
+      alert("Error al crear la publicaci\xF3n:", e2);
     }
     const publicaciones = await obtenerPublicaciones();
     mostrarPublicaciones(publicaciones);
@@ -20022,10 +20037,10 @@ const RecuperarContrasena = () => {
   const div = document.createElement("div");
   div.className = "contenedores-r-r";
   div.innerHTML = `
-    <picture>
-      <source media="(max-width: 600px)" srcset="${logoBlanco}">
-      <img src="${iconoNegro}" alt="Descripci\xF3n de la imagen" class="icono-register icono-restablecer">
-    </picture>
+  <picture>
+  <source media="(max-width: 600px)" srcset="${logoBlanco}">
+  <img src="${iconoNegro}" alt="Descripci\xF3n de la imagen" class="icono-register icono-restablecer">
+  </picture>
     <form id="recuperar-Form" class="form-r-r">
       <h2>Recuperar contrase\xF1a</h2>
       <p style="color: black;">Para restablecer su contrase\xF1a, ingrese la direcci\xF3n de correo electr\xF3nico que usa para iniciar sesi\xF3n.</p>
