@@ -1,8 +1,7 @@
 import { navigateTo } from '../router.js';
-import { registerWithEmail, openModal } from '../helpers/accederCongmail.js';
+import { registerWithEmail, openModal } from '../helpers/firebaseAuth.js';
 import logoBlanco from '../assets/logoPrincipal.png';
 import iconoNegro from '../assets/iconoNavegador.png';
-
 
 export const Register = () => {
   document.body.classList.add('others-background');
@@ -13,10 +12,10 @@ export const Register = () => {
   <picture>
   <source media="(max-width: 600px)" srcset="${logoBlanco}">
   <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register">
-</picture>
-    <span class="span-register">Únete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. ¡Viaja sin límites!</span>
-    <form id="registerForm" class="form-r-r">
-    <h2>Registro</h2>
+  </picture>
+  <span class="span-register">Únete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. ¡Viaja sin límites!</span>
+  <form id="registerForm" class="form-r-r">
+       <h2>Registro</h2>
         <input type="email" placeholder="Correo electrónico" name="email" id="email" >
         <div style="height: 16px;"></div>
         <input type="password" maxlength="16" minlength="6"  placeholder="Contraseña" name="psw" id="psw" >
@@ -43,8 +42,6 @@ export const Register = () => {
     e.preventDefault();
     const email = div.querySelector('#email').value;
     const password = div.querySelector('#psw').value;
-    // const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    // const emailRegex = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.[a-zA-Z]{2,}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     // Validar que se haya ingresado un correo electrónico válido
     if (!email || !emailRegex.test(email)) {
