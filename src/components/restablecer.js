@@ -38,7 +38,6 @@ export const RecuperarContrasena = () => {
     e.preventDefault();
     navigateTo('/');
   });
-
   const formulario = div.querySelector('#recuperar-Form');
   const mensajeEnvio = div.querySelector('#mensaje-envio');
   const mensajeEnvioContainer = div.querySelector('.mensaje-envio-container');

@@ -29,20 +29,20 @@ export const Home = () => {
     <img class="cerrar-sesion" src="${iconoSalir}" alt="Cerrar sesión">
     </header>
     <h2>¡Hola, Bienvenidx a wanderlust !</h2>
-    <div class="container-post">
+    <section class="container-post">
     <form id="post-form" class="post-form">
     <p>¿Cuál ha sido tu destino de viaje favorito hasta ahora y por qué lo recomendarías?</p>
-    <div class="contenedor-img-text">
+    <section class="contenedor-img-text">
     <textarea id="post-content" placeholder="Cuéntanos tus aventuras......" ></textarea>
-    <div class="drop-container">
+    <section class="drop-container">
     <span style="color:black;"class="drop-title">Selecciona una imagen de tus viajes</span>
     <input type="file"  class="post-image" id="post-image" >
-    </div>
-    </div>
-    <div class="contenedor-btn-publicar"><button type="submit" class='btn-publicar'>Publicar</button></div>
+    </section>
+    </section>
+    <section class="contenedor-btn-publicar"><button type="submit" class='btn-publicar'>Publicar</button></section>
     </form>
-    <div id="post-list"></div>
-    </div>
+    <article id="post-list"></article>
+    </section>
   `;
   const postList = div.querySelector('#post-list');
   // eslint-disable-next-line max-len
@@ -125,8 +125,8 @@ export const Home = () => {
         editContent.setAttribute('src', editarVacio);
         deleteImg.setAttribute('class', 'delete');
         deleteImg.setAttribute('src', eliminarVacio);
-        contenedorBtnPost.appendChild(editContent);
-        contenedorBtnPost.appendChild(deleteImg);
+        contenedorBtnPost.append(editContent, deleteImg);
+        // contenedorBtnPost.appendChild();
         deleteImg.addEventListener('click', async () => {
           // Mostrar mensaje de confirmación para eliminar post
           deleteImg.setAttribute('src', eliminarLleno);
@@ -148,19 +148,19 @@ export const Home = () => {
             document.getElementById('descripcion').value = publicacion.descripcion;
           } else {
             // Si no existe un formulario, crear uno nuevo
-            const form = document.createElement('div');
+            const form = document.createElement('form');
             form.className = 'form-edicion';
             form.innerHTML = `
-            <div class="contenedor-inputs-editar">
+            <section class="contenedor-inputs-editar">
             <label for="descripcion">Descripción:</label>
             <textarea id="descripcion"  name="descripcion">${publicacion.descripcion}</textarea>
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" name="imagen">
-            </div>
-            <div class="contenedor-btn-edit">
+            </section>
+            <section class="contenedor-btn-edit">
             <button type="button" id="guardar" class="btn-guardar">Guardar</button>
             <button type="button" id="cancelar" class="btn-cancelar">Cancelar</button>
-            </div>  `;
+            </section>  `;
             // Agregar el formulario al DOM
             contenedorCajaEditar.appendChild(form);
             // Agregar controlador de eventos al botón "Cancelar"
@@ -186,8 +186,8 @@ export const Home = () => {
                 mostrarPublicaciones(publicaciones);
                 alert('La publicación se ha actualizado correctamente.');
                 form.style.display = 'none';
-              } catch (error) {
-                console.error('Error actualizando la publicación: ', error);
+              } catch (e) {
+                console.error('Error actualizando la publicación: ', e);
               }
             });
           }

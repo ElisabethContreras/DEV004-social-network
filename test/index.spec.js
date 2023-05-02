@@ -11,7 +11,7 @@ import {
   signInWithPassword, signInWithGoogle, mostrarVentanaRecuperarContraseña, registerWithEmail,
   openModal, cerrarsesion,
 } from '../src/helpers/firebaseAuth';
-import { crearPublicacion} from '../src/helpers/firebasestore';
+import { crearPublicacion } from '../src/helpers/firebasestore';
 
 jest.mock('../src/helpers/firebaseAuth');
 

@@ -9,11 +9,11 @@ export const Login = () => {
   document.body.classList.add('others-background');
   document.body.classList.remove('home-background');
   const div = document.createElement('div');
-  div.className = 'contenedores-r-r  contenedor-login';
+  div.className = 'contenedores-r-r';
   div.innerHTML = `
   <picture>
   <source media="(max-width: 600px)" srcset="${logo}">
-  <img src="${logoDorado}" alt="Descripción de la imagen" class="logoForm">
+  <img src="${logoDorado}" alt="logo wanderlust" class="logoForm">
   </picture>
   <form id="loginForm" class="loginForm">
   <button class="google-btn">
