@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { navigateTo } from '../router';
-import { signInWithGoogle, signInWithPassword } from '../helpers/accederCongmail';
+import { signInWithGoogle, signInWithPassword, openModal } from '../helpers/firebaseAuth';
 import logo from '../assets/logo.png';
 import logoDorado from '../assets/logo1.png';
 import googleIcon from '../assets/google.png';
@@ -10,11 +9,11 @@ export const Login = () => {
   document.body.classList.add('others-background');
   document.body.classList.remove('home-background');
   const div = document.createElement('div');
-  div.className = 'contenedores-r-r  contenedor-login';
+  div.className = 'contenedores-r-r';
   div.innerHTML = `
   <picture>
   <source media="(max-width: 600px)" srcset="${logo}">
-  <img src="${logoDorado}" alt="Descripción de la imagen" class="logoForm">
+  <img src="${logoDorado}" alt="logo wanderlust" class="logoForm">
   </picture>
   <form id="loginForm" class="loginForm">
   <button class="google-btn">
@@ -34,29 +33,19 @@ export const Login = () => {
   <div style="height: 16px;"></div>
   <div class="col">
   <div>
-  <a href="#" class="btn" >¿Olvidaste tu contraseña ? <span class="olvidaste-contraseña-btn" style="color: #66DA5F;">Recuperala</span></a>
+  <span class="olvidaste-contraseña-btn" >¿Olvidaste tu contraseña ? <a href="#" class="btn" style="color: #66DA5F; ">Recuperala</a></span>
   </div>
-  <div style="height: 16px;"></div>
   <div>
-  <a href="#" class="signup-btn">¿No tienes una cuenta? <span  style="color: #66DA5F;">Registrate</span></a>
+  <span>¿No tienes una cuenta? <a href="#" class="signup-btn" style="color: #66DA5F; ">Registrate</a></span>
   </div>
-  <div style="height: 16px;"></div>
   </div>
   </form>
   <div class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
+  <span class="close" style="color: #565255;">&times;</span>
+  <p>Some text in the Modal..</p>
   </div>
-</div>`;
-
-  // Function to open modal
-  const openModal = (message) => {
-    div.querySelector('.modal').style.display = 'block';
-    div.querySelector('.modal-content > p:nth-child(2)').textContent = message;
-    div.querySelector('.modal-content > p:nth-child(2)').style.color = 'black';
-  };
-  // funcion para ocultar el modal
+  </div>`;
   div.querySelector('.close').addEventListener('click', (e) => {
     e.preventDefault();
     div.querySelector('.modal').style.display = 'none';
@@ -75,11 +64,11 @@ export const Login = () => {
       openModal('Por favor, introduce una contraseña de al menos 6 caracteres.');
       return;
     }
-    signInWithPassword(email, password).then(
-      (useCredential) => {
+    signInWithPassword(email, password)
+      .then(() => {
         navigateTo('/home');
-      },
-      (error) => {
+      })
+      .catch((error) => {
         const errorCode = error.code;
         let errorMessage;
         if (errorCode === 'auth/wrong-password') {
@@ -90,17 +79,18 @@ export const Login = () => {
           errorMessage = 'Ha ocurrido un error al iniciar sesión. Por favor, inténtalo de nuevo más tarde.';
         }
         openModal(errorMessage);
-      },
-    );
+      });
   });
 
   div.querySelector('.google-btn').addEventListener('click', (e) => {
     e.preventDefault();
-    signInWithGoogle().then(
-      (useCredential) => {
-        navigateTo('/home');
-      },
-      (error) => {
+    signInWithGoogle()
+      .then(
+        () => {
+          navigateTo('/home');
+        },
+      )
+      .catch((error) => {
         switch (error.code) {
           case 'auth/popup-closed-by-user':
             openModal('El inicio de sesión se ha cancelado.');
@@ -145,8 +135,7 @@ export const Login = () => {
             openModal('Ha ocurrido un error desconocido, por favor intenta de nuevo más tarde.');
             break;
         }
-      },
-    );
+      });
   });
 
   div.querySelector('.signup-btn').addEventListener('click', (e) => {
@@ -157,7 +146,6 @@ export const Login = () => {
     e.preventDefault();
     navigateTo('/restablecer');
   });
-
   // Return the div element
   return div;
 };

@@ -1,10 +1,12 @@
 const LOCAL_ROUTES = {};
-
 // Navegar a una ruta específica y actualizar el historial
 export const navigateTo = (pathname, updateHistory = true) => {
 // Si no se encuentra la ruta, redirigir a la página de inicio
-  const path = typeof LOCAL_ROUTES[pathname] !== 'function' ? pathname : '/';
-
+  const path = LOCAL_ROUTES[pathname];
+  if (!LOCAL_ROUTES[pathname]) {
+    // eslint-disable-next-line no-param-reassign
+    pathname = '/';
+  }
   // Actualizar el historial
   if (updateHistory) {
     window.history.pushState({}, path, window.location.origin + pathname);
@@ -25,8 +27,7 @@ export const initRouter = (routes) => {
   }, LOCAL_ROUTES);
 
   // Agregue un detector de eventos para controlar el botón de avance/retroceso
-  // eslint-disable-next-line no-unused-vars
-  window.addEventListener('popstate', (e) => {
+  window.addEventListener('popstate', () => {
     navigateTo(window.location.pathname, false);
   });
 

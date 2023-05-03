@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { mostrarVentanaRecuperarContraseña } from '../helpers/accederCongmail.js';
+import { mostrarVentanaRecuperarContraseña } from '../helpers/firebaseAuth.js';
 import { navigateTo } from '../router.js';
 import logoBlanco from '../assets/logoPrincipal.png';
 import iconoNegro from '../assets/iconoNavegador.png';
@@ -10,26 +10,25 @@ export const RecuperarContrasena = () => {
   const div = document.createElement('div');
   div.className = 'contenedores-r-r';
   div.innerHTML = `
-    <picture>
-      <source media="(max-width: 600px)" srcset="${logoBlanco}">
-      <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register">
-    </picture>
+  <picture>
+  <source media="(max-width: 600px)" srcset="${logoBlanco}">
+  <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register icono-restablecer">
+  </picture>
     <form id="recuperar-Form" class="form-r-r">
       <h2>Recuperar contraseña</h2>
-      <p>Para restablecer su contraseña, ingrese la dirección de correo electrónico que usa para iniciar sesión.</p>
-      <input type="email" placeholder="Correo electrónico" name="email" id="email" required>
+      <p style="color: black;">Para restablecer su contraseña, ingrese la dirección de correo electrónico que usa para iniciar sesión.</p>
+      <input type="email" placeholder="Correo electrónico" name="email" id="email">
       <div style="height: 16px;"></div>
       <button class="btn-registros">Enviar</button>
-      <div style="height: 32px;"></div>
-      <a href="#" style="color: black;" class="btn">
+      <div style="height: 16px;"></div>
+      <span style="color: black;">
       ¡No importa! <br>
-        <span style="color: #3e8ed0;">Llévame de vuelta para iniciar sesión</span>
-      </a>
+      <a href="#"  style="color: #3e8ed0;"class="btn"> Llévame de vuelta para iniciar sesión</a></span>
     </form>
     <div class="mensaje-envio-container modal">
     <div id="contenedor-msj" class="modal-content">
     <h2>Consultar su correo electrónico</h2>
-      <span class="close">&times;</span>
+      <span class="close" style="color: #565255;">&times;</span>
       <div id="mensaje-envio"></div>
     <button id="volver-inicio" class="btn-registros">Volver a la página de inicio</button>
     </div>
@@ -39,7 +38,6 @@ export const RecuperarContrasena = () => {
     e.preventDefault();
     navigateTo('/');
   });
-
   const formulario = div.querySelector('#recuperar-Form');
   const mensajeEnvio = div.querySelector('#mensaje-envio');
   const mensajeEnvioContainer = div.querySelector('.mensaje-envio-container');
@@ -54,8 +52,19 @@ export const RecuperarContrasena = () => {
         mensajeEnvioContainer.style.display = 'flex';
       })
       .catch((error) => {
-        mensajeEnvio.textContent = `Error al enviar el correo ${email} . Por favor, intenta de nuevo más tarde.`;
-        mensajeEnvioContainer.style.display = 'flex';
+        if (error.code === 'auth/invalid-email') {
+          // Mostrar mensaje de error en español
+          mensajeEnvio.textContent = 'La dirección de correo electrónico no es válida.';
+          mensajeEnvioContainer.style.display = 'flex';
+        } else if (error.code === 'auth/user-not-found') {
+          // Mostrar mensaje de error en español
+          mensajeEnvio.textContent = 'No se encontró ningún usuario con la dirección de correo electrónico proporcionada.';
+          mensajeEnvioContainer.style.display = 'flex';
+        } else {
+          // Mostrar mensaje de error genérico en español
+          mensajeEnvio.textContent = 'Se ha producido un error al restablecer la contraseña. Por favor, inténtelo nuevamente más tarde.';
+          mensajeEnvioContainer.style.display = 'flex';
+        }
       });
   });
 

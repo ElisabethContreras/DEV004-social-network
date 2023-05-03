@@ -1,9 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { getStorage } from '@firebase/storage';
 
 // La configuración de Firebase de tu aplicación web
 
@@ -26,11 +25,12 @@ export const initFirebase = () => {
 
   // Initialize Cloud Firestore y  obtenemos una referencia al servicio.
   const db = getFirestore(app);
-
+  const storage = getStorage(app, 'gs://wanderlust-edc27.appspot.com');
   // Devuelve un objeto que contiene las referencias a la app de Firebase.
   return {
     app,
     auth,
     db,
+    storage,
   };
 };

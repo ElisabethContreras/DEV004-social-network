@@ -1,8 +1,7 @@
 import { navigateTo } from '../router.js';
-import { registerWithEmail } from '../helpers/accederCongmail.js';
+import { registerWithEmail, openModal } from '../helpers/firebaseAuth.js';
 import logoBlanco from '../assets/logoPrincipal.png';
 import iconoNegro from '../assets/iconoNavegador.png';
-
 
 export const Register = () => {
   document.body.classList.add('others-background');
@@ -13,21 +12,21 @@ export const Register = () => {
   <picture>
   <source media="(max-width: 600px)" srcset="${logoBlanco}">
   <img src="${iconoNegro}" alt="Descripción de la imagen" class="icono-register">
-</picture>
-    <p>Únete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. ¡Viaja sin límites!</p>
-    <form id="registerForm" class="form-r-r">
-    <h2>Registro</h2>
+  </picture>
+  <span class="span-register">Únete a nuestra comunidad de viajeros y comparte tus aventuras con el mundo. ¡Viaja sin límites!</span>
+  <form id="registerForm" class="form-r-r">
+       <h2>Registro</h2>
         <input type="email" placeholder="Correo electrónico" name="email" id="email" >
         <div style="height: 16px;"></div>
         <input type="password" maxlength="16" minlength="6"  placeholder="Contraseña" name="psw" id="psw" >
         <div style="height: 16px;"></div>
-        <button  class="btn-registros">Crear</button>
+        <button id="crear" class="btn-registros">Crear</button>
         <div style="height: 32px;"></div>
-        <a href="#" style="color: black;" class="btn"> ¿ Ya tienes una cuenta?<br><span style="color: #3e8ed0; ">Ingresa</span></a>
+        <span style="color: black;"> ¿ Ya tienes una cuenta?<br><a href="#" style="color: #3e8ed0; " class="btn">Ingresa</a></span>
     </form>
     <div class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
+      <span class="close" style="color: #565255;">&times;</span>
       <p>Some text in the Modal..</p>
     </div>
   </div>`;
@@ -39,18 +38,10 @@ export const Register = () => {
     e.preventDefault();
     div.querySelector('.modal').style.display = 'none';
   });
-  const openModal = (message) => {
-    div.querySelector('.modal').style.display = 'block';
-    div.querySelector('.modal-content > p:nth-child(2)').textContent = message;
-    div.querySelector('.modal-content > p:nth-child(2)').style.color = 'black';
-  };
-
   div.querySelector('#registerForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.psw.value;
-    // const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    // const emailRegex = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.[a-zA-Z]{2,}$/;
+    const email = div.querySelector('#email').value;
+    const password = div.querySelector('#psw').value;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     // Validar que se haya ingresado un correo electrónico válido
     if (!email || !emailRegex.test(email)) {
@@ -65,7 +56,8 @@ export const Register = () => {
     }
     registerWithEmail(email, password)
       .then(() => {
-        navigateTo('/home');
+        navigateTo('/');
+        openModal('Registrado exitosamente');
       })
       .catch((error) => {
         switch (error.code) {
