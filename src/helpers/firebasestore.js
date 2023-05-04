@@ -63,7 +63,7 @@ export const crearPublicacion = async (user, postContent, postImage) => {
   console.log('Publicación agregada con ID:', docRef.id);
 };
 //---------------------------------------------------------------------------------
-export const eliminarPublicacion = async (postId, db) => {
+export const eliminarPublicacion = async (postId ) => {
   try {
     await deleteDoc(doc(db, 'publicaciones', postId));
     alert('Publicación eliminada con éxito.');

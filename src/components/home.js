@@ -62,18 +62,19 @@ export const Home = () => {
   const mostrarPublicaciones = (publicaciones) => {
     postList.innerHTML = '';
     publicaciones.forEach((publicacion) => {
+      const avatar = `https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`
+      const imagenPost = `<div class="contenedor-img-post"><img class="post-imagen" src="${publicacion.image}" alt="Imagen de la publicación"></div>`
       const postDiv = document.createElement('div');
       postDiv.className = 'post';
       postDiv.innerHTML = ` 
       <header class="post-header">
       <div class="sub-header-post">
-      <img class="post-author-photo" src="${publicacion.autorPhotoURL ? publicacion.autorPhotoURL : `https://ui-avatars.com/api/?name=${publicacion.autor}&size=96&background=007bff&color=fff&rounded=true`}" alt="Foto de perfil de ${publicacion.autor}">
+      <img class="post-author-photo" src="${publicacion.autorPhotoURL ? publicacion.autorPhotoURL : avatar }" alt="Foto de perfil de ${publicacion.autor}">
       <p><strong>${publicacion.autor}</strong></p>
       </div>
       <p>${publicacion.fecha_creacion.toDate().toLocaleString()}</p>
       </header>
-        ${publicacion.image ? `<div class="contenedor-img-post"><img class="post-imagen" src="${publicacion.image}" alt="Imagen de la publicación"></div>`
-    : '<div class="post-imagen-vacia"></div>'}
+        ${publicacion.image ? imagenPost : '<div class="post-imagen-vacia"></div>'}
       <p class="texto-descripcion"><strong>${publicacion.autor}</strong>  ${publicacion.descripcion}</p>
       <div class="contenedor-edicion">
       </div>
@@ -133,7 +134,7 @@ export const Home = () => {
           // eslint-disable-next-line no-restricted-globals, no-alert
           const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta publicación?');
           if (confirmacion) {
-            await eliminarPublicacion(publicacion.id, db);
+            await eliminarPublicacion(publicacion.id);
             const publicaciones = await obtenerPublicaciones();
             mostrarPublicaciones(publicaciones);
           }
